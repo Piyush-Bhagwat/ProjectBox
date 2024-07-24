@@ -5,7 +5,7 @@ import Image from "next/image";
 import React, { useContext } from "react";
 
 const Header = () => {
-    const { user } = useContext(projectContext);
+    const { user, login } = useContext(projectContext);
 
     return (
         <header className="text-gray-600 body-font bg-white dark:bg-black">
@@ -48,7 +48,7 @@ const Header = () => {
                             <a className="cursor-pointer hover:text-gray-900">
                                 <Image
                                     className="object-cover w-6 h-6 rounded-full ring ring-gray-300 dark:ring-gray-600"
-                                    src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                                    src={user.photoURL}
                                     alt="hi"
                                     width={20}
                                     height={20}
@@ -58,7 +58,10 @@ const Header = () => {
                     )}
 
                     {!user && (
-                        <button className="inline-flex items-center bg-blue-500 border-0 py-1 px-3 focus:outline-none hover:bg-blue-700 transition-all rounded text-base text-white mt-4 md:mt-0">
+                        <button
+                            onClick={login}
+                            className="inline-flex items-center bg-blue-500 border-0 py-1 px-3 focus:outline-none hover:bg-blue-700 transition-all rounded text-base text-white mt-4 md:mt-0"
+                        >
                             Login
                         </button>
                     )}
