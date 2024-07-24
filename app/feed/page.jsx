@@ -1,15 +1,10 @@
-'use client'
-import { IMAGES } from "@/assets/assets";
+"use client";
 import ProjectCard from "@/components/ProjectCard";
-import { projectContext } from "@/context/projectContext";
-import Image from "next/image";
-import React, { useContext } from "react";
+import React from "react";
 
 const FeedPage = () => {
-
     return (
         <div className="p-5">
-            
             <div className="flex flex-wrap gap-6 justify-center w-full">
                 <ProjectCard />
                 <ProjectCard />

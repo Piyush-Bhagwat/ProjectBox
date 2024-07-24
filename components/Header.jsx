@@ -67,16 +67,6 @@ const Header = () => {
                     )}
                 </nav>
             </div>
-
-            <div className="text-xs flex w-full gap-2 justify-center">
-                <button className="text-blue-400">WebDev</button>
-                <button>AI</button>
-                <button>ML</button>
-                <button>Data Science</button>
-                <button>VR</button>
-                <button>AppDev</button>
-                <button>Others</button>
-            </div>
         </header>
     );
 };
