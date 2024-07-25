@@ -81,6 +81,8 @@ const NewProjectForm = () => {
         //step4: upload!!
         console.log("uploads start");
         await uploadPost(data);
+
+        alert("upload successful please refresh");
     };
 
     const sendInviations = async () => {};
