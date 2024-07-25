@@ -38,7 +38,7 @@ const NewProjectForm = () => {
             const fileUrl = URL.createObjectURL(file);
 
             setImages((prev) =>
-                prev.map((img, id) => (id === idx ? fileUrl : img))
+                prev.map((img, id) => (id === idx ? {url: fileUrl, file} : img))
             );
         }
     };

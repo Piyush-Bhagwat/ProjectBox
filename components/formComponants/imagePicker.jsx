@@ -7,22 +7,24 @@ const ImagePicker = ({ handleSelect, image, idx }) => {
             <div className="text-center ">
                 {image ? (
                     <>
-                    <label htmlFor={`file-upload-${idx}-change`} >
-                        <span className="text-blue-500 block mb-3" >Change</span>
-                        <input
-                            id={`file-upload-${idx}-change`}
-                            name="file-upload"
-                            type="file"
-                            onChange={(e) => handleSelect(e, parseInt(idx))}
-                            accept="image/png, image/gif, image/jpeg, image/jpg"
-                            className="sr-only"
-                        />
+                        <label htmlFor={`file-upload-${idx}-change`}>
+                            <span className="text-blue-500 block mb-3">
+                                Change
+                            </span>
+                            <input
+                                id={`file-upload-${idx}-change`}
+                                name="file-upload"
+                                type="file"
+                                onChange={(e) => handleSelect(e, parseInt(idx))}
+                                accept="image/png, image/gif, image/jpeg, image/jpg"
+                                className="sr-only"
+                            />
                         </label>
                         <Image
                             width={300}
                             height={300}
-                            className="w-full aspect-square object-cover rounded-md shadow-md   "
-                            src={image}
+                            className="w-full aspect-square object-contain rounded-md shadow-md"
+                            src={image.url}
                             alt="hello"
                         />
                     </>
