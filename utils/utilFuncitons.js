@@ -1,3 +1,5 @@
-export const loginFromLocalStorage = () => {
-    return localStorage.getItem("user");
-}
+const getPostID = (username = "", projectName = "") => {
+    return `${username.replace(" ", "-")}@${projectName.replace(" ", "-")}`;
+};
+
+export { getPostID };
