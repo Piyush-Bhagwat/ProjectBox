@@ -10,7 +10,7 @@ import { uploadPost } from "@/firebase/firebase.db";
 const NewProjectForm = () => {
     // Initialize state with one input field
     const [members, setMembers] = useState([]);
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({ category: "web" });
     const [images, setImages] = useState([null, null, null, null]);
     const { user } = useContext(projectContext);
 
@@ -50,16 +50,30 @@ const NewProjectForm = () => {
         }
     };
 
+    const isFormFilled = () => {
+        return (
+            formData.visiblity &&
+            formData.projectName &&
+            formData.about &&
+            formData.date &&
+            formData.status &&
+            formData.tech
+        );
+    };
+
     useEffect(() => {
         console.log("images", images);
     }, [images]);
 
     const handlSubmit = async (e) => {
         e.preventDefault();
+        if (!isFormFilled()) {
+            alert("fill the form please");
+            return
+        };
+
         console.log("clicked on submit");
-
-        // console.log(getProjectID(user.username, formData.projectName));
-
+        
         // step1 photos!
         const photos = await uploadImages(
             images,
@@ -237,6 +251,7 @@ const NewProjectForm = () => {
                                     <input
                                         name="githubLink"
                                         type="url"
+                                        onChange={handleFormChange}
                                         placeholder="link"
                                         autoComplete="off"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -248,6 +263,7 @@ const NewProjectForm = () => {
                                     Hosted :
                                     <input
                                         name="hostedLink"
+                                        onChange={handleFormChange}
                                         type="url"
                                         placeholder="link"
                                         autoComplete="off"
@@ -260,6 +276,7 @@ const NewProjectForm = () => {
                                     Twitter :
                                     <input
                                         name="twitterLink"
+                                        onChange={handleFormChange}
                                         type="url"
                                         placeholder="link"
                                         autoComplete="off"
@@ -272,6 +289,7 @@ const NewProjectForm = () => {
                                     LinkedIn :
                                     <input
                                         name="linkedLink"
+                                        onChange={handleFormChange}
                                         type="url"
                                         placeholder="link"
                                         autoComplete="off"
@@ -285,6 +303,7 @@ const NewProjectForm = () => {
                                     <input
                                         name="youtubeLink"
                                         type="url"
+                                        onChange={handleFormChange}
                                         placeholder="link"
                                         autoComplete="off"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"

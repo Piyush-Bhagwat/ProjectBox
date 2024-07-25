@@ -36,7 +36,7 @@ const ProjectCard = ({ project }) => {
                     </h3>
                 </a>
 
-                <div className="flex gap-1">{renderTags()}</div>
+                <div className="flex flex-wrap gap-1">{renderTags()}</div>
 
                 <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
                     {project.about}
