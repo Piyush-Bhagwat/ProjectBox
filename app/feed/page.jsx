@@ -1,15 +1,14 @@
 "use client";
 import ProjectCard from "@/components/ProjectCard";
 import { projectContext } from "@/context/projectContext";
-import { getbox } from "@/firebase/firebase.db";
 import React, { useContext, useEffect } from "react";
 
 const FeedPage = () => {
     const { user, box } = useContext(projectContext);
     const renderCards = () => {
        return <>
-            { box?.map(() => {
-                return <ProjectCard />;
+            { box?.map((item) => {
+                return <ProjectCard url={item.photos[0]}/>;
             })}
         </>;
     };

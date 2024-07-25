@@ -1,14 +1,14 @@
 import Image from "next/image";
 import React from "react";
 
-const ProjectCard = () => {
+const ProjectCard = ({url}) => {
     return (
         <article className="overflow-hidden w-[23%] border rounded-lg border-gray-600 bg-white shadow-sm">
             <Image
                 alt=""
                 width={480}
                 height={480}
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+                src={url}
                 className="h-56 w-full object-cover"
             />
 
