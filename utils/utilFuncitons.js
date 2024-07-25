@@ -1,5 +1,7 @@
 const getPostID = (username = "", projectName = "") => {
-    return `${username.replace(" ", "-")}@${projectName.replace(" ", "-")}`;
+    return `${username.split(" ").join("-")}@${projectName
+        .split(" ")
+        .join("-")}`;
 };
 
 export { getPostID };
