@@ -28,7 +28,7 @@ const ProjectCard = ({ project }) => {
     };
 
     return (
-        <article className={`overflow-hidden w-[23%] p-2  border rounded-lg bg-neutral-900 border-gray-400 shadow-sm ${project.auther == user.username && "border border-white"}`}>
+        <article className={`overflow-hidden w-[23%] p-2  border-2 border-dashed rounded-lg border-neutral-600 shadow-sm ${project.auther == user.username && "border border-white"}`}>
             <Image
                 alt=""
                 width={480}
@@ -40,7 +40,7 @@ const ProjectCard = ({ project }) => {
             <div className="p-2">
 
                 <Link href={`/display?id=${project.id}`}>
-                    <h3 className="text-lg font-medium text-gray-50">
+                    <h3 className="text-lg font-medium text-neutral-200">
 
                         {project.projectName}
 
