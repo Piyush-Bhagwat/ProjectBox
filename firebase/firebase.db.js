@@ -25,9 +25,10 @@ const createUser = async (data) => {
     console.log("error.................", data);
 };
 
-const storeToBox = async (username, path) => {
+const storeToBox = async (username, path, name) => {
     await addDoc(collection(db, "users", username, "box"), {
         path,
+        name,
         time: Date.now(),
     });
 };
@@ -62,6 +63,19 @@ const getbox = async (username) => {
     }
 };
 
+const checkProjectNameAvalibale = async (username, id) => {
+    try {
+        const colRef = collection(db, "users", username, "box")
+        const q = query(colRef, where("name", '==', id));
+        const snapshot = await getDocs(q);
+    
+        return snapshot.empty;
+    } catch (er) {
+        console.log(er);
+    }
+   
+}
+
 // -----------------Post---------------------------
 
 const uploadPost = async (data) => {
@@ -72,7 +86,7 @@ const uploadPost = async (data) => {
         console.log("upload form", data);
         await setDoc(postRef, data);
         console.log("upload finished");
-        await storeToBox(data.auther, pathToPost);
+        await storeToBox(data.auther, pathToPost, postID);
         return pathToPost;
     } catch (er) {
         console.warn("error uploading post");
@@ -133,4 +147,5 @@ export {
     getAllPosts,
     getPostData,
     getPostFromProjectID,
+    checkProjectNameAvalibale
 };
