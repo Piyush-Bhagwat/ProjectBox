@@ -79,6 +79,20 @@ const uploadPost = async (data) => {
     }
 };
 
+const getAllPosts = async () => {
+    const categories = ["web", "app", "ai", "ds", "vr", "other"];
+    const posts = [];
+
+    for (const cat of categories) {
+        const ref = collection(db, "posts", "india", cat);
+        const snap = await getDocs(ref);
+
+        snap.docs.forEach((doc) => posts.push(doc.data()));
+    }
+
+    return posts;
+};
+
 const getPostData = async (id) => {
     try {
         const postRef = doc(db, id);
@@ -90,4 +104,4 @@ const getPostData = async (id) => {
     }
 };
 
-export { userExistEmail, createUser, getbox, getUser, uploadPost };
+export { userExistEmail, createUser, getbox, getUser, uploadPost, getAllPosts };

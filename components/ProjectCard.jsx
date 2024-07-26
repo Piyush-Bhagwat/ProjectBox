@@ -1,16 +1,18 @@
+import { projectContext } from "@/context/projectContext";
 import Image from "next/image";
-import React from "react";
+import React, { useContext } from "react";
 
 const ProjectCard = ({ project }) => {
     console.log(project);
+    const {user} = useContext(projectContext)
 
-    const renderTags = () => {
-        const tags = project.tags?.split(",");
+    const renderTech = () => {
+        const tags = project.tech?.split(",");
         return (
             <>
                 {tags?.map((tag) => {
                     return (
-                        <div className="px-2 py-0.5 border text-sm border-black rounded-full">
+                        <div className="px-2 py-0.5 text-white border text-sm border-white rounded-full">
                             {tag}
                         </div>
                     );
@@ -20,7 +22,7 @@ const ProjectCard = ({ project }) => {
     };
 
     return (
-        <article className="overflow-hidden w-[23%] border rounded-lg border-gray-600 bg-white shadow-sm">
+        <article className={`overflow-hidden w-[23%]  border rounded-lg border-gray-600 shadow-sm ${project.auther == user.username && "border border-white"}`}>
             <Image
                 alt=""
                 width={480}
@@ -31,14 +33,14 @@ const ProjectCard = ({ project }) => {
 
             <div className="p-4 sm:p-6">
                 <a href="#">
-                    <h3 className="text-lg font-medium text-gray-900">
+                    <h3 className="text-lg font-medium text-gray-50">
                         {project.projectName}
                     </h3>
                 </a>
 
-                <div className="flex flex-wrap gap-1">{renderTags()}</div>
+                <div className="flex flex-wrap gap-1">{renderTech()}</div>
 
-                <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
+                <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-300">
                     {project.about}
                 </p>
 

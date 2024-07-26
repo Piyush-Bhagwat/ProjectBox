@@ -6,6 +6,7 @@ import { uploadImages } from "@/firebase/direbase.storage";
 import { projectContext } from "@/context/projectContext";
 import { getProjectID } from "@/utils/utilFuncitons";
 import { uploadPost } from "@/firebase/firebase.db";
+import Button from "./ui/Button";
 
 const NewProjectForm = () => {
     // Initialize state with one input field
@@ -73,7 +74,7 @@ const NewProjectForm = () => {
         };
 
         console.log("clicked on submit");
-        
+
         // step1 photos!
         const photos = await uploadImages(
             images,
@@ -88,6 +89,7 @@ const NewProjectForm = () => {
         const data = {
             ...formData,
             photos,
+            members,
             auther: user.username,
             createdAt: Date.now(),
             likes: 0,
@@ -474,9 +476,8 @@ const NewProjectForm = () => {
                             ))}
                         </div>
 
-                        <button onClick={addField} type="button">
-                            Add Feild
-                        </button>
+                        <Button onClick={addField} lable="Add More Member" type="button" />
+                           
                     </div>
                 </div>
 
