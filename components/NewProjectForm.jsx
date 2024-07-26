@@ -3,18 +3,20 @@ import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import ImagePicker from "./formComponants/imagePicker";
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 import { uploadImages } from "@/firebase/direbase.storage";
 import { projectContext } from "@/context/projectContext";
-import { getProjectID } from "@/utils/utilFuncitons";
-import { uploadPost } from "@/firebase/firebase.db";
+import { getPostID, getProjectID } from "@/utils/utilFuncitons";
+import { checkProjectNameAvalibale, uploadPost } from "@/firebase/firebase.db";
 import Button from "./ui/Button";
-
 
 const NewProjectForm = () => {
     // Initialize state with one input field
     const [members, setMembers] = useState([]);
+    const [uploading, setUploading] = useState(false);
+    const [projectName, setProjectName] = useState(null);
+    const [nameAvaliable, setNameAvaliable] = useState(false);
     const [formData, setFormData] = useState({ category: "web" });
     const [images, setImages] = useState([null, null, null, null]);
     const { user } = useContext(projectContext);
@@ -27,6 +29,19 @@ const NewProjectForm = () => {
         }
         setMembers([...members, ""]);
     };
+
+    //check Projectname Avalable
+    const checkProjectName = async () => {
+        if (!projectName) return;
+        setProjectName((p) => p.trim());
+
+        const id = getPostID(user.username, projectName);
+        const res = await checkProjectNameAvalibale(user.username, id);
+        setNameAvaliable(res);
+    };
+    useEffect(() => {
+        checkProjectName();
+    }, [projectName]);
 
     // Handle change in input value
     const handleMemberChange = (index, event) => {
@@ -58,7 +73,7 @@ const NewProjectForm = () => {
     const isFormFilled = () => {
         return (
             formData.visiblity &&
-            formData.projectName &&
+            projectName &&
             formData.about &&
             formData.date &&
             formData.status &&
@@ -70,26 +85,27 @@ const NewProjectForm = () => {
         console.log("images", images);
     }, [images]);
 
-
     const router = useRouter();
-
-   
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (uploading) return;
+
         if (!isFormFilled()) {
             alert("fill the form please");
-            return
-        };
+            return;
+        }
 
+        if (!nameAvaliable) {
+            alert("Name not avaliable");
+            return;
+        }
+
+        setUploading(true);
         console.log("clicked on submit");
 
         // step1 photos!
-        const photos = await uploadImages(
-            images,
-            user.username,
-            formData.projectName
-        );
+        const photos = await uploadImages(images, user.username, projectName);
 
         //step2: sending invitaions
         sendInviations();
@@ -97,6 +113,7 @@ const NewProjectForm = () => {
         //step3: add urls to data
         const data = {
             ...formData,
+            projectName,
             photos,
             members,
             auther: user.username,
@@ -108,9 +125,9 @@ const NewProjectForm = () => {
         await uploadPost(data);
 
         alert("upload successful please refresh");
-      
-      const projectId = 'sampleId'; // Replace with actual project ID from form input or state
-        router.push(`/display/${projectId}/pg`);
+
+        setUploading(false);
+        router.push(`/display/${getPostID(user.username, projectName)}`);
     };
 
     const sendInviations = async () => {};
@@ -144,11 +161,27 @@ const NewProjectForm = () => {
                                         type="text"
                                         placeholder="Blog Site"
                                         autoComplete="off"
-                                        onChange={handleFormChange}
+                                        onChange={(e) =>
+                                            setProjectName(e.target.value)
+                                        }
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
+                            {projectName && (
+                                <p
+                                    className={`${
+                                        nameAvaliable
+                                            ? "text-green-300"
+                                            : "text-red-400"
+                                    } ml-3 text-sm`}
+                                >
+                                    <span className="text-blue-300">
+                                        {getPostID(user?.username, projectName)}
+                                    </span>{" "}
+                                    is {!nameAvaliable && "not "} avaliable
+                                </p>
+                            )}
                         </div>
 
                         <div className="sm:col-span-4">
@@ -471,8 +504,11 @@ const NewProjectForm = () => {
                             ))}
                         </div>
 
-                        <Button onClick={addField} lable="Add More Member" type="button" />
-                           
+                        <Button
+                            onClick={addField}
+                            lable="Add More Member"
+                            type="button"
+                        />
                     </div>
                 </div>
 
