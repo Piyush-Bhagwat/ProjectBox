@@ -3,25 +3,48 @@ import React from "react";
 import Link from 'next/link';
 
 const ProjectCard = ({ project }) => {
+
+    console.log(project);
+
+    const renderTags = () => {
+        const tags = project.tags?.split(",");
+        return (
+            <>
+                {tags?.map((tag) => {
+                    return (
+                        <div className="px-2 py-0.5 border text-sm border-black rounded-full">
+                            {tag}
+                        </div>
+                    );
+                })}
+            </>
+        );
+    };
+
     return (
         <article className="overflow-hidden w-[23%] border rounded-lg border-gray-600 bg-white shadow-sm">
             <Image
                 alt=""
                 width={480}
                 height={480}
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+                src={project.photos[0]}
                 className="h-56 w-full object-cover"
             />
 
             <div className="p-4 sm:p-6">
                 <Link href={`/display?id=${project.id}`}>
                     <h3 className="text-lg font-medium text-gray-900">
-                        {project.name}
+
+                        {project.projectName}
+
                     </h3>
                 </Link>
 
+                <div className="flex gap-1">{renderTags()}</div>
+
                 <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
-                  {project.description}
+
+                    {project.about}
                 </p>
 
                 <Link

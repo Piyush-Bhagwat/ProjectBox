@@ -1,6 +1,6 @@
 "use client";
 import { loginWithGoogle } from "@/firebase/firbase.auth";
-import { createUser, userExistEmail } from "@/firebase/firebase.db";
+import { createUser, getbox, getUser, userExistEmail } from "@/firebase/firebase.db";
 import { useRouter } from "next/navigation";
 import React, { createContext, useEffect, useState } from "react";
 
@@ -12,12 +12,27 @@ const ProjectContext = ({ children }) => {
 
     const [user, setUser] = useState(null);
     const [toSignup, setToSigUp] = useState(false);
+    const [box, getBox] = useState(null);
     const router = useRouter();
 
     useEffect(() => {
-        const res = JSON.parse(localStorage.getItem("user"));
-        if (res) setUser(res);
+        async function fetchUser() {
+            let res = JSON.parse(localStorage.getItem("user"));
+            res = await getUser(res.email);
+            if (res) setUser(res);
+        }
+
+        fetchUser();
     }, []);
+
+    useEffect(() => {
+        async function fetchData() {
+            const data = await getbox(user?.username);
+            getBox(data);
+        }
+
+        fetchData();
+    }, [user]);
 
     const login = async () => {
         const res = await loginWithGoogle();
@@ -38,6 +53,8 @@ const ProjectContext = ({ children }) => {
             router.push("/feed");
         }
 
+        const dbUser = await getUser(data.email);
+        setUser(dbUser);
         localStorage.setItem("user", JSON.stringify(res));
     };
 
@@ -49,6 +66,8 @@ const ProjectContext = ({ children }) => {
         };
         console.log("data", data);
         await createUser(data);
+        const dbUser = await getUser(data.email);
+        setUser(dbUser);
         setToSigUp(false);
         router.push("/feed");
     };
@@ -56,6 +75,7 @@ const ProjectContext = ({ children }) => {
     const val = {
         user,
         toSignup,
+        box,
         setUser,
         login,
         signUp,

@@ -1,6 +1,7 @@
 "use client";
 import ProjectCard from "@/components/ProjectCard";
-import React from "react";
+import { projectContext } from "@/context/projectContext";
+import React, { useContext, useEffect } from "react";
 
 // project data
 
@@ -10,12 +11,23 @@ const projects=[
 ];
 
 const FeedPage = () => {
+    const { user, box } = useContext(projectContext);
+    const renderCards = () => {
+        return (
+            <>
+                {box?.map((item) => {
+                    return <ProjectCard project={item} />;
+                })}
+            </>
+        );
+    };
+
     return (
         <div className="p-5">
             <div className="flex flex-wrap gap-6 justify-center w-full">
-                {projects.map(project=>(
-                <ProjectCard key={project.id} project={project}/>
-                ))}
+
+                {renderCards()}
+
             </div>
         </div>
     );
