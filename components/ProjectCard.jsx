@@ -27,7 +27,7 @@ const ProjectCard = ({ project }) => {
     };
 
     return (
-        <article className={`overflow-hidden w-[23%]  border rounded-lg border-gray-600 shadow-sm ${project.auther == user.username && "border border-white"}`}>
+        <article className={`overflow-hidden w-[23%]  border rounded-lg border-gray-400 shadow-sm ${project.auther == user.username && "border border-white"}`}>
             <Image
                 alt=""
                 width={480}
@@ -39,7 +39,7 @@ const ProjectCard = ({ project }) => {
             <div className="p-4 sm:p-6">
 
                 <Link href={`/display?id=${project.id}`}>
-                    <h3 className="text-lg font-medium text-gray-900">
+                    <h3 className="text-lg font-medium text-gray-50">
 
                         {project.projectName}
 
@@ -49,7 +49,7 @@ const ProjectCard = ({ project }) => {
                 <div className="flex flex-wrap gap-1">{renderTech()}</div>
 
 
-                <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
+                <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-400">
 
                     {project.about}
                 </p>
