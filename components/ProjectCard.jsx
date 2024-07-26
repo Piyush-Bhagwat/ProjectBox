@@ -28,7 +28,7 @@ const ProjectCard = ({ project, id }) => {
     };
 
     return (
-        <article className={`overflow-hidden w-[23%] p-2  border-2 border-dashed rounded-lg border-neutral-600 shadow-sm ${project.auther == user.username && "border border-white"}`}>
+        <article className={`overflow-hidden w-[23%] p-2  border-2 border-dashed rounded-lg  shadow-sm ${project?.auther === user?.username ? "border-white" : "border-neutral-600"}`}>
             <Image
                 alt=""
                 width={480}

@@ -9,7 +9,7 @@ const LoginPage = () => {
     const { login, user, toSignup } = useContext(projectContext);
     return (
         <div className="w-full h-[50vh] gap-3 flex justify-center items-center">
-            {!user && (
+            {user ? <h1 className="text-white text-2xl font-bold">You are logged in</h1> : (
                 <button
                     onClick={login}
                     className="px-10 py-3 text-white bg-blue-400 hover:bg-blue-800 shadow-md rounded-lg"
