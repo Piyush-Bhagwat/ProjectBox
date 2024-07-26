@@ -4,54 +4,45 @@ import { projectContext } from "@/context/projectContext";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useContext } from "react";
+import Button from "./ui/Button";
 
 const Header = () => {
     const { user, login } = useContext(projectContext);
 
     return (
-        <header className="text-gray-600 body-font bg-white dark:bg-black">
-            <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center justify-between w-full relative">
+        <header className="text-gray-50 body-font border-b border-neutral-700 shadow-xl">
+            <div className="container mx-auto flex flex-wrap px-5 py-2 flex-col md:flex-row items-center justify-between w-full relative">
                 <Link
                     href="/feed"
-                    className="flex cursor-pointer title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
+                    className="flex cursor-pointer title-font font-medium items-center text-gray-50 "
                 >
-                    <Image src={IMAGES.logoDark} alt="logo" width="30" />
+                    <Image src={IMAGES.logo} alt="logo" width="50" />
                     <span className="ml-3 text-xl">ProjectBox</span>
                 </Link>
 
                 {user && (
                     <Link href="/newProject">
-                        <button className="absolute left-[50%] bottom-[25%] translate-x-[-50%] inline-flex items-center bg-blue-500 border-0 py-1 px-3 focus:outline-none hover:bg-blue-700 transition-all rounded text-base text-white mt-4 md:mt-0">
-                            Add Project
-                            <svg
-                                fill="none"
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                className="w-4 h-4 ml-1"
-                                viewBox="0 0 24 24"
-                            >
-                                <path d="M5 12h14M12 5l7 7-7 7"></path>
-                            </svg>
-                        </button>
+                        <Button
+                            className="absolute left-[50%] bottom-[25%] translate-x-[-50%] "
+                            lable="Add Project"
+                        />
                     </Link>
                 )}
 
                 <nav className="flex text-sm flex-wrap items-center gap-3 justify-center">
-                    <a className=" cursor-pointer hover:text-gray-900">
+                    <a className=" cursor-pointer hover:text-gray-300">
                         Randomize
                     </a>
                     {user && (
                         <>
-                            <a className=" cursor-pointer hover:text-gray-900">
+                            <a className=" cursor-pointer hover:text-gray-300">
                                 Favorites
                             </a>
 
-                            <a className=" cursor-pointer hover:text-gray-900">
+                            <a className=" cursor-pointer hover:text-gray-300">
                                 Your Box
                             </a>
-                            <a className="cursor-pointer hover:text-gray-900">
+                            <a className="cursor-pointer hover:text-gray-300">
                                 <Image
                                     className="object-cover w-6 h-6 rounded-full ring ring-gray-300 dark:ring-gray-600"
                                     src={user.photoURL}
@@ -65,12 +56,7 @@ const Header = () => {
 
                     {!user && (
                         <Link href="/login">
-                        <button
-                            
-                            className="inline-flex items-center bg-blue-500 border-0 py-1 px-3 focus:outline-none hover:bg-blue-700 transition-all rounded text-base text-white mt-4 md:mt-0"
-                        >
-                            Login
-                        </button>
+                            <Button lable="Login" />
                         </Link>
                     )}
                 </nav>

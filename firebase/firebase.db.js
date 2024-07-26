@@ -79,15 +79,58 @@ const uploadPost = async (data) => {
     }
 };
 
+const getAllPosts = async () => {
+    const categories = ["web", "app", "ai", "ds", "vr", "other"];
+    const posts = [];
+
+    for (const cat of categories) {
+        const path = `posts/india/${cat}`;
+        const ref = collection(db, path);
+        const snap = await getDocs(ref);
+
+        snap.docs.forEach((doc) => posts.push({ ...doc.data(), id: doc.id }));
+    }
+
+    return posts;
+};
+
 const getPostData = async (id) => {
     try {
         const postRef = doc(db, id);
         const snap = await getDoc(postRef);
 
-        return snap.data();
+        return { ...snap.data(), id: snap.id };
     } catch (er) {
         console.warn("error getting post data", id, er);
     }
 };
 
-export { userExistEmail, createUser, getbox, getUser, uploadPost };
+const getPostFromProjectID = async (projectID = "") => {
+    const categories = ["web", "app", "ai", "ds", "vr", "other"];
+    const posts = [];
+    projectID = projectID.replace("%40", "@").replace("%20", " ");
+
+    for (const cat of categories) {
+        const path = `posts/india/${cat}/${projectID}`;
+        const ref = doc(db, path);
+        const snap = await getDoc(ref);
+
+        if (snap.data()) {
+            console.log("project found:", snap.data());
+            return snap.data()
+        }
+    }
+
+    return posts;
+};
+
+export {
+    userExistEmail,
+    createUser,
+    getbox,
+    getUser,
+    uploadPost,
+    getAllPosts,
+    getPostData,
+    getPostFromProjectID,
+};

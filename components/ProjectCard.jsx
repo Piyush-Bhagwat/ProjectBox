@@ -1,19 +1,24 @@
+import { projectContext } from "@/context/projectContext";
 import Image from "next/image";
-import React from "react";
+
+import React, { useContext } from "react";
+
 import Link from 'next/link';
+import Button from "./ui/Button";
 
-const ProjectCard = ({ project }) => {
-<<<<<<< HEAD
-=======
+
+const ProjectCard = ({ project, id }) => {
+
     console.log(project);
+    const {user} = useContext(projectContext)
 
-    const renderTags = () => {
-        const tags = project.tags?.split(",");
+    const renderTech = () => {
+        const tags = project.tech?.split(",");
         return (
             <>
                 {tags?.map((tag) => {
                     return (
-                        <div className="px-2 py-0.5 border text-sm border-black rounded-full">
+                        <div className="px-2 py-0.5 text-white border text-sm border-white rounded-full">
                             {tag}
                         </div>
                     );
@@ -22,49 +27,41 @@ const ProjectCard = ({ project }) => {
         );
     };
 
->>>>>>> 30dab624af85ada0f295a7679f52b8fcbc4eb8f1
     return (
-        <article className="overflow-hidden w-[23%] border rounded-lg border-gray-600 bg-white shadow-sm">
+        <article className={`overflow-hidden w-[23%] p-2  border-2 border-dashed rounded-lg border-neutral-600 shadow-sm ${project.auther == user?.username && "border border-white"}`}>
             <Image
                 alt=""
                 width={480}
                 height={480}
                 src={project.photos[0]}
-                className="h-56 w-full object-cover"
+                className="h-56 w-full object-cover rounded-lg"
             />
 
-            <div className="p-4 sm:p-6">
-                <Link href={`/display?id=${project.id}`}>
-                    <h3 className="text-lg font-medium text-gray-900">
-<<<<<<< HEAD
-                        {project.name}
-=======
+            <div className="p-2">
+
+                <Link href={`/display/${project.id}`}>
+                    <h3 className="text-lg font-medium text-neutral-200">
+
                         {project.projectName}
->>>>>>> 30dab624af85ada0f295a7679f52b8fcbc4eb8f1
+
                     </h3>
                 </Link>
 
-                <div className="flex gap-1">{renderTags()}</div>
+                <div className="flex flex-wrap gap-1">{renderTech()}</div>
 
-                <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
-<<<<<<< HEAD
-                  {project.description}
-=======
+
+                <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-400">
+
                     {project.about}
->>>>>>> 30dab624af85ada0f295a7679f52b8fcbc4eb8f1
                 </p>
 
                 <Link
-                    href={`/display?id=${project.id}`}
-                    className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600">
-                    Find out more
-                    <span
-                        aria-hidden="true"
-                        className="block transition-all group-hover:ms-0.5 rtl:rotate-180"
-                    >
-                        &rarr;
-                    </span>
+                    href={`/display/${project.id}`}
+                    className="mt-3 block"
+                   >
+                    <Button rounded="true" lable="View Project ->"/>
                 </Link>
+
             </div>
         </article>
     );

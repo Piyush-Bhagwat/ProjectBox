@@ -1,25 +1,33 @@
 "use client";
 import { loginWithGoogle } from "@/firebase/firbase.auth";
-import { createUser, getbox, getUser, userExistEmail } from "@/firebase/firebase.db";
+import {
+    createUser,
+    getAllPosts,
+    getbox,
+    getUser,
+    userExistEmail,
+} from "@/firebase/firebase.db";
 import { useRouter } from "next/navigation";
 import React, { createContext, useEffect, useState } from "react";
 
 export const projectContext = createContext(null);
 
 const ProjectContext = ({ children }) => {
-
-    const [project, setProject] = useState(null);
-
     const [user, setUser] = useState(null);
+    const [feed, setFeed] = useState(null);
     const [toSignup, setToSigUp] = useState(false);
-    const [box, getBox] = useState(null);
+    const [box, setBox] = useState(null);
     const router = useRouter();
 
     useEffect(() => {
         async function fetchUser() {
+            console.log("getting login info...");
             let res = JSON.parse(localStorage.getItem("user"));
             res = await getUser(res.email);
-            if (res) setUser(res);
+            if (res) {
+                setUser(res);
+                console.log("found user");
+            }
         }
 
         fetchUser();
@@ -27,12 +35,12 @@ const ProjectContext = ({ children }) => {
 
     useEffect(() => {
         async function fetchData() {
-            const data = await getbox(user?.username);
-            getBox(data);
+            const data = await getAllPosts();
+            setFeed(data);
         }
 
         fetchData();
-    }, [user]);
+    }, []);
 
     const login = async () => {
         const res = await loginWithGoogle();
@@ -76,12 +84,14 @@ const ProjectContext = ({ children }) => {
         user,
         toSignup,
         box,
+        feed,
         setUser,
         login,
         signUp,
     };
+
     return (
-        <projectContext.Provider value={{val ,project, setProject} }>
+        <projectContext.Provider value={val}>
             {children}
         </projectContext.Provider>
     );
