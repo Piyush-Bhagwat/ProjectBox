@@ -36,7 +36,6 @@ const ProjectContext = ({ children }) => {
     useEffect(() => {
         async function fetchData() {
             const data = await getAllPosts();
-            console.log("feed", data);
             setFeed(data);
         }
 
