@@ -11,12 +11,12 @@ const Header = () => {
 
     return (
         <header className="text-gray-50 body-font border-b border-neutral-700 shadow-xl">
-            <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center justify-between w-full relative">
+            <div className="container mx-auto flex flex-wrap px-5 py-2 flex-col md:flex-row items-center justify-between w-full relative">
                 <Link
                     href="/feed"
-                    className="flex cursor-pointer title-font font-medium items-center text-gray-50 mb-4 md:mb-0"
+                    className="flex cursor-pointer title-font font-medium items-center text-gray-50 "
                 >
-                    <Image src={IMAGES.logo} alt="logo" width="30" />
+                    <Image src={IMAGES.logo} alt="logo" width="50" />
                     <span className="ml-3 text-xl">ProjectBox</span>
                 </Link>
 
