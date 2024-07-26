@@ -76,6 +76,18 @@ const checkProjectNameAvalibale = async (username, id) => {
    
 }
 
+const checkUsernameAvalible = async (username) => {
+    try {
+        const colRef = collection(db, "users")
+        const q = query(colRef, where("username", '==', username));
+        const snapshot = await getDocs(q);
+    
+        return snapshot.empty;
+    } catch (er) {
+        console.log(er);
+    }
+}
+
 // -----------------Post---------------------------
 
 const uploadPost = async (data) => {
@@ -147,5 +159,6 @@ export {
     getAllPosts,
     getPostData,
     getPostFromProjectID,
-    checkProjectNameAvalibale
+    checkProjectNameAvalibale,
+    checkUsernameAvalible
 };
