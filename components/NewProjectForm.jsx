@@ -1,14 +1,22 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ImagePicker from "./formComponants/imagePicker";
+<<<<<<< HEAD
 import { useRouter } from 'next/navigation';
+=======
+import { uploadImages } from "@/firebase/direbase.storage";
+import { projectContext } from "@/context/projectContext";
+import { getProjectID } from "@/utils/utilFuncitons";
+import { uploadPost } from "@/firebase/firebase.db";
+>>>>>>> 30dab624af85ada0f295a7679f52b8fcbc4eb8f1
 
 const NewProjectForm = () => {
     // Initialize state with one input field
     const [members, setMembers] = useState([]);
     const [formData, setFormData] = useState({});
     const [images, setImages] = useState([null, null, null, null]);
+    const { user } = useContext(projectContext);
 
     // Handle adding a new input field
     const addField = () => {
@@ -39,7 +47,9 @@ const NewProjectForm = () => {
             const fileUrl = URL.createObjectURL(file);
 
             setImages((prev) =>
-                prev.map((img, id) => (id === idx ? {url: fileUrl, file} : img))
+                prev.map((img, id) =>
+                    id === idx ? { url: fileUrl, file } : img
+                )
             );
         }
     };
@@ -48,6 +58,7 @@ const NewProjectForm = () => {
         console.log("images", images);
     }, [images]);
 
+<<<<<<< HEAD
     const router = useRouter();
 
     const handleSubmit = (event) => {
@@ -56,6 +67,40 @@ const NewProjectForm = () => {
         const projectId = 'sampleId'; // Replace with actual project ID from form input or state
         router.push(`/display/${projectId}/pg`);
     };
+=======
+    const handlSubmit = async (e) => {
+        e.preventDefault();
+        console.log("clicked on submit");
+
+        // console.log(getProjectID(user.username, formData.projectName));
+
+        // step1 photos!
+        const photos = await uploadImages(
+            images,
+            user.username,
+            formData.projectName
+        );
+
+        //step2: sending invitaions
+        sendInviations();
+
+        //step3: add urls to data
+        const data = {
+            ...formData,
+            photos,
+            auther: user.username,
+            createdAt: Date.now(),
+            likes: 0,
+        };
+        //step4: upload!!
+        console.log("uploads start");
+        await uploadPost(data);
+
+        alert("upload successful please refresh");
+    };
+
+    const sendInviations = async () => {};
+>>>>>>> 30dab624af85ada0f295a7679f52b8fcbc4eb8f1
 
     return (
         <form onSubmit={handleSubmit}>
@@ -563,6 +608,7 @@ const NewProjectForm = () => {
                 </button>
                 <button
                     type="submit"
+                    onClick={handlSubmit}
                     className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                     Upload
