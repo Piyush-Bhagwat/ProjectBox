@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useContext } from "react";
 
 import Link from 'next/link';
+import Button from "./ui/Button";
 
 
 const ProjectCard = ({ project }) => {
@@ -27,19 +28,19 @@ const ProjectCard = ({ project }) => {
     };
 
     return (
-        <article className={`overflow-hidden w-[23%]  border rounded-lg border-gray-400 shadow-sm ${project.auther == user.username && "border border-white"}`}>
+        <article className={`overflow-hidden w-[23%] p-2  border-2 border-dashed rounded-lg border-neutral-600 shadow-sm ${project.auther == user.username && "border border-white"}`}>
             <Image
                 alt=""
                 width={480}
                 height={480}
                 src={project.photos[0]}
-                className="h-56 w-full object-cover"
+                className="h-56 w-full object-cover rounded-lg"
             />
 
-            <div className="p-4 sm:p-6">
+            <div className="p-2">
 
                 <Link href={`/display?id=${project.id}`}>
-                    <h3 className="text-lg font-medium text-gray-50">
+                    <h3 className="text-lg font-medium text-neutral-200">
 
                         {project.projectName}
 
@@ -56,15 +57,11 @@ const ProjectCard = ({ project }) => {
 
                 <Link
                     href={`/display?id=${project.id}`}
-                    className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600">
-                    Find out more
-                    <span
-                        aria-hidden="true"
-                        className="block transition-all group-hover:ms-0.5 rtl:rotate-180"
-                    >
-                        &rarr;
-                    </span>
+                    className="mt-3 block"
+                   >
+                    <Button rounded="true" lable="View Project ->"/>
                 </Link>
+
             </div>
         </article>
     );

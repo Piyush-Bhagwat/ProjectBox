@@ -118,11 +118,11 @@ const NewProjectForm = () => {
     return (
         <form onSubmit={handleSubmit}>
             <div className="space-y-12">
-                <div className="border-b border-gray-900/10 pb-12">
-                    <h2 className="text-base font-semibold leading-7 text-gray-900">
+                <div className="border-b border-white pb-12">
+                    <h2 className="text-base font-semibold leading-7 text-white">
                         Basic Info
                     </h2>
-                    <p className="mt-1 text-sm leading-6 text-gray-600">
+                    <p className="mt-1 text-sm leading-6 text-gray-300">
                         This information will be displayed publicly so be
                         careful what you share.
                     </p>
@@ -131,7 +131,7 @@ const NewProjectForm = () => {
                         <div className="sm:col-span-4">
                             <label
                                 htmlFor="projectName"
-                                className="block text-sm font-medium leading-6 text-gray-900"
+                                className="block text-sm font-medium leading-6 text-neutral-200"
                             >
                                 Project Name:
                             </label>
@@ -145,7 +145,7 @@ const NewProjectForm = () => {
                                         placeholder="Blog Site"
                                         autoComplete="off"
                                         onChange={handleFormChange}
-                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
@@ -154,7 +154,7 @@ const NewProjectForm = () => {
                         <div className="sm:col-span-4">
                             <label
                                 htmlFor="formal-name"
-                                className="block text-sm font-medium leading-6 text-gray-900"
+                                className="block text-sm font-medium leading-6 text-neutral-200"
                             >
                                 Formal Name:
                             </label>
@@ -167,7 +167,7 @@ const NewProjectForm = () => {
                                         placeholder="Content Management System"
                                         onChange={handleFormChange}
                                         autoComplete="off"
-                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
@@ -176,7 +176,7 @@ const NewProjectForm = () => {
                         <div>
                             <label
                                 htmlFor="date"
-                                class="block text-sm text-gray-500 dark:text-gray-300"
+                                class="block text-sm text-neutral-200 dark:text-gray-300"
                             >
                                 date
                             </label>
@@ -195,7 +195,7 @@ const NewProjectForm = () => {
                         <div className="col-span-full">
                             <label
                                 htmlFor="about"
-                                className="block text-sm font-medium leading-6 text-gray-900"
+                                className="block text-sm font-medium leading-6 text-neutral-200"
                             >
                                 About
                             </label>
@@ -206,11 +206,11 @@ const NewProjectForm = () => {
                                     required
                                     onChange={handleFormChange}
                                     rows={3}
-                                    className="block p-1 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block p-1 w-full border-2 border-dashed rounded-md bg-neutral-900 py-1.5 text-neutral-200 shadow-sm placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6"
                                     defaultValue={""}
                                 />
                             </div>
-                            <p className="mt-3 text-sm leading-6 text-gray-600">
+                            <p className="mt-3 text-sm leading-6 text-gray-300">
                                 Write a few sentences about your project to
                                 describe it.
                             </p>
@@ -219,7 +219,7 @@ const NewProjectForm = () => {
                         <div className="sm:col-span-4">
                             <label
                                 htmlFor="tags"
-                                className="block text-sm font-medium leading-6 text-gray-900"
+                                className="block text-sm font-medium leading-6 text-neutral-200"
                             >
                                 Tags:
                             </label>
@@ -232,35 +232,18 @@ const NewProjectForm = () => {
                                         type="text"
                                         placeholder="Comma seperated"
                                         autoComplete="off"
-                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
                         </div>
 
-                        <div className="col-span-full">
-                            <label
-                                htmlFor="photo"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                Photo
-                            </label>
-                            <div className="mt-2 flex items-center gap-x-3">
-                                <button
-                                    type="button"
-                                    className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                >
-                                    Change
-                                </button>
-                            </div>
-                        </div>
-
                         <div className="sm:col-span-4">
-                            <label className="block text-sm font-medium leading-6 text-gray-900">
+                            <label className="block text-sm font-medium leading-6 text-neutral-200">
                                 Social Links of Project:
                             </label>
                             <div className="mt-2">
-                                <div className="flex rounded-md shadow-sm ring-1 ring-inset items-center px-1 ring-gray-300 sm:max-w-md">
+                                <div className="flex text-white rounded-md shadow-sm ring-1 ring-inset items-center px-1 ring-gray-300 sm:max-w-md">
                                     Github :
                                     <input
                                         name="githubLink"
@@ -268,12 +251,12 @@ const NewProjectForm = () => {
                                         onChange={handleFormChange}
                                         placeholder="link"
                                         autoComplete="off"
-                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
                             <div className="mt-2">
-                                <div className="flex rounded-md shadow-sm ring-1 ring-inset items-center px-1 ring-gray-300 sm:max-w-md">
+                                <div className="flex text-white rounded-md shadow-sm ring-1 ring-inset items-center px-1 ring-gray-300 sm:max-w-md">
                                     Hosted :
                                     <input
                                         name="hostedLink"
@@ -281,12 +264,12 @@ const NewProjectForm = () => {
                                         type="url"
                                         placeholder="link"
                                         autoComplete="off"
-                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
                             <div className="mt-2">
-                                <div className="flex rounded-md shadow-sm ring-1 ring-inset items-center px-1 ring-gray-300 sm:max-w-md">
+                                <div className="flex text-white rounded-md shadow-sm ring-1 ring-inset items-center px-1 ring-gray-300 sm:max-w-md">
                                     Twitter :
                                     <input
                                         name="twitterLink"
@@ -294,12 +277,12 @@ const NewProjectForm = () => {
                                         type="url"
                                         placeholder="link"
                                         autoComplete="off"
-                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
                             <div className="mt-2">
-                                <div className="flex rounded-md shadow-sm ring-1 ring-inset items-center px-1 ring-gray-300 sm:max-w-md">
+                                <div className="flex text-white rounded-md shadow-sm ring-1 ring-inset items-center px-1 ring-gray-300 sm:max-w-md">
                                     LinkedIn :
                                     <input
                                         name="linkedLink"
@@ -307,12 +290,12 @@ const NewProjectForm = () => {
                                         type="url"
                                         placeholder="link"
                                         autoComplete="off"
-                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
                             <div className="mt-2">
-                                <div className="flex rounded-md shadow-sm ring-1 ring-inset items-center px-1 ring-gray-300 sm:max-w-md">
+                                <div className="flex text-white rounded-md shadow-sm ring-1 ring-inset items-center px-1 ring-gray-300 sm:max-w-md">
                                     Youtube :
                                     <input
                                         name="youtubeLink"
@@ -320,14 +303,14 @@ const NewProjectForm = () => {
                                         onChange={handleFormChange}
                                         placeholder="link"
                                         autoComplete="off"
-                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
                         </div>
 
                         <div className="col-span-full">
-                            <label className="block text-sm font-medium leading-6 text-gray-900">
+                            <label className="block text-sm font-medium leading-6 text-neutral-200">
                                 Photos
                             </label>
                             <div className="flex gap-2">
@@ -357,7 +340,7 @@ const NewProjectForm = () => {
                 </div>
 
                 <div className="border-b border-gray-900/10 pb-12">
-                    <h2 className="text-base font-semibold leading-7 text-gray-900">
+                    <h2 className="text-base font-semibold leading-7 text-neutral-200">
                         Details
                     </h2>
 
@@ -365,7 +348,7 @@ const NewProjectForm = () => {
                         <div className="sm:col-span-3">
                             <label
                                 htmlFor="status"
-                                className="block text-sm font-medium leading-6 text-gray-900"
+                                className="block text-sm font-medium leading-6 text-neutral-200"
                             >
                                 Status
                             </label>
@@ -375,7 +358,7 @@ const NewProjectForm = () => {
                                 <div>
                                     <label
                                         htmlFor="finished"
-                                        className="flex cursor-pointer items-center justify-center rounded-md border border-gray-100 bg-white px-3 py-2 text-gray-900 hover:border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-500 has-[:checked]:text-white"
+                                        className="flex cursor-pointer items-center justify-center rounded-md border border-gray-100  px-3 py-2 text-neutral-200 hover:border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-500 has-[:checked]:text-white"
                                     >
                                         <input
                                             type="radio"
@@ -396,7 +379,7 @@ const NewProjectForm = () => {
                                 <div>
                                     <label
                                         htmlFor="ongoing"
-                                        className="flex cursor-pointer items-center justify-center rounded-md border border-gray-100 bg-white px-3 py-2 text-gray-900 hover:border-gray-200 has-[:checked]:border-red-500 has-[:checked]:bg-red-500 has-[:checked]:text-white"
+                                        className="flex cursor-pointer items-center justify-center rounded-md border border-gray-100  px-3 py-2 text-neutral-200 hover:border-gray-200 has-[:checked]:border-red-500 has-[:checked]:bg-red-500 has-[:checked]:text-white"
                                     >
                                         <input
                                             type="radio"
@@ -420,7 +403,7 @@ const NewProjectForm = () => {
                     <div className="mb-3 sm:col-span-3">
                         <label
                             htmlFor="category"
-                            className="block text-sm font-medium leading-6 text-gray-900"
+                            className="block text-sm font-medium leading-6 text-neutral-200"
                         >
                             Category
                         </label>
@@ -430,7 +413,7 @@ const NewProjectForm = () => {
                                 name="category"
                                 onChange={handleFormChange}
                                 required
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                className="block w-full rounded-md bg-neutral-900 border-0 py-1.5 text-neutral-200 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                             >
                                 <option value="web">Web Development</option>
                                 <option value="ds">Data Science</option>
@@ -445,7 +428,7 @@ const NewProjectForm = () => {
                     <div className="col-span-full mb-3">
                         <label
                             htmlFor="tech"
-                            className="block text-sm font-medium leading-6 text-gray-900"
+                            className="block text-sm font-medium leading-6 text-neutral-200"
                         >
                             Technologies Used: (comma seperated)
                         </label>
@@ -456,13 +439,13 @@ const NewProjectForm = () => {
                                 onChange={handleFormChange}
                                 required
                                 name="tech"
-                                className="w-[40%] rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                className="w-[40%] bg-neutral-900 px-2 rounded-md border-0 py-1.5 text-neutral-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
                     </div>
 
                     <div className="sm:col-span-4 mb-3">
-                        <label className="block text-sm font-medium leading-6 text-gray-900">
+                        <label className="block text-sm font-medium leading-6 text-neutral-200">
                             Team Members: (write ProjectBox username if exist)
                         </label>
 
@@ -482,7 +465,7 @@ const NewProjectForm = () => {
                                         onChange={(event) =>
                                             handleMemberChange(index, event)
                                         }
-                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             ))}
@@ -494,17 +477,17 @@ const NewProjectForm = () => {
                 </div>
 
                 <div className="border-b border-gray-900/10 pb-12">
-                    <h2 className="text-base font-semibold leading-7 text-gray-900">
+                    <h2 className="text-base font-semibold leading-7 text-neutral-200">
                         Journey
                     </h2>
-                    <p className="mt-1 text-sm leading-6 text-gray-600">
+                    <p className="mt-1 text-sm leading-6 text-gray-300">
                         Tell about the journey of your project
                     </p>
 
                     <div className=" mt-10 col-span-full mb-3">
                         <label
                             htmlFor="problems"
-                            className="block text-sm font-medium leading-6 text-gray-900"
+                            className="block text-sm font-medium leading-6 text-neutral-200"
                         >
                             Problems Faced
                         </label>
@@ -514,7 +497,7 @@ const NewProjectForm = () => {
                                 name="problems"
                                 onChange={handleFormChange}
                                 rows={3}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                className="block p-1 w-full border-2 border-dashed rounded-md bg-neutral-900 py-1.5 text-neutral-200 shadow-sm placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6"
                                 defaultValue={""}
                             />
                         </div>
@@ -523,7 +506,7 @@ const NewProjectForm = () => {
                     <div className="col-span-full mb-3">
                         <label
                             htmlFor="solution"
-                            className="block text-sm font-medium leading-6 text-gray-900"
+                            className="block text-sm font-medium leading-6 text-neutral-200"
                         >
                             Solution you came up with:
                         </label>
@@ -533,7 +516,7 @@ const NewProjectForm = () => {
                                 name="solution"
                                 onChange={handleFormChange}
                                 rows={3}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                className="block p-1 w-full border-2 border-dashed rounded-md bg-neutral-900 py-1.5 text-neutral-200 shadow-sm placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6"
                                 defaultValue={""}
                             />
                         </div>
@@ -542,7 +525,7 @@ const NewProjectForm = () => {
                     <div className="col-span-full mb-3">
                         <label
                             htmlFor="notes"
-                            className="block text-sm font-medium leading-6 text-gray-900"
+                            className="block text-sm font-medium leading-6 text-neutral-200"
                         >
                             Personal Notes: (only visible to you)
                         </label>
@@ -552,7 +535,7 @@ const NewProjectForm = () => {
                                 name="notes"
                                 onChange={handleFormChange}
                                 rows={3}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                className="block p-1 w-full border-2 border-dashed rounded-md bg-neutral-900 py-1.5 text-neutral-200 shadow-sm placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6"
                                 defaultValue={""}
                             />
                         </div>
@@ -562,7 +545,7 @@ const NewProjectForm = () => {
                         <div className="sm:col-span-3">
                             <label
                                 htmlFor="visiblity"
-                                className="block text-sm font-medium leading-6 text-gray-900"
+                                className="block text-sm font-medium leading-6 text-neutral-200"
                             >
                                 Visiblity:
                             </label>
@@ -572,7 +555,7 @@ const NewProjectForm = () => {
                                 <div>
                                     <label
                                         htmlFor="public"
-                                        className="flex cursor-pointer items-center justify-center rounded-md border border-gray-100 bg-white px-3 py-2 text-gray-900 hover:border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-500 has-[:checked]:text-white"
+                                        className="flex cursor-pointer items-center justify-center rounded-md border border-gray-100  px-3 py-2 text-neutral-200 hover:border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-500 has-[:checked]:text-white"
                                     >
                                         <input
                                             type="radio"
@@ -593,7 +576,7 @@ const NewProjectForm = () => {
                                 <div>
                                     <label
                                         htmlFor="private"
-                                        className="flex cursor-pointer items-center justify-center rounded-md border border-gray-100 bg-white px-3 py-2 text-gray-900 hover:border-gray-200 has-[:checked]:border-red-500 has-[:checked]:bg-red-500 has-[:checked]:text-white"
+                                        className="flex cursor-pointer items-center justify-center rounded-md border border-gray-100  px-3 py-2 text-neutral-200 hover:border-gray-200 has-[:checked]:border-red-500 has-[:checked]:bg-red-500 has-[:checked]:text-white"
                                     >
                                         <input
                                             type="radio"
@@ -619,17 +602,12 @@ const NewProjectForm = () => {
             <div className="mt-6 flex items-center justify-end gap-x-6 mb-10">
                 <button
                     type="button"
-                    className="text-sm font-semibold leading-6 text-gray-900"
+                    className="text-sm font-semibold leading-6 text-neutral-200"
                 >
                     Cancel
                 </button>
-                <button
-                    type="submit"
-                    onClick={handleSubmit}
-                    className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                    Upload
-                </button>
+
+                <Button type="submit" onClick={handleSubmit} lable="Upload" />
             </div>
         </form>
     );

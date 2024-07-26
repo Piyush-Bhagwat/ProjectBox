@@ -6,7 +6,6 @@ import React, { useContext, useEffect } from "react";
 const FeedPage = () => {
     const { user, feed } = useContext(projectContext);
     const renderCards = () => {
-        console.log(feed ,"render cards");
         return (
             <>
                 {feed?.map((item) => {

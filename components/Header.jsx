@@ -10,7 +10,7 @@ const Header = () => {
     const { user, login } = useContext(projectContext);
 
     return (
-        <header className="text-gray-50 body-font bg-black">
+        <header className="text-gray-50 body-font border-b border-neutral-700 shadow-xl">
             <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center justify-between w-full relative">
                 <Link
                     href="/feed"
