@@ -1,7 +1,8 @@
 import Image from "next/image";
 import React from "react";
+import Link from 'next/link';
 
-const ProjectCard = () => {
+const ProjectCard = ({ project }) => {
     return (
         <article className="overflow-hidden w-[23%] border rounded-lg border-gray-600 bg-white shadow-sm">
             <Image
@@ -13,25 +14,19 @@ const ProjectCard = () => {
             />
 
             <div className="p-4 sm:p-6">
-                <a href="#">
+                <Link href={`/display?id=${project.id}`}>
                     <h3 className="text-lg font-medium text-gray-900">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        {project.name}
                     </h3>
-                </a>
+                </Link>
 
                 <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Recusandae dolores, possimus pariatur animi temporibus
-                    nesciunt praesentium dolore sed nulla ipsum eveniet corporis
-                    quidem, mollitia itaque minus soluta, voluptates neque
-                    explicabo tempora nisi culpa eius atque dignissimos.
-                    Molestias explicabo corporis voluptatem?
+                  {project.description}
                 </p>
 
-                <a
-                    href="#"
-                    className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
-                >
+                <Link
+                    href={`/display?id=${project.id}`}
+                    className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600">
                     Find out more
                     <span
                         aria-hidden="true"
@@ -39,7 +34,7 @@ const ProjectCard = () => {
                     >
                         &rarr;
                     </span>
-                </a>
+                </Link>
             </div>
         </article>
     );

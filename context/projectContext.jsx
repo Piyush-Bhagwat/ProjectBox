@@ -7,6 +7,9 @@ import React, { createContext, useEffect, useState } from "react";
 export const projectContext = createContext(null);
 
 const ProjectContext = ({ children }) => {
+
+    const [project, setProject] = useState(null);
+
     const [user, setUser] = useState(null);
     const [toSignup, setToSigUp] = useState(false);
     const router = useRouter();
@@ -58,7 +61,7 @@ const ProjectContext = ({ children }) => {
         signUp,
     };
     return (
-        <projectContext.Provider value={val}>
+        <projectContext.Provider value={{val ,project, setProject} }>
             {children}
         </projectContext.Provider>
     );

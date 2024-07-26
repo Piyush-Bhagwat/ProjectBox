@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import ImagePicker from "./formComponants/imagePicker";
+import { useRouter } from 'next/navigation';
 
 const NewProjectForm = () => {
     // Initialize state with one input field
@@ -47,10 +48,17 @@ const NewProjectForm = () => {
         console.log("images", images);
     }, [images]);
 
-    const handlSubmit = () => {};
+    const router = useRouter();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        
+        const projectId = 'sampleId'; // Replace with actual project ID from form input or state
+        router.push(`/display/${projectId}/pg`);
+    };
 
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <div className="space-y-12">
                 <div className="border-b border-gray-900/10 pb-12">
                     <h2 className="text-base font-semibold leading-7 text-gray-900">
