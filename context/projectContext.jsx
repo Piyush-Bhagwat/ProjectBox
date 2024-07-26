@@ -1,6 +1,6 @@
 "use client";
 import { loginWithGoogle } from "@/firebase/firbase.auth";
-import { createUser, getbox, getUser, userExistEmail } from "@/firebase/firebase.db";
+import { createUser, getAllPosts, getbox, getUser, userExistEmail } from "@/firebase/firebase.db";
 import { useRouter } from "next/navigation";
 import React, { createContext, useEffect, useState } from "react";
 
@@ -11,8 +11,9 @@ const ProjectContext = ({ children }) => {
     const [project, setProject] = useState(null);
 
     const [user, setUser] = useState(null);
+    const [feed, setFeed] = useState(null)
     const [toSignup, setToSigUp] = useState(false);
-    const [box, getBox] = useState(null);
+    const [box, setBox] = useState(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -27,12 +28,14 @@ const ProjectContext = ({ children }) => {
 
     useEffect(() => {
         async function fetchData() {
-            const data = await getbox(user?.username);
-            getBox(data);
+            const data = await getAllPosts(user?.username);
+            console.log("feed", data);
+            setBox(data);
         }
 
         fetchData();
     }, [user]);
+
 
     const login = async () => {
         const res = await loginWithGoogle();
