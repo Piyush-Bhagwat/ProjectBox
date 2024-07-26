@@ -1,16 +1,15 @@
 import { projectContext } from "@/context/projectContext";
 import Image from "next/image";
+import { FaRegUserCircle } from "react-icons/fa";
 
 import React, { useContext } from "react";
 
-import Link from 'next/link';
+import Link from "next/link";
 import Button from "./ui/Button";
 
-
-const ProjectCard = ({ project, id }) => {
-
+const ProjectCard = ({ project }) => {
     console.log(project);
-    const {user} = useContext(projectContext)
+    const { user } = useContext(projectContext);
 
     const renderTech = () => {
         const tags = project.tech?.split(",");
@@ -28,9 +27,15 @@ const ProjectCard = ({ project, id }) => {
     };
 
     return (
-        <article className={`overflow-hidden w-[23%] p-2  border-2 border-dashed rounded-lg  shadow-sm ${project?.auther === user?.username ? "border-white" : "border-neutral-600"}`}>
+        <article
+            className={`overflow-hidden w-[23%] p-2  border-2 border-dashed rounded-lg  shadow-sm ${
+                project?.auther === user?.username
+                    ? "border-white"
+                    : "border-neutral-600"
+            }`}
+        >
             <Image
-                alt=""
+                alt={project.projectName}
                 width={480}
                 height={480}
                 src={project.photos[0]}
@@ -38,30 +43,28 @@ const ProjectCard = ({ project, id }) => {
             />
 
             <div className="p-2">
-
                 <Link href={`/display/${project.id}`}>
                     <h3 className="text-lg font-medium text-neutral-200">
-
                         {project.projectName}
-
                     </h3>
                 </Link>
 
                 <div className="flex flex-wrap gap-1">{renderTech()}</div>
 
-
                 <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-400">
-
                     {project.about}
                 </p>
 
-                <Link
-                    href={`/display/${project.id}`}
-                    className="mt-3 block"
-                   >
-                    <Button rounded="true" lable="View Project ->"/>
+                <Link href="#">
+                    
+                    <h3 className="flex items-center text-neutral-400 gap-2">
+                        <FaRegUserCircle /> {project.auther}
+                    </h3>
                 </Link>
 
+                <Link href={`/display/${project.id}`} className="mt-3 block">
+                    <Button rounded="true" lable="View Project ->" />
+                </Link>
             </div>
         </article>
     );

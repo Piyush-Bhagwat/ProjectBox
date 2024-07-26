@@ -11,6 +11,7 @@ import { getPostID } from "@/utils/utilFuncitons";
 import { checkProjectNameAvalibale, uploadPost } from "@/firebase/firebase.db";
 import Button from "./ui/Button";
 import Loader from "./ui/Loader";
+import TextInput from "./formComponants/textInput";
 
 const NewProjectForm = () => {
     // Initialize state with one input field
@@ -149,28 +150,18 @@ const NewProjectForm = () => {
 
                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                             <div className="sm:col-span-4">
-                                <label
-                                    htmlFor="projectName"
-                                    className="block text-sm font-medium leading-6 text-neutral-200"
-                                >
-                                    Project Name:
-                                </label>
-                                <div className="mt-2">
-                                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md">
-                                        <input
-                                            id="projectname"
-                                            name="projectName"
-                                            required
-                                            type="text"
-                                            placeholder="Blog Site"
-                                            autoComplete="off"
-                                            onChange={(e) =>
-                                                setProjectName(e.target.value)
-                                            }
-                                            className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        />
-                                    </div>
-                                </div>
+                                <TextInput
+                                    id="projectname"
+                                    name="projectName"
+                                    lable="Project Name:"
+                                    required
+                                    placeholder="Blog Site"
+                                    autoComplete="off"
+                                    onChange={(e) =>
+                                        setProjectName(e.target.value)
+                                    }
+                                />
+
                                 {projectName && (
                                     <p
                                         className={`${
@@ -191,24 +182,15 @@ const NewProjectForm = () => {
                             </div>
 
                             <div className="sm:col-span-4">
-                                <label
-                                    htmlFor="formal-name"
-                                    className="block text-sm font-medium leading-6 text-neutral-200"
-                                >
-                                    Formal Name:
-                                </label>
                                 <div className="mt-2">
-                                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md">
-                                        <input
-                                            id="formal-name"
-                                            name="formalName"
-                                            type="text"
-                                            placeholder="Content Management System"
-                                            onChange={handleFormChange}
-                                            autoComplete="off"
-                                            className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        />
-                                    </div>
+                                    <TextInput
+                                        id="formal-name"
+                                        lable="Formal Name"
+                                        name="formalName"
+                                        placeholder="Content Management System"
+                                        onChange={handleFormChange}
+                                        autoComplete="off"
+                                    />
                                 </div>
                             </div>
 
@@ -256,24 +238,15 @@ const NewProjectForm = () => {
                             </div>
 
                             <div className="sm:col-span-4">
-                                <label
-                                    htmlFor="tags"
-                                    className="block text-sm font-medium leading-6 text-neutral-200"
-                                >
-                                    Tags:
-                                </label>
                                 <div className="mt-2">
-                                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md">
-                                        <input
-                                            id="tags"
-                                            name="tags"
-                                            onChange={handleFormChange}
-                                            type="text"
-                                            placeholder="Comma seperated"
-                                            autoComplete="off"
-                                            className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        />
-                                    </div>
+                                    <TextInput
+                                        id="tags"
+                                        lable="Tags"
+                                        name="tags"
+                                        onChange={handleFormChange}
+                                        placeholder="Comma seperated"
+                                        autoComplete="off"
+                                    />
                                 </div>
                             </div>
 
@@ -465,22 +438,14 @@ const NewProjectForm = () => {
                         </div>
 
                         <div className="col-span-full mb-3">
-                            <label
-                                htmlFor="tech"
-                                className="block text-sm font-medium leading-6 text-neutral-200"
-                            >
-                                Technologies Used: (comma seperated)
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="tech"
-                                    type="text"
-                                    onChange={handleFormChange}
-                                    required
-                                    name="tech"
-                                    className="w-[40%] bg-neutral-900 px-2 rounded-md border-0 py-1.5 text-neutral-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
+                            <TextInput
+                                id="tech"
+                                lable="Technologies Used: (comma seperated)"
+                                type="text"
+                                onChange={handleFormChange}
+                                required
+                                name="tech"
+                            />
                         </div>
 
                         <div className="sm:col-span-4 mb-3">
