@@ -1,8 +1,14 @@
 import { projectContext } from "@/context/projectContext";
 import Image from "next/image";
+
 import React, { useContext } from "react";
 
+import React from "react";
+import Link from 'next/link';
+
+
 const ProjectCard = ({ project }) => {
+
     console.log(project);
     const {user} = useContext(projectContext)
 
@@ -32,22 +38,26 @@ const ProjectCard = ({ project }) => {
             />
 
             <div className="p-4 sm:p-6">
-                <a href="#">
-                    <h3 className="text-lg font-medium text-gray-50">
+
+                <Link href={`/display?id=${project.id}`}>
+                    <h3 className="text-lg font-medium text-gray-900">
+
                         {project.projectName}
+
                     </h3>
-                </a>
+                </Link>
 
                 <div className="flex flex-wrap gap-1">{renderTech()}</div>
 
-                <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-300">
+
+                <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
+
                     {project.about}
                 </p>
 
-                <a
-                    href="#"
-                    className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
-                >
+                <Link
+                    href={`/display?id=${project.id}`}
+                    className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600">
                     Find out more
                     <span
                         aria-hidden="true"
@@ -55,7 +65,7 @@ const ProjectCard = ({ project }) => {
                     >
                         &rarr;
                     </span>
-                </a>
+                </Link>
             </div>
         </article>
     );

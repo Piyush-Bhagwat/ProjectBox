@@ -8,7 +8,7 @@ const NewPage = () => {
         <h1 className='text-[2em] md:text-[3em] font-black mt-2 mb-10'>Add New Project: </h1>
 
         <NewProjectForm />
-
+  
     </div>
   )
 }

@@ -2,11 +2,15 @@
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import ImagePicker from "./formComponants/imagePicker";
+
+import { useRouter } from 'next/navigation';
+
 import { uploadImages } from "@/firebase/direbase.storage";
 import { projectContext } from "@/context/projectContext";
 import { getProjectID } from "@/utils/utilFuncitons";
 import { uploadPost } from "@/firebase/firebase.db";
 import Button from "./ui/Button";
+
 
 const NewProjectForm = () => {
     // Initialize state with one input field
@@ -66,7 +70,12 @@ const NewProjectForm = () => {
         console.log("images", images);
     }, [images]);
 
-    const handlSubmit = async (e) => {
+
+    const router = useRouter();
+
+   
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!isFormFilled()) {
             alert("fill the form please");
@@ -99,12 +108,15 @@ const NewProjectForm = () => {
         await uploadPost(data);
 
         alert("upload successful please refresh");
+      
+      const projectId = 'sampleId'; // Replace with actual project ID from form input or state
+        router.push(`/display/${projectId}/pg`);
     };
 
     const sendInviations = async () => {};
 
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <div className="space-y-12">
                 <div className="border-b border-gray-900/10 pb-12">
                     <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -613,7 +625,7 @@ const NewProjectForm = () => {
                 </button>
                 <button
                     type="submit"
-                    onClick={handlSubmit}
+                    onClick={handleSubmit}
                     className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                     Upload
