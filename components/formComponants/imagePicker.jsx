@@ -3,7 +3,7 @@ import React from "react";
 
 const ImagePicker = ({ handleSelect, image, idx }) => {
     return (
-        <div className="mt-2 w-[27%] aspect-square items-center flex justify-center rounded-lg border border-dashed border-gray-900/25 p-3 ">
+        <div className="mt-2 w-[27%] aspect-square bg-gray-800 items-center flex justify-center rounded-lg border border-dashed border-white/25 p-3 ">
             <div className="text-center ">
                 {image ? (
                     <>
@@ -30,10 +30,10 @@ const ImagePicker = ({ handleSelect, image, idx }) => {
                     </>
                 ) : (
                     <>
-                        <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                        <div className="mt-4 flex text-sm leading-6 text-gray-50">
                             <label
                                 htmlFor={`file-upload-${idx}`}
-                                className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                                className="relative px-2 cursor-pointer rounded-md bg-white font-semibold text-black focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                             >
                                 <span>Upload a file</span>
                                 <input
@@ -49,7 +49,7 @@ const ImagePicker = ({ handleSelect, image, idx }) => {
                             </label>
                             <p className="pl-1">or drag and drop</p>
                         </div>
-                        <p className="text-xs leading-5 text-gray-600">
+                        <p className="text-xs leading-5 text-gray-50">
                             PNG, JPG, GIF up to 10MB
                         </p>
                     </>
