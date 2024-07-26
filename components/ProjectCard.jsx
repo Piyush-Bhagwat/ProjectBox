@@ -7,7 +7,7 @@ import Link from 'next/link';
 import Button from "./ui/Button";
 
 
-const ProjectCard = ({ project }) => {
+const ProjectCard = ({ project, id }) => {
 
     console.log(project);
     const {user} = useContext(projectContext)
@@ -39,7 +39,7 @@ const ProjectCard = ({ project }) => {
 
             <div className="p-2">
 
-                <Link href={`/display?id=${project.id}`}>
+                <Link href={`/display/${project.id}`}>
                     <h3 className="text-lg font-medium text-neutral-200">
 
                         {project.projectName}
@@ -56,7 +56,7 @@ const ProjectCard = ({ project }) => {
                 </p>
 
                 <Link
-                    href={`/display?id=${project.id}`}
+                    href={`/display/${project.id}`}
                     className="mt-3 block"
                    >
                     <Button rounded="true" lable="View Project ->"/>

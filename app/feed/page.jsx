@@ -9,7 +9,7 @@ const FeedPage = () => {
         return (
             <>
                 {feed?.map((item) => {
-                    return <ProjectCard project={item} />;
+                    return <ProjectCard project={item} id={item.id} />;
                 })}
             </>
         );
@@ -18,9 +18,7 @@ const FeedPage = () => {
     return (
         <div className="p-5">
             <div className="flex flex-wrap gap-6 justify-center w-full">
-
                 {renderCards()}
-
             </div>
         </div>
     );
