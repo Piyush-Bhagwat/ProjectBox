@@ -1,4 +1,4 @@
-import logo from "@/assets/ProjectBoxlogo.png"
+import logo from "@/assets/logo.png"
 import logoDark from "@/assets/logoDark.png"
 
 

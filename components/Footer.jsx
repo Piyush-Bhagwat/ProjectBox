@@ -7,12 +7,13 @@ const Footer = () => {
         <footer className="">
             <div className="container px-6 py-8 mx-auto">
                 <div className="flex flex-col items-center text-center">
-                    <a href="#">
+                    <a href="#" className="flex  items-center gap-3 text-white">
                         <Image
-                            className="w-auto h-7"
+                           
                             src={IMAGES.logo}
+                            width={60}
                             alt="logo"
-                        />
+                        /> <h1>Project Box</h1>
                     </a>
 
                     <div className="flex flex-wrap justify-center mt-4 -mx-4">
