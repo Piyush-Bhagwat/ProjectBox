@@ -27,6 +27,7 @@ const ProjectCard = ({ project }) => {
     };
 
     return (
+
         <article
             className={`overflow-hidden w-[23%] p-2  border-2 border-dashed rounded-lg  shadow-sm ${
                 project?.auther === user?.username
