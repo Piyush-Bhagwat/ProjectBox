@@ -3,7 +3,6 @@ import Image from "next/image";
 
 import React, { useContext } from "react";
 
-import React from "react";
 import Link from 'next/link';
 
 
