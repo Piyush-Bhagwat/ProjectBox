@@ -23,6 +23,8 @@ const ProjectContext = ({ children }) => {
         async function fetchUser() {
             console.log("getting login info...");
             let res = JSON.parse(localStorage.getItem("user"));
+            const data = await getAllPosts();
+            setFeed(data);
             res = await getUser(res.email);
             if (res) {
                 setUser(res);
@@ -35,12 +37,15 @@ const ProjectContext = ({ children }) => {
 
     useEffect(() => {
         async function fetchData() {
-            const data = await getAllPosts();
-            setFeed(data);
+            if(!user) return
+            const boxData = await getbox(user.username);
+            if (boxData) {
+                setBox(boxData);
+            }
         }
 
         fetchData();
-    }, []);
+    }, [user]);
 
     const login = async () => {
         const res = await loginWithGoogle();
