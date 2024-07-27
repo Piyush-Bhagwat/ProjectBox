@@ -10,8 +10,8 @@ const ProjectPage = ({ params }) => {
     useEffect(()=>{
         async function fetch(){
             const data = await getPostFromProjectID(projectID)
+            console.log("ProjectID", projectID);
             setProject(data)
-            console.log("project", data);
         }
         fetch()
     }, [])

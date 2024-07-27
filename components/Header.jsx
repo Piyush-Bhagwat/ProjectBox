@@ -42,7 +42,7 @@ const Header = () => {
                             <Link href="/box" className=" cursor-pointer hover:text-gray-300">
                                 Your Box
                             </Link>
-                            <a className="cursor-pointer hover:text-gray-300">
+                            <Link href={`/user/${user.username}`} className="cursor-pointer hover:text-gray-300">
                                 <Image
                                     className="object-cover w-6 h-6 rounded-full ring ring-gray-300 dark:ring-gray-600"
                                     src={user.photoURL}
@@ -50,7 +50,7 @@ const Header = () => {
                                     width={20}
                                     height={20}
                                 />
-                            </a>
+                            </Link>
                         </>
                     )}
 

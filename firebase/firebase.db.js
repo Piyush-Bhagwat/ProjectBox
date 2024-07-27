@@ -134,7 +134,7 @@ const getPostData = async (id) => {
 const getPostFromProjectID = async (projectID = "") => {
     const categories = ["web", "app", "ai", "ds", "vr", "other"];
     const posts = [];
-    projectID = projectID.replace("%40", "@").replace("%20", " ");
+    projectID = decodeURIComponent(projectID);
 
     for (const cat of categories) {
         const path = `posts/india/${cat}/${projectID}`;
