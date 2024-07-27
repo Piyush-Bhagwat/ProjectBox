@@ -25,7 +25,7 @@ const FeedPage = () => {
     return (
         <div className="p-5 min-h-[60vh]">
             {feed ? (
-                <div className="flex flex-wrap gap-6 justify-center w-full">
+                <div className="flex flex-wrap flex-col md:flex-row gap-3 md:gap-6 justify-center w-full">
                     {renderCards()}
                 </div>
             ) : (
