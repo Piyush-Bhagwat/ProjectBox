@@ -16,7 +16,7 @@ const ProjectCard = ({ project }) => {
             <>
                 {tags?.map((tag) => {
                     return (
-                        <div className="px-2 py-0.5 text-white border text-sm border-white rounded-full">
+                        <div className="md:px-2 md:py-0.5 px-1 text-white border text-sm border-white rounded-full">
                             {tag}
                         </div>
                     );
@@ -28,7 +28,7 @@ const ProjectCard = ({ project }) => {
     return (
 
         <article
-            className={`overflow-hidden w-[23%] p-2  border-2 border-dashed rounded-lg  shadow-sm ${
+            className={`overflow-hidden w-full md:w-[23%] p-2  border-2 border-dashed rounded-lg  shadow-sm ${
                 project?.auther === user?.username
                     ? "border-white"
                     : "border-neutral-600"
