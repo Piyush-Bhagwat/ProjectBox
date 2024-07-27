@@ -3,8 +3,16 @@ import Image from "next/image";
 
 const ProjectDisplay = ({ project }) => {
     if (!project) {
-        return <div className="text-white">Loading...</div>;
+        return (
+            <div className="flex items-center justify-center h-screen bg-black">
+                <div className="text-white text-lg">Loading...</div>
+            </div>
+        );
     }
+
+    const photoUrl = (project.photos && project.photos.length > 0) 
+    ? project.photos[0] 
+    : "https://via.placeholder.com/480";
 
     return (
         <div className="p-5 text-white">
@@ -14,7 +22,7 @@ const ProjectDisplay = ({ project }) => {
                     <h1 className="text-[2em] text-neutral-200 md:text-[3em] font-black mt-2 mb-10">{project.projectName}</h1>
                     <div className="mt-6">
                         <Image
-                            src={project?.photos[0] || "https://via.placeholder.com/480"}
+                            src={photoUrl}
                             alt={project.projectName}
                             width={600}
                             height={400}
