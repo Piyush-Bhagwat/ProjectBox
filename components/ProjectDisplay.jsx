@@ -11,7 +11,7 @@ const ProjectDisplay = ({ project }) => {
             <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
                 
                 <div>
-                    <h1 className="text-4xl font-bold text-gray-50">{project.projectName}</h1>
+                    <h1 className="text-[2em] text-neutral-200 md:text-[3em] font-black mt-2 mb-10">{project.projectName}</h1>
                     <div className="mt-6">
                         <Image
                             src={project?.photos[0] || "https://via.placeholder.com/480"}
@@ -22,11 +22,13 @@ const ProjectDisplay = ({ project }) => {
                         />
                     </div>
                     <div className="mt-6">
-                        <p className="text-lg font-medium text-gray-50 ">Description</p>
-                        <p className="mt-2 text-gray-300">{project.about}</p>
+                        <p className="text-base font-semibold leading-7 text-white">Description</p>
+                        <p className="mt-1 text-sm leading-6 text-gray-300">{project.about}</p>
                     </div>
+
+                    {(project.githubLink || project.hostedLink || project.twitterLink || project.linkedLink) && (
                     <div className="mt-6">
-                        <p className="text-lg font-medium text-gray-50">Social Links</p>
+                        <p className="text-base font-semibold leading-7 text-white">Social Links</p>
                         <ul className="mt-2 list-none flex space-x-4">
                             {project.githubLink && (
                                 <li>
@@ -125,12 +127,12 @@ const ProjectDisplay = ({ project }) => {
                             )}
                         </ul>
                     </div>
-                </div>
-                
+                    )}
+            </div>
                 <div>
                     <div className="mt-6">
-                        <p className="text-lg font-medium text-gray-50">Details</p>
-                        <div className="mt-2 space-y-2">
+                        <p className="text-base font-semibold leading-7 text-white">Details</p>
+                        <div className="mt-1 text-sm leading-6 text-gray-300">
                             <p><strong>Category:</strong> {project.category}</p>
                             <p><strong>Status:</strong> {project.status}</p>
                             <p><strong>Technologies:</strong> {project.tech}</p>
@@ -142,41 +144,47 @@ const ProjectDisplay = ({ project }) => {
                    
 
                     <div className="mt-6">
-                        <p className="text-lg font-medium text-gray-50">Journey</p>
-                        <div className="mt-2 space-y-2">
-                            <p><strong>Problems Faced:</strong> {project.problems}</p>
-                            <p><strong>Solution:</strong> {project.solution}</p>
-                            <p><strong>Personal Notes:</strong> {project.notes}</p>
-                        </div>
-                    </div>
+    <p className="text-base font-semibold leading-7 text-white">Journey</p>
+    <div className="mt-1 text-sm leading-6 text-gray-300">
+        <p className="mb-2"><strong>Problems Faced:</strong> {project.problems}</p>
+        <p className="mb-2"><strong>Solution:</strong> {project.solution}</p>
+        <p className="mb-2"><strong>Personal Notes:</strong> {project.notes}</p>
+    </div>
+</div>
 
+
+{project.members && project.members.length > 0 && (
                     <div className="mt-6">
-                        <p className="text-lg font-medium text-gray-50">Team Members</p>
-                        <ul className="mt-2 list-disc list-inside">
+                        <p className="text-base font-semibold leading-7 text-white">Team Members</p>
+                        <ul className="mt-2 text-sm list-disc list-inside text-gray-300">
                             {project.members && project.members.map((member, index) => (
                                 <li key={index}>{member}</li>
                             ))}
                         </ul>
                     </div>
+                        )}
                 </div>
             </div>
 
             <div className="mt-6 max-w-6xl mx-auto">
-                <p className="text-lg font-medium text-gray-50">Photos</p>
-                <div className="mt-2 flex flex-wrap gap-2">
-                    {project.photos && project.photos.map((img, idx) => (
-                        <Image
-                            key={idx}
-                            src={img}
-                            alt={`Project Photo ${idx + 1}`}
-                            width={200}
-                            height={200}
-                            className="w-[48%] aspect-square object-contain rounded-lg"
-                        />
-                    ))}
-                </div>
-            </div>
-        </div>
+
+    <p className="text-base font-semibold leading-7 text-white">Photos</p>
+    <div className="mt-2 flex flex-wrap gap-2">
+        {project.photos && project.photos.map((img, idx) => (
+            <Image
+                key={idx}
+                src={img}
+                alt={`Project Photo ${idx + 1}`}
+                width={150} 
+                height={150} 
+                className="w-[48%] aspect-square object-contain border-2 border-dashed rounded-md border-gray-300"
+            />
+        ))}
+    </div>
+</div>
+
+</div>
+
     );
 };
 
