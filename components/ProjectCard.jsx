@@ -8,7 +8,6 @@ import Link from "next/link";
 import Button from "./ui/Button";
 
 const ProjectCard = ({ project }) => {
-    console.log(project);
     const { user } = useContext(projectContext);
 
     const renderTech = () => {

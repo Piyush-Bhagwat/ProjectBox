@@ -1,15 +1,17 @@
 "use client";
 import Image from "next/image";
+import PageSkeleton from "./ui/PageSkeleton";
 
 const ProjectDisplay = ({ project }) => {
     if (!project) {
         return (
-            <div className="flex items-center justify-center h-screen bg-black">
-                <div className="text-white text-lg">Loading...</div>
+            <div className="px-32 py-16">
+                <PageSkeleton />
             </div>
+            
         );
     }
-
+   
     const photoUrl = (project.photos && project.photos.length > 0) 
     ? project.photos[0] 
     : "https://via.placeholder.com/480";
@@ -23,7 +25,7 @@ const ProjectDisplay = ({ project }) => {
                     <div className="mt-6">
                         <Image
                             src={photoUrl}
-                            alt={project.projectName}
+                            alt={project.projectName || " "}
                             width={600}
                             height={400}
                             className="w-full aspect-video object-cover rounded-lg"
