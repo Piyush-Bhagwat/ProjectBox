@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useContext } from "react";
 import Button from "./ui/Button";
+import { FaPlus } from "react-icons/fa6";
 
 const Header = () => {
     const { user, login } = useContext(projectContext);
@@ -22,10 +23,9 @@ const Header = () => {
 
                 {user && (
                     <Link href="/newProject">
-                        <Button
-                            className="absolute left-[50%] bottom-[25%] translate-x-[-50%] "
-                            lable="Add Project"
-                        />
+                        <Button className="absolute left-[50%] bottom-[25%] translate-x-[-50%] ">
+                            Add Project <FaPlus />
+                        </Button>
                     </Link>
                 )}
 
@@ -39,10 +39,16 @@ const Header = () => {
                                 Favorites
                             </a>
 
-                            <Link href="/box" className=" cursor-pointer hover:text-gray-300">
+                            <Link
+                                href="/box"
+                                className=" cursor-pointer hover:text-gray-300"
+                            >
                                 Your Box
                             </Link>
-                            <Link href={`/user/${user.username}`} className="cursor-pointer hover:text-gray-300">
+                            <Link
+                                href={`/user/${user.username}`}
+                                className="cursor-pointer hover:text-gray-300"
+                            >
                                 <Image
                                     className="object-cover w-6 h-6 rounded-full ring ring-gray-300 dark:ring-gray-600"
                                     src={user.photoURL}

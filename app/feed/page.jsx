@@ -6,7 +6,12 @@ import React, { useContext, useEffect } from "react";
 import { Rings, RotatingSquare } from "react-loader-spinner";
 
 const FeedPage = () => {
-    const { user, feed } = useContext(projectContext);
+    const { user, feed, fetchFeed } = useContext(projectContext);
+
+    useEffect(()=>{
+        fetchFeed()
+    }, [])
+
     const renderCards = () => {
         return (
             <>

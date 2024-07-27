@@ -8,6 +8,7 @@ const Button = ({
     type,
     rounded,
     lg,
+    children
 }) => {
     return (
         <button
@@ -19,9 +20,10 @@ const Button = ({
                 important
                     ? "bg-neutral-100 text-black hover:bg-neutral-500 hover:text-neutral-100"
                     : "border-2 text-neutral-200"
-            } border-dashed ${className}  hover:bg-neutral-100 hover:text-black transition-all`}
+            } border-dashed ${className}  hover:bg-neutral-100 hover:text-black transition-all flex gap-2 items-center`}
         >
             {lable}
+            {children}
         </button>
     );
 };
