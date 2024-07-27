@@ -39,9 +39,9 @@ const Header = () => {
                                 Favorites
                             </a>
 
-                            <a className=" cursor-pointer hover:text-gray-300">
+                            <Link href="/box" className=" cursor-pointer hover:text-gray-300">
                                 Your Box
-                            </a>
+                            </Link>
                             <a className="cursor-pointer hover:text-gray-300">
                                 <Image
                                     className="object-cover w-6 h-6 rounded-full ring ring-gray-300 dark:ring-gray-600"
