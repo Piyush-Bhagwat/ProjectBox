@@ -178,20 +178,23 @@ const ProjectDisplay = ({ project }) => {
             <div className="mt-6 max-w-6xl mx-auto">
 
             <p className="text-base font-semibold leading-7 text-white">Photos</p>
-{project.photos.length > 1 && (
+{project.photos && Array.isArray(project.photos) && project.photos.length > 1 && (
     <div className="mt-2 flex justify-center overflow-x-auto space-x-4">
         {project.photos.slice(1).map((img, idx) => (
-            <Image
-                key={idx}
-                src={img}
-                alt={`Project Photo ${idx + 1}`}
-                width={300}  // Adjusted width
-                height={300} // Adjusted height
-                className="object-contain border-2 border-dashed rounded-md border-gray-300"
-            />
+            <div key={idx} className="flex-shrink-0 p-1 border-2 border-dashed rounded-md border-gray-300">
+                <Image
+                    src={img}
+                    alt={`Project Photo ${idx + 1}`}
+                    width={350}  // Adjusted width
+                    height={350} // Adjusted height
+                    className="object-contain"
+                />
+            </div>
         ))}
     </div>
 )}
+
+
 
 
 </div>
