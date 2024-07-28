@@ -21,7 +21,7 @@ const page = () => {
         <div className="p-5 min-h-[60vh]">
             <h2 className="text-neutral-200 text-4xl font-bold">Your Box</h2>
             {box ? (
-                <div className="flex flex-wrap gap-6 justify-center w-full">
+                <div className="flex flex-wrap mt-10 gap-6 justify-center w-full">
                     {renderCards()}
                 </div>
             ) : (

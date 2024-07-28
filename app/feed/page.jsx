@@ -6,7 +6,12 @@ import React, { useContext, useEffect } from "react";
 import { Rings, RotatingSquare } from "react-loader-spinner";
 
 const FeedPage = () => {
-    const { user, feed } = useContext(projectContext);
+    const { user, feed, fetchFeed } = useContext(projectContext);
+
+    useEffect(()=>{
+        fetchFeed()
+    }, [])
+
     const renderCards = () => {
         return (
             <>
@@ -20,7 +25,7 @@ const FeedPage = () => {
     return (
         <div className="p-5 min-h-[60vh]">
             {feed ? (
-                <div className="flex flex-wrap gap-6 justify-center w-full">
+                <div className="flex flex-wrap flex-col md:flex-row gap-3 md:gap-6 justify-center w-full">
                     {renderCards()}
                 </div>
             ) : (
