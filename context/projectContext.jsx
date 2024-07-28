@@ -79,6 +79,7 @@ const ProjectContext = ({ children }) => {
         const data = {
             username: usr,
             password: pass,
+            lowerUsername: usr.toLowerCase(),
             ...user,
         };
         console.log("data", data);

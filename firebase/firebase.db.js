@@ -88,6 +88,14 @@ const checkUsernameAvalible = async (username) => {
     }
 }
 
+const searchUserNames = async (searchTerm) => {
+    const q = query(userCollection, where('lowerUsername', '>=', searchTerm), where('lowerUsername', '<', searchTerm + '\uf8ff'))
+    const snap = await getDocs(q);
+
+    const usernames = snap.docs.map((doc)=> doc.data().username);
+    return usernames
+}
+
 // -----------------Post---------------------------
 
 const uploadPost = async (data) => {
@@ -160,5 +168,6 @@ export {
     getPostData,
     getPostFromProjectID,
     checkProjectNameAvalibale,
-    checkUsernameAvalible
+    checkUsernameAvalible,
+    searchUserNames
 };
