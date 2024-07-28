@@ -118,6 +118,7 @@ const NewProjectForm = () => {
             projectName,
             photos,
             members,
+          
             auther: user.username,
             createdAt: Date.now(),
             likes: 0,

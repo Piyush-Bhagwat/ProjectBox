@@ -150,6 +150,35 @@ const getPostFromProjectID = async (projectID = "") => {
     return posts;
 };
 
+
+const getUserProjects = async (email) => {
+    try {
+        const userSnapshot = await getDocs(
+            query(userCollection, where("email", "==", email))
+        );
+
+        if (userSnapshot.empty) {
+            throw new Error("User not found");
+        }
+
+        const username = userSnapshot.docs[0].data().username;
+        const boxRef = collection(db, "users", username, "box");
+        const snapshot = await getDocs(boxRef);
+
+        const projects = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+
+        return projects;
+    } catch (error) {
+        console.error("Error fetching user projects:", error);
+        return [];
+    }
+};
+
+
+
 export {
     userExistEmail,
     createUser,
@@ -160,5 +189,6 @@ export {
     getPostData,
     getPostFromProjectID,
     checkProjectNameAvalibale,
-    checkUsernameAvalible
+    checkUsernameAvalible,
+    getUserProjects,
 };
