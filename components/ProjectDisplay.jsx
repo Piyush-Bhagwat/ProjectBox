@@ -172,12 +172,22 @@ const ProjectDisplay = ({ project }) => {
                         <div className="flex w-full justify-evenly">
                             <div className=" flex flex-col gap-3 p-3 w-[35%] border-2 border-dashed border-neutral-600 rounded-lg">
                                 <h3>{project.formalName}</h3>
-                                <div className="flex justify-between">
+                                <div className="flex items-center justify-between">
                                     <p className="border w-fit text-sm border-neutral-700 rounded-full px-2 py-0.5">
                                         {project.category}
                                     </p>
 
-                                    <p className="text-sm">{project.status}</p>
+                                    <p className="text-sm flex gap-1 items-center">
+                                        {" "}
+                                        <span
+                                            className={`p-1.5 rounded-full animate-pulse ${
+                                                project.status == "ongoing"
+                                                    ? "bg-blue-300"
+                                                    : "bg-green-300"
+                                            } inline-block`}
+                                        ></span>
+                                        {project.status}
+                                    </p>
                                 </div>
 
                                 <div className="flex flex-wrap w-full gap-2">
@@ -193,9 +203,10 @@ const ProjectDisplay = ({ project }) => {
                                 </p>
                                 <div className="mt-2 flex gap-2 flex-wrap">
                                     <Link href={`/user/${project.auther}`}>
-                                    <button className="border flex gap-2 items-center cursor-pointer w-fit text-sm border-neutral-700 rounded-full px-2 py-0.5">
-                                        <FaCrown /> {project.auther}
-                                    </button></Link>
+                                        <button className="border flex gap-2 items-center cursor-pointer w-fit text-sm border-neutral-700 rounded-full px-2 py-0.5">
+                                            <FaCrown /> {project.auther}
+                                        </button>
+                                    </Link>
                                     {project.members &&
                                         project.members.map((member, index) => (
                                             <button

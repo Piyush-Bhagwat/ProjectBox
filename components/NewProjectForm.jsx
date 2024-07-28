@@ -16,21 +16,17 @@ import {
 import Button from "./ui/Button";
 import Loader from "./ui/Loader";
 import TextInput from "./formComponants/textInput";
+import MemberInput from "./formComponants/MemberInput";
 
 const NewProjectForm = () => {
     // Initialize state with one input field
-    const [members, setMembers] = useState([]);
+    const [members, setMembers] = useState([""]);
     const [uploading, setUploading] = useState(false);
     const [projectName, setProjectName] = useState(null);
     const [nameAvaliable, setNameAvaliable] = useState(false);
     const [formData, setFormData] = useState({ category: "web" });
     const [images, setImages] = useState([null, null, null, null]);
     const { user } = useContext(projectContext);
-    const [usernameSuggest, setUsernameSuggest] = useState([]);
-
-    useEffect(() => {
-        console.log("names", usernameSuggest);
-    }, [usernameSuggest]);
 
     // Handle adding a new input field
     const addField = () => {
@@ -480,44 +476,15 @@ const NewProjectForm = () => {
                                 </div>
                                 {members.map((member, index) => (
                                     <>
-                                        <div
-                                            key={index}
-                                            className="flex relative rounded-md shadow-sm text-neutral-400  ring-1 ring-inset items-center px-1 ring-gray-300 sm:max-w-md mb-2"
-                                        >
-                                            box/
-                                            <input
-                                                name={`member-${index}`}
-                                                type="text"
-                                                placeholder="username"
-                                                autoComplete="off"
-                                                list={`suggest-${index}`}
-                                                value={member}
-                                                onChange={async (event) => {
-                                                    handleMemberChange(
-                                                        index,
-                                                        event
-                                                    );
-
-                                                    const suggest =
-                                                        await searchUserNames(
-                                                            event.target.value
-                                                        );
-
-                                                    setUsernameSuggest(suggest);
-                                                }}
-                                                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                            />
-                                            <datalist id={`suggest-${index}`}>
-                                                {usernameSuggest &&
-                                                    usernameSuggest.map(
-                                                        (name) => (
-                                                            <option
-                                                                value={name}
-                                                            />
-                                                        )
-                                                    )}
-                                            </datalist>
-                                        </div>
+                                        <MemberInput
+                                            onChange={(event) => {
+                                                handleMemberChange(
+                                                    index,
+                                                    event
+                                                );
+                                            }}
+                                            index={index}
+                                        />
                                     </>
                                 ))}
                             </div>
