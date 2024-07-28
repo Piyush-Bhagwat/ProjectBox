@@ -6,17 +6,21 @@ import {
     getbox,
     getUser,
     userExistEmail,
+    getUserProjects
 } from "@/firebase/firebase.db";
 import { useRouter } from "next/navigation";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState, useContext } from "react";
 
 export const projectContext = createContext(null);
+
+export const useProjects = () => useContext(projectContext);
 
 const ProjectContext = ({ children }) => {
     const [user, setUser] = useState(null);
     const [feed, setFeed] = useState(null);
     const [toSignup, setToSigUp] = useState(false);
     const [box, setBox] = useState(null);
+    const [projects, setProjects] = useState([]);
     const router = useRouter();
 
     useEffect(() => {
@@ -46,6 +50,10 @@ const ProjectContext = ({ children }) => {
             if (boxData) {
                 setBox(boxData);
             }
+
+            const userProjects = await getUserProjects(user.email); // replace with your function to get projects
+            setProjects(userProjects);
+
         }
 
         fetchData();
@@ -95,6 +103,7 @@ const ProjectContext = ({ children }) => {
         toSignup,
         box,
         feed,
+        projects,
         setUser,
         login,
         signUp,
