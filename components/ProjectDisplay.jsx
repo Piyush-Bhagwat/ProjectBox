@@ -2,7 +2,14 @@
 import Image from "next/image";
 import PageSkeleton from "./ui/PageSkeleton";
 import { useEffect, useState } from "react";
-import { FaGithub, FaLinkedin, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import {
+    FaCrown,
+    FaGithub,
+    FaLinkedin,
+    FaXTwitter,
+    FaYoutube,
+} from "react-icons/fa6";
+import Link from "next/link";
 
 const ProjectDisplay = ({ project }) => {
     const [photoIDX, setPhotoIDX] = useState(0);
@@ -63,7 +70,7 @@ const ProjectDisplay = ({ project }) => {
             </h1>
 
             <div className="flex gap-10">
-                <div>
+                <div className="w-1/2">
                     <div className="mt-6 flex gap-3 items-center justify-center ">
                         <button
                             className="text-2xl block h-12 aspect-square border-2 rounded-full border-dashed border-neutral-600 hover:bg-neutral-600 transition-all"
@@ -89,10 +96,10 @@ const ProjectDisplay = ({ project }) => {
                     </div>
 
                     <div className="mt-6">
-                        <p className="text-base font-semibold leading-7 text-white">
+                        <h2 className="font-semibold mb-3 text-3xl leading-7 text-neutral-200">
                             Description
-                        </p>
-                        <p className="mt-1 text-sm leading-6 text-gray-300">
+                        </h2>
+                        <p className="mt-1 leading-6 text-gray-300">
                             {project.about}
                         </p>
                     </div>
@@ -156,13 +163,13 @@ const ProjectDisplay = ({ project }) => {
                     )}
                 </div>
 
-                <div>
-                    <div className="mt-6">
-                        <h2 className="font-semibold mb-3 text-3xl leading-7 text-white">
+                <div className="w-1/2">
+                    <div className="mt-6 w-full">
+                        <h2 className="font-semibold mb-3 text-3xl leading-7 text-neutral-200">
                             Details
                         </h2>
 
-                        <div className="flex justify-evenly">
+                        <div className="flex w-full justify-evenly">
                             <div className=" flex flex-col gap-3 p-3 w-[35%] border-2 border-dashed border-neutral-600 rounded-lg">
                                 <h3>{project.formalName}</h3>
                                 <div className="flex justify-between">
@@ -180,31 +187,34 @@ const ProjectDisplay = ({ project }) => {
                                 <p>Started: {project.date}</p>
                             </div>
 
-                            {project.members && project.members.length > 0 && (
-                                <div className=" flex flex-col gap-3 p-3 w-[35%] border-2 border-dashed border-neutral-600 rounded-lg">
-                                    <p className="text-base font-semibold leading-7 text-white">
-                                        Team Members
-                                    </p>
-                                    <div className="mt-2 flex gap-2 flex-wrap">
-                                        {project.members &&
-                                            project.members.map(
-                                                (member, index) => (
-                                                    <button className="border cursor-pointer w-fit text-sm border-neutral-700 rounded-full px-2 py-0.5" key={index}>
-                                                        {member}
-                                                    </button>
-                                                )
-                                            )}
-                                    </div>
+                            <div className=" flex flex-col gap-3 p-3 w-[35%] border-2 border-dashed border-neutral-600 rounded-lg">
+                                <p className="text-base font-semibold leading-7 text-white">
+                                    Team Members
+                                </p>
+                                <div className="mt-2 flex gap-2 flex-wrap">
+                                    <Link href={`/user/${project.auther}`}>
+                                    <button className="border flex gap-2 items-center cursor-pointer w-fit text-sm border-neutral-700 rounded-full px-2 py-0.5">
+                                        <FaCrown /> {project.auther}
+                                    </button></Link>
+                                    {project.members &&
+                                        project.members.map((member, index) => (
+                                            <button
+                                                className="border cursor-pointer w-fit text-sm border-neutral-700 rounded-full px-2 py-0.5"
+                                                key={index}
+                                            >
+                                                {member}
+                                            </button>
+                                        ))}
                                 </div>
-                            )}
+                            </div>
                         </div>
                     </div>
 
                     <div className="mt-6">
-                        <p className="text-base font-semibold leading-7 text-white">
+                        <p className="font-semibold mb-3 text-3xl leading-7 text-neutral-200">
                             Journey
                         </p>
-                        <div className="mt-1 text-sm leading-6 text-gray-300">
+                        <div className="mt-1 ml-6 leading-6 text-gray-300">
                             <p className="mb-2">
                                 <strong>Problems Faced:</strong>{" "}
                                 {project.problems}
