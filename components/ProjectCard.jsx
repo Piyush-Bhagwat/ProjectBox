@@ -55,7 +55,7 @@ const ProjectCard = ({ project }) => {
                     {project.about}
                 </p>
 
-                <Link href="#">
+                <Link href={`/user/${project.auther}`}>
                     
                     <h3 className="flex items-center text-neutral-400 gap-2">
                         <FaRegUserCircle /> {project.auther}

@@ -65,28 +65,41 @@ const getbox = async (username) => {
 
 const checkProjectNameAvalibale = async (username, id) => {
     try {
-        const colRef = collection(db, "users", username, "box")
-        const q = query(colRef, where("name", '==', id));
+        const colRef = collection(db, "users", username, "box");
+        const q = query(colRef, where("name", "==", id));
         const snapshot = await getDocs(q);
-    
+
         return snapshot.empty;
     } catch (er) {
         console.log(er);
     }
-   
-}
+};
 
 const checkUsernameAvalible = async (username) => {
     try {
-        const colRef = collection(db, "users")
-        const q = query(colRef, where("username", '==', username));
+        const colRef = collection(db, "users");
+        const q = query(colRef, where("username", "==", username));
         const snapshot = await getDocs(q);
-    
+
         return snapshot.empty;
     } catch (er) {
         console.log(er);
     }
-}
+};
+
+const searchUserNames = async (searchTerm) => {
+    const q = query(
+        userCollection,
+        where("lowerUsername", ">=", searchTerm),
+        where("lowerUsername", "<", searchTerm + "\uf8ff")
+    );
+    const snap = await getDocs(q);
+
+    const usernames = snap.docs.map((doc) => {
+        return { username: doc.data().username, url: doc.data().photoURL, name: doc.data().name };
+    });
+    return usernames;
+};
 
 // -----------------Post---------------------------
 
@@ -143,7 +156,7 @@ const getPostFromProjectID = async (projectID = "") => {
 
         if (snap.data()) {
             console.log("project found:", snap.data());
-            return snap.data()
+            return snap.data();
         }
     }
 
@@ -160,5 +173,6 @@ export {
     getPostData,
     getPostFromProjectID,
     checkProjectNameAvalibale,
-    checkUsernameAvalible
+    checkUsernameAvalible,
+    searchUserNames,
 };

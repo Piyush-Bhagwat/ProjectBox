@@ -7,15 +7,20 @@ import { useRouter } from "next/navigation";
 
 import { uploadImages } from "@/firebase/direbase.storage";
 import { projectContext } from "@/context/projectContext";
-import { getPostID } from "@/utils/utilFuncitons";
-import { checkProjectNameAvalibale, uploadPost } from "@/firebase/firebase.db";
+import { debounce, getPostID } from "@/utils/utilFuncitons";
+import {
+    checkProjectNameAvalibale,
+    searchUserNames,
+    uploadPost,
+} from "@/firebase/firebase.db";
 import Button from "./ui/Button";
 import Loader from "./ui/Loader";
 import TextInput from "./formComponants/textInput";
+import MemberInput from "./formComponants/MemberInput";
 
 const NewProjectForm = () => {
     // Initialize state with one input field
-    const [members, setMembers] = useState([]);
+    const [members, setMembers] = useState([""]);
     const [uploading, setUploading] = useState(false);
     const [projectName, setProjectName] = useState(null);
     const [nameAvaliable, setNameAvaliable] = useState(false);
@@ -41,8 +46,9 @@ const NewProjectForm = () => {
         const res = await checkProjectNameAvalibale(user.username, id);
         setNameAvaliable(res);
     };
+    const debouncedCheckProjectName = debounce(checkProjectName, 300);
     useEffect(() => {
-        checkProjectName();
+        debouncedCheckProjectName();
     }, [projectName]);
 
     // Handle change in input value
@@ -455,24 +461,31 @@ const NewProjectForm = () => {
                             </label>
 
                             <div className="mt-2">
+                                <div className="flex text-neutral-400 rounded-md shadow-sm ring-1 ring-inset items-center px-1 ring-gray-300 sm:max-w-md mb-2">
+                                    box/
+                                    <input
+                                        name="auther"
+                                        type="text"
+                                        placeholder="username"
+                                        autoComplete="user"
+                                        value={user?.username}
+                                        readOnly
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    />{" "}
+                                    (auther)
+                                </div>
                                 {members.map((member, index) => (
-                                    <div
-                                        key={index}
-                                        className="flex rounded-md shadow-sm ring-1 ring-inset items-center px-1 ring-gray-300 sm:max-w-md mb-2"
-                                    >
-                                        box/
-                                        <input
-                                            name={`member-${index}`}
-                                            type="text"
-                                            placeholder="username"
-                                            autoComplete="user"
-                                            value={member}
-                                            onChange={(event) =>
-                                                handleMemberChange(index, event)
-                                            }
-                                            className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    <>
+                                        <MemberInput
+                                            onChange={(event) => {
+                                                handleMemberChange(
+                                                    index,
+                                                    event
+                                                );
+                                            }}
+                                            index={index}
                                         />
-                                    </div>
+                                    </>
                                 ))}
                             </div>
 
