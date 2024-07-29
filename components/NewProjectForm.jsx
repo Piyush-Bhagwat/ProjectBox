@@ -20,7 +20,7 @@ import MemberInput from "./formComponants/MemberInput";
 
 const NewProjectForm = () => {
     // Initialize state with one input field
-    const [members, setMembers] = useState([""]);
+    const [members, setMembers] = useState([]);
     const [uploading, setUploading] = useState(false);
     const [projectName, setProjectName] = useState(null);
     const [nameAvaliable, setNameAvaliable] = useState(false);
@@ -46,6 +46,7 @@ const NewProjectForm = () => {
         const res = await checkProjectNameAvalibale(user.username, id);
         setNameAvaliable(res);
     };
+
     const debouncedCheckProjectName = debounce(checkProjectName, 300);
     useEffect(() => {
         debouncedCheckProjectName();
@@ -124,7 +125,7 @@ const NewProjectForm = () => {
             projectName,
             photos,
             members,
-          
+
             auther: user.username,
             createdAt: Date.now(),
             likes: 0,
@@ -155,20 +156,29 @@ const NewProjectForm = () => {
                             careful what you share.
                         </p>
 
-                        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                            <div className="sm:col-span-4">
-                                <TextInput
-                                    id="projectname"
-                                    name="projectName"
-                                    lable="Project Name:"
-                                    required
-                                    placeholder="Blog Site"
-                                    autoComplete="off"
-                                    onChange={(e) =>
-                                        setProjectName(e.target.value)
-                                    }
-                                />
-
+                        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 w-full">
+                            <div className="sm:col-span-8 w-full">
+                                <div className="flex flex-col">
+                                    <label
+                                        htmlFor="projectname"
+                                        className="text-neutral-100"
+                                    >
+                                        Project Name:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        onChange={(e) =>
+                                            setProjectName(e.target.value)
+                                        }
+                                        autoComplete="off"
+                                        placeholder="Blog Site"
+                                        id="projectname"
+                                        name="projectName"
+                                        lable="Project Name:"
+                                        required
+                                        className=" w-full bg-transparent ring-transparent outline-none text-neutral-200 px-3 pt-5 pb-1 text-4xl border-b-2 border-dashed"
+                                    />
+                                </div>
                                 {projectName && (
                                     <p
                                         className={`${
