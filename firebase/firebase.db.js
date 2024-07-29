@@ -96,9 +96,24 @@ const searchUserNames = async (searchTerm) => {
     const snap = await getDocs(q);
 
     const usernames = snap.docs.map((doc) => {
-        return { username: doc.data().username, url: doc.data().photoURL, name: doc.data().name };
+        return {
+            username: doc.data().username,
+            url: doc.data().photoURL,
+            name: doc.data().name,
+        };
     });
     return usernames;
+};
+
+const getUserPhoto = async (username) => {
+    const ref = doc(db, "users", username);
+
+    const snap = await getDoc(ref);
+
+    if (sanp) {
+        return snap.data().photoURL;
+    }
+    return null;
 };
 
 // -----------------Post---------------------------
@@ -163,7 +178,6 @@ const getPostFromProjectID = async (projectID = "") => {
     return posts;
 };
 
-
 const getUserProjects = async (email) => {
     try {
         const userSnapshot = await getDocs(
@@ -190,8 +204,6 @@ const getUserProjects = async (email) => {
     }
 };
 
-
-
 export {
     userExistEmail,
     createUser,
@@ -205,5 +217,5 @@ export {
     checkUsernameAvalible,
     getUserProjects,
     searchUserNames,
-
+    getUserPhoto,
 };
