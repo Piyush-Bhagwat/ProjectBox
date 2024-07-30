@@ -129,7 +129,7 @@ const ProjectDisplay = ({ project }) => {
                                 Team Members
                             </p>
                             <div className="mt-2 flex gap-2 flex-wrap">
-                                <Link href={`/user/${project.auther}`}>
+                                <Link href={`/box/${project.auther}`}>
                                     <button className="border flex gap-2 items-center cursor-pointer w-fit text-sm border-neutral-700 rounded-full px-2 py-0.5">
                                         <FaCrown /> {project.auther}
                                     </button>

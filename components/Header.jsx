@@ -8,7 +8,7 @@ import Button from "./ui/Button";
 import { FaPlus } from "react-icons/fa6";
 
 const Header = () => {
-    const { user, login } = useContext(projectContext);
+    const { user } = useContext(projectContext);
 
     return (
         <header className="text-gray-50 body-font border-b border-neutral-700 shadow-xl">
@@ -45,13 +45,13 @@ const Header = () => {
                             </a>
 
                             <Link
-                                href="/box"
+                                href={`/box/${user?.username}`}
                                 className=" cursor-pointer hover:text-gray-300"
                             >
                                 Your Box
                             </Link>
                             <Link
-                                href={`/user/${user.username}`}
+                                href={`/user`}
                                 className="cursor-pointer hover:text-gray-300"
                             >
                                 <Image

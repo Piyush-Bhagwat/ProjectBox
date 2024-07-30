@@ -1,10 +1,8 @@
-import { Inter } from "next/font/google";
+import { Inter, Work_Sans } from "next/font/google";
 import "./globals.css";
 import ProjectContext from "@/context/projectContext";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Work_Sans({ subsets: ["latin"] });
 
 export const metadata = {
     title: "ProjectBox | Home",
@@ -16,11 +14,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <ProjectContext>
-                <body className={inter.className}>
-                    <Header />
-                    {children}
-                    <Footer />
-                </body>
+                <body className={inter.className}>{children}</body>
             </ProjectContext>
         </html>
     );
