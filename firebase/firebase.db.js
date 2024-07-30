@@ -42,6 +42,13 @@ const getUser = async (email) => {
     return snapshot.docs[0].data();
 };
 
+const getUserByUsername = async (username) => {
+    const ref = doc(db, "users", username);
+    const snap = await getDoc(ref);
+
+    return snap.data();
+};
+
 const getbox = async (username) => {
     if (!username) return;
 
@@ -138,16 +145,17 @@ const uploadPost = async (data) => {
 const getAllPosts = async () => {
     const categories = ["web", "app", "ai", "ds", "vr", "other"];
     const posts = [];
-    
+
     for (const cat of categories) {
         const path = `posts/india/${cat}`;
         const ref = collection(db, path);
-        const snap = await getDocs(ref);
+        const q = query(ref, orderBy("createdAt"));
+        const snap = await getDocs(q);
 
         snap.docs.forEach((doc) => posts.push({ ...doc.data(), id: doc.id }));
     }
 
-    return posts;
+    return posts.reverse();
 };
 
 const getAllPostsByCategory = async (category) => {
@@ -224,6 +232,7 @@ export {
     createUser,
     getbox,
     getUser,
+    getUserByUsername,
     uploadPost,
     getAllPosts,
     getAllPostsByCategory,
