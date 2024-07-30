@@ -5,6 +5,8 @@ import {
     doc,
     getDoc,
     getDocs,
+    limit,
+    orderBy,
     query,
     setDoc,
     updateDoc,
@@ -136,7 +138,7 @@ const uploadPost = async (data) => {
 const getAllPosts = async () => {
     const categories = ["web", "app", "ai", "ds", "vr", "other"];
     const posts = [];
-
+    
     for (const cat of categories) {
         const path = `posts/india/${cat}`;
         const ref = collection(db, path);
