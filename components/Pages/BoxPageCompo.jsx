@@ -1,7 +1,8 @@
 import React from "react";
 import ProjectCard from "../ProjectCard";
 import Image from "next/image";
-import { FaRegCopy } from "react-icons/fa6";
+import { FaGithub, FaRegCopy, FaTwitter, FaXTwitter } from "react-icons/fa6";
+import { FaLinkedin } from "react-icons/fa";
 
 const BoxPageCompo = ({ user, pageUser, box }) => {
     const renderCards = () => {
@@ -18,14 +19,18 @@ const BoxPageCompo = ({ user, pageUser, box }) => {
         <div className="p-5 min-h-[60vh] w-full flex flex-col items-center">
             <div className="mt-3 flex flex-col items-center w-full">
                 <div className="flex items-center relative">
-                    <p className="text-neutral-200 absolute -left-1/3 -translate-x-full">{box.length} projects made</p>
+                    <p className="text-neutral-200 absolute -left-1/3 -translate-x-full">
+                        {box.length} projects made
+                    </p>
                     <Image
                         src={pageUser.photoURL}
                         width={264}
                         height={264}
                         className="rounded-full border-[12px] border-dashed border-neutral-800"
                     />
-                    <p className="text-neutral-200 absolute -right-1/3 translate-x-full">{pageUser.title && pageUser.title} hi</p>
+                    <p className="text-neutral-200 absolute -right-1/3 translate-x-full">
+                        {pageUser.title && `I am a ${pageUser.title}`}
+                    </p>
                 </div>
                 <div className="mt-5">
                     <h1 className="text-5xl text-neutral-200">
@@ -44,6 +49,37 @@ const BoxPageCompo = ({ user, pageUser, box }) => {
                         </button>
                     </div>
                 </div>
+            </div>
+
+            <div className="text-neutral-200 flex gap-3 justify-center mt-5">
+                {pageUser.github && (
+                    <a
+                        className="bg-neutral-700 p-3 block rounded-full text-4xl shadow-md hover:bg-neutral-800 hover:text-neutral-300"
+                        href={pageUser.github}
+                    >
+                        <FaGithub />
+                    </a>
+                )}
+                {pageUser.linkedIn && (
+                    <a
+                        className="bg-neutral-700 p-3 block rounded-full text-4xl shadow-md hover:bg-neutral-800 hover:text-neutral-300"
+                        href={pageUser.linkedIn}
+                    >
+                        <FaLinkedin />
+                    </a>
+                )}
+                {pageUser.twitter && (
+                    <a
+                        className="bg-neutral-700 p-3 block rounded-full text-4xl shadow-md hover:bg-neutral-800 hover:text-neutral-300"
+                        href={pageUser.twitter}
+                    >
+                        <FaXTwitter />
+                    </a>
+                )}
+            </div>
+
+            <div className="mt-5 w-3/4">
+                <p className="text-neutral-200">{pageUser.about}</p>
             </div>
 
             {box && (
