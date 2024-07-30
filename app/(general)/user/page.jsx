@@ -1,22 +1,19 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { useProjects } from "@/context/projectContext";
 import ProjectCard from "@/components/ProjectCard";
 import Skeleton from "@/components/ui/skeleton";
-import { getbox, getUserByUsername } from "@/firebase/firebase.db";
 import Image from "next/image";
 
 const ProfilePage = ({ params }) => {
-    const { profileImage, setProfileImage, user, box } = useProjects();
+    const {user, box } = useProjects();
 
     const [isEditing, setIsEditing] = useState(false);
-    const router = useRouter();
 
     useEffect(() => {
-        document.title = `${params.username} | Home`;
-    }, []);
+        document.title = `${user?.username} | Home`;
+    }, [user]);
 
     const handleShareProfile = () => {
         const profileLink = `${window.location.origin}/profile/${params.username}`;
@@ -26,7 +23,7 @@ const ProfilePage = ({ params }) => {
     };
 
     const handleLogout = () => {
-        router.push("/");
+        null
     };
 
     const handleEditProfile = () => {
