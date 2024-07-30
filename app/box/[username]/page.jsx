@@ -1,34 +1,47 @@
 "use client";
+import BoxPageCompo from "@/components/Pages/BoxPageCompo";
 import ProjectCard from "@/components/ProjectCard";
 import Skeleton from "@/components/ui/skeleton";
 import { projectContext } from "@/context/projectContext";
-import React, { useContext } from "react";
+import { getbox, getUserByUsername } from "@/firebase/firebase.db";
+import React, { useContext, useEffect, useState } from "react";
 
-const page = () => {
-    const { box } = useContext(projectContext);
+const page = ({ params }) => {
+    const { user } = useContext(projectContext);
 
-    const renderCards = () => {
-        return (
-            <>
-                {box?.map((item) => {
-                    return <ProjectCard project={item} id={item.id} />;
-                })}
-            </>
-        );
+    const [box, setBox] = useState(null);
+    const [pageUser, setPageUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    const fetchData = async () => {
+        setLoading(true);
+        const boxData = await getbox(params.username);
+        const userData = await getUserByUsername(params.username);
+
+        setBox(boxData.slice(0, 4));
+        setPageUser(userData);
+        setLoading(false);
     };
 
-    return (
-        <div className="p-5 min-h-[60vh]">
-            <h2 className="text-neutral-200 text-4xl font-bold">Your Box</h2>
+    //load the data
+    useEffect(() => {
+        fetchData();
+    }, []);
 
-            {box ? (
-                <div className="mt-6 grid grid-col-1 md:grid-cols-4 gap-3 md:gap-5">
-                    {renderCards()}
-                </div>
-            ) : (
+    return (
+        <>
+            {loading ? (
                 <Skeleton />
+            ) : (
+                <>
+                    {pageUser ? (
+                        <BoxPageCompo box={box} pageUser={pageUser} user={user}/>
+                    ) : (
+                        <h1>No User Found 💀</h1>
+                    )}
+                </>
             )}
-        </div>
+        </>
     );
 };
 

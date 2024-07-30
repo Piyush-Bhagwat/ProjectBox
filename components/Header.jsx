@@ -45,7 +45,7 @@ const Header = () => {
                             </a>
 
                             <Link
-                                href="/box"
+                                href={`/box/${user?.username}`}
                                 className=" cursor-pointer hover:text-gray-300"
                             >
                                 Your Box

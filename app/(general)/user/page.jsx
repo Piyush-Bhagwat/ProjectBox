@@ -6,7 +6,7 @@ import ProjectCard from "@/components/ProjectCard";
 import Skeleton from "@/components/ui/skeleton";
 import Image from "next/image";
 
-const ProfilePage = ({ params }) => {
+const ProfilePage = () => {
     const {user, box } = useProjects();
 
     const [isEditing, setIsEditing] = useState(false);
@@ -16,7 +16,7 @@ const ProfilePage = ({ params }) => {
     }, [user]);
 
     const handleShareProfile = () => {
-        const profileLink = `${window.location.origin}/profile/${params.username}`;
+        const profileLink = `${window.location.origin}/box/${user.username}`;
         navigator.clipboard.writeText(profileLink).then(() => {
             alert("Profile link copied to clipboard!");
         });
@@ -79,14 +79,14 @@ const ProfilePage = ({ params }) => {
                             >
                                 Share Profile
                             </button>
-                            {user && user.username === params.username && (
+                            
                                 <button
                                     className="px-3 py-0.5 border-white rounded-md border-2 text-neutral-200 border-dashed hover:bg-neutral-100 hover:text-black transition-all"
                                     onClick={handleEditProfile}
                                 >
                                     {isEditing ? "Cancel" : "Edit Profile"}
                                 </button>
-                            )}
+                            
                             <button
                                 className="px-3 py-0.5 border-white rounded-md border-2 text-neutral-200 border-dashed hover:bg-neutral-100 hover:text-black transition-all"
                                 onClick={handleLogout}
