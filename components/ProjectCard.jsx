@@ -49,7 +49,7 @@ const ProjectCard = ({ project }) => {
                     </h3>
                 </Link>
 
-                <div className="flex flex-wrap gap-1">{renderTech()}</div>
+                <div className="flex flex-wrap gap-1 mt-2">{renderTech()}</div>
 
                 <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-400">
                     {project.about}
