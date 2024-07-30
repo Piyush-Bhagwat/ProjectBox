@@ -22,7 +22,24 @@ const ProjectContext = ({ children }) => {
     const [toSignup, setToSigUp] = useState(false);
     const [box, setBox] = useState(null);
     const [projects, setProjects] = useState([]);
+    const [profileImage, setProfileImage]=useState(null);
+
     const router = useRouter();
+
+    useEffect(() => {
+        async function fetchUser() {
+            console.log("getting login info...");
+            let res = JSON.parse(localStorage.getItem("user"));
+
+            res = await getUser(res.email);
+            if (res) {
+                setUser(res);
+                console.log("found user");
+            }
+        }
+
+        fetchUser();
+    }, []);
 
     useEffect(() => {
         async function fetchUser() {
@@ -109,6 +126,8 @@ const ProjectContext = ({ children }) => {
         box,
         feed,
         projects,
+        profileImage,
+        setProfileImage,
         setUser,
         login,
         signUp,
