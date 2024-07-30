@@ -6,7 +6,8 @@ import {
     getbox,
     getUser,
     userExistEmail,
-    getUserProjects
+    getUserProjects,
+    getAllPostsByCategory,
 } from "@/firebase/firebase.db";
 import { useRouter } from "next/navigation";
 import React, { createContext, useEffect, useState, useContext } from "react";
@@ -38,8 +39,13 @@ const ProjectContext = ({ children }) => {
         fetchUser();
     }, []);
 
-    const fetchFeed = async () => {
-        const data = await getAllPosts();
+    const fetchFeed = async (category) => {
+        let data = [];
+        if (category === "all") {
+            data = await getAllPosts();
+        } else {
+            data = await getAllPostsByCategory(category)
+        }
         setFeed(data);
     };
 
@@ -53,7 +59,6 @@ const ProjectContext = ({ children }) => {
 
             const userProjects = await getUserProjects(user.email); // replace with your function to get projects
             setProjects(userProjects);
-
         }
 
         fetchData();

@@ -148,6 +148,19 @@ const getAllPosts = async () => {
     return posts;
 };
 
+const getAllPostsByCategory = async (category) => {
+    const cat = category;
+    const posts = [];
+
+    const path = `posts/india/${cat}`;
+    const ref = collection(db, path);
+    const snap = await getDocs(ref);
+
+    snap.docs.forEach((doc) => posts.push({ ...doc.data(), id: doc.id }));
+
+    return posts;
+};
+
 const getPostData = async (id) => {
     try {
         const postRef = doc(db, id);
@@ -211,6 +224,7 @@ export {
     getUser,
     uploadPost,
     getAllPosts,
+    getAllPostsByCategory,
     getPostData,
     getPostFromProjectID,
     checkProjectNameAvalibale,

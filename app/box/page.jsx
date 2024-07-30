@@ -20,8 +20,9 @@ const page = () => {
     return (
         <div className="p-5 min-h-[60vh]">
             <h2 className="text-neutral-200 text-4xl font-bold">Your Box</h2>
+
             {box ? (
-                <div className="flex flex-wrap mt-10 gap-6 justify-center w-full">
+                <div className="mt-6 grid grid-col-1 md:grid-cols-4 gap-3 md:gap-5">
                     {renderCards()}
                 </div>
             ) : (
