@@ -5,6 +5,8 @@ import {
     doc,
     getDoc,
     getDocs,
+    limit,
+    orderBy,
     query,
     setDoc,
     updateDoc,
@@ -38,6 +40,13 @@ const getUser = async (email) => {
     const snapshot = await getDocs(q);
 
     return snapshot.docs[0].data();
+};
+
+const getUserByUsername = async (username) => {
+    const ref = doc(db, "users", username);
+    const snap = await getDoc(ref);
+
+    return snap.data();
 };
 
 const getbox = async (username) => {
@@ -140,12 +149,13 @@ const getAllPosts = async () => {
     for (const cat of categories) {
         const path = `posts/india/${cat}`;
         const ref = collection(db, path);
-        const snap = await getDocs(ref);
+        const q = query(ref, orderBy("createdAt"));
+        const snap = await getDocs(q);
 
         snap.docs.forEach((doc) => posts.push({ ...doc.data(), id: doc.id }));
     }
 
-    return posts;
+    return posts.reverse();
 };
 
 const getAllPostsByCategory = async (category) => {
@@ -222,6 +232,7 @@ export {
     createUser,
     getbox,
     getUser,
+    getUserByUsername,
     uploadPost,
     getAllPosts,
     getAllPostsByCategory,
