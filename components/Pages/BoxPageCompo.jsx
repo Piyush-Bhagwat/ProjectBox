@@ -26,7 +26,7 @@ const BoxPageCompo = ({ user, pageUser, box }) => {
                         src={pageUser.photoURL}
                         width={264}
                         height={264}
-                        className="rounded-full border-[12px] border-dashed border-neutral-800"
+                        className="rounded-full w-[264px] aspect-square object-cover border-[12px] border-dashed border-neutral-800"
                     />
                     <p className="text-neutral-200 absolute -right-1/3 translate-x-full">
                         {pageUser.title && `I am a ${pageUser.title}`}

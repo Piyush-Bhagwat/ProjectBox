@@ -57,8 +57,8 @@ const ProfilePage = () => {
                                     <>
                                         <Image
                                             src={user.photoURL}
-                                            width={600}
-                                            height={600}
+                                            width={400}
+                                            height={400}
                                             alt="Profile"
                                             className="w-64 h-64 rounded-full object-cover"
                                         />
