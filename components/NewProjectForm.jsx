@@ -494,6 +494,7 @@ const NewProjectForm = () => {
                                                     event
                                                 );
                                             }}
+                                            key={index}
                                             index={index}
                                         />
                                     </>
