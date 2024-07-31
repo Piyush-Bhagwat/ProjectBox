@@ -106,7 +106,7 @@ const ProfilePage = () => {
                         <h3 className="text-2xl mb-6 font-semibold relative w-fit">
                             Title:
                             <EditBtn
-                                type="area"
+                                type="text"
                                 InitialValue={user.title}
                                 title="Your Title"
                                 feild="title"

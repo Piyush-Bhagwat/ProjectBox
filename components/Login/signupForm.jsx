@@ -59,8 +59,10 @@ const SignupForm = () => {
                         <TextInput
                             required
                             placeholder="UserName"
+
                             onChange={(e) => setUsername(e.target.value)}
                             value={username}
+                            max={20}
                         />
                         {username && (
                             <p
