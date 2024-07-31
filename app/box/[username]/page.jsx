@@ -6,7 +6,7 @@ import { projectContext, useProjects } from "@/context/projectContext";
 import { getbox, getUserByUsername } from "@/firebase/firebase.db";
 import React, { useContext, useEffect, useState } from "react";
 
-const page = ({ params }) => {
+const BoxPage = ({ params }) => {
     const { user } = useProjects();
 
     const [box, setBox] = useState(null);
@@ -45,4 +45,4 @@ const page = ({ params }) => {
     );
 };
 
-export default page;
+export default BoxPage;
