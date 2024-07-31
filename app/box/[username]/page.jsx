@@ -2,12 +2,12 @@
 import BoxPageCompo from "@/components/Pages/BoxPageCompo";
 import ProjectCard from "@/components/ProjectCard";
 import Skeleton from "@/components/ui/skeleton";
-import { projectContext } from "@/context/projectContext";
+import { projectContext, useProjects } from "@/context/projectContext";
 import { getbox, getUserByUsername } from "@/firebase/firebase.db";
 import React, { useContext, useEffect, useState } from "react";
 
 const page = ({ params }) => {
-    const { user } = useContext(projectContext);
+    const { user } = useProjects();
 
     const [box, setBox] = useState(null);
     const [pageUser, setPageUser] = useState(null);

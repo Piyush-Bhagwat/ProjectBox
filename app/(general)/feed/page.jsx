@@ -27,7 +27,7 @@ const FeedPage = () => {
         return (
             <>
                 {feed?.map((item) => {
-                    return <ProjectCard project={item} id={item.id} />;
+                    return <ProjectCard key={item.id} project={item} id={item.id} />;
                 })}
             </>
         );
