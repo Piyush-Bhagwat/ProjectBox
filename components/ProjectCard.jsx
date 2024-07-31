@@ -16,7 +16,7 @@ const ProjectCard = ({ project }) => {
             <>
                 {tags?.map((tag) => {
                     return (
-                        <div className="md:px-2 md:py-0.5 px-1 text-white border text-sm border-white rounded-full">
+                        <div key={tag} className="md:px-2 md:py-0.5 px-1 text-white border text-sm border-white rounded-full">
                             {tag}
                         </div>
                     );
