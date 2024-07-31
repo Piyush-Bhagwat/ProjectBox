@@ -14,6 +14,7 @@ import {
 } from "firebase/firestore";
 import { db, userCollection } from "./firebase.config";
 import { getPostID } from "@/utils/utilFuncitons";
+import { uploadProfileImage } from "./direbase.storage";
 
 const userExistEmail = async (email) => {
     const q = query(userCollection, where("email", "==", email));
@@ -125,6 +126,20 @@ const getUserPhoto = async (username) => {
     return null;
 };
 
+const updateFeild = async (username, feild, value) => {
+    const docRef = doc(db, "users", username);
+    // console.log("updated thiss", username, {[feild]: value});
+    await updateDoc(docRef, { [feild]: value });
+};
+
+const updateProfilePhoto = async (username, image) => {
+    const url = await uploadProfileImage(image, username);
+
+    await updateFeild(username, "photoURL", url);
+
+    return url;
+};
+
 // -----------------Post---------------------------
 
 const uploadPost = async (data) => {
@@ -233,6 +248,8 @@ export {
     getbox,
     getUser,
     getUserByUsername,
+    updateFeild,
+    updateProfilePhoto,
     uploadPost,
     getAllPosts,
     getAllPostsByCategory,

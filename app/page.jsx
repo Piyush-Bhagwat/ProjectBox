@@ -1,9 +1,13 @@
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import Button from "@/components/ui/Button";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function LandingPage() {
     return (
+        <>
+        <Header />
         <main className="">
             <section className="text-gray-400 body-font">
                 <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
@@ -184,5 +188,7 @@ export default function LandingPage() {
                 </div>
             </section>
         </main>
+        <Footer />
+        </>
     );
 }
