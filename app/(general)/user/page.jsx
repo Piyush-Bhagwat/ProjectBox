@@ -1,13 +1,17 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { SlPencil } from "react-icons/sl";
 import { useProjects } from "@/context/projectContext";
 import ProjectCard from "@/components/ProjectCard";
 import Skeleton from "@/components/ui/skeleton";
 import Image from "next/image";
+import { FaCheck } from "react-icons/fa6";
+import Button from "@/components/ui/Button";
+import EditBtn from "@/components/ui/EditBtn";
 
 const ProfilePage = () => {
-    const {user, box } = useProjects();
+    const { user, box } = useProjects();
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -23,11 +27,7 @@ const ProfilePage = () => {
     };
 
     const handleLogout = () => {
-        null
-    };
-
-    const handleEditProfile = () => {
-        setIsEditing(!isEditing);
+        null;
     };
 
     const renderCards = () => {
@@ -49,25 +49,39 @@ const ProfilePage = () => {
                             <h4 className="text-xl mb-2">
                                 Total Projects Uploaded
                             </h4>
-                            <div className="text-lg">{box.length}</div>
+                            <div className="text-lg">{box?.length}</div>
                         </div>
                         <div className="flex flex-col items-center">
-                            <div className="relative w-64 h-64 rounded-full bg-gray-300 flex items-center justify-center">
+                            <div className="relative w-64 h-64 rounded-full flex items-center justify-center">
                                 {user?.photoURL ? (
-                                    <Image
-                                        src={user.photoURL}
-                                        width={600}
-                                        height={600}
-                                        alt="Profile"
-                                        className="w-64 h-64 rounded-full object-cover"
-                                    />
+                                    <>
+                                        <Image
+                                            src={user.photoURL}
+                                            width={600}
+                                            height={600}
+                                            alt="Profile"
+                                            className="w-64 h-64 rounded-full object-cover"
+                                        />
+                                        <EditBtn
+                                            title="Set new Profile"
+                                            type="image"
+                                        />
+                                    </>
                                 ) : (
                                     <span className="text-8xl">👤</span>
                                 )}
                             </div>
                             <div>
-                                <h2 className="text-2xl mt-4 font-semibold">
-                                    {user?.name}
+                                <h2 className="text-2xl mt-4 font-semibold relative">
+                                    {user?.name}{" "}
+                                    <EditBtn
+                                        width="5"
+                                        value={user.name}
+                                        InitialValue={user.name}
+                                        title="New Name"
+                                        feild="name"
+                                        max={25}
+                                    />
                                 </h2>
                                 <p>@{user?.username}</p>
                             </div>
@@ -79,14 +93,6 @@ const ProfilePage = () => {
                             >
                                 Share Profile
                             </button>
-                            
-                                <button
-                                    className="px-3 py-0.5 border-white rounded-md border-2 text-neutral-200 border-dashed hover:bg-neutral-100 hover:text-black transition-all"
-                                    onClick={handleEditProfile}
-                                >
-                                    {isEditing ? "Cancel" : "Edit Profile"}
-                                </button>
-                            
                             <button
                                 className="px-3 py-0.5 border-white rounded-md border-2 text-neutral-200 border-dashed hover:bg-neutral-100 hover:text-black transition-all"
                                 onClick={handleLogout}
@@ -96,15 +102,33 @@ const ProfilePage = () => {
                         </div>
                     </div>
 
-                    {user.about && (
-                        <div className="bg-neutral-900 text-neutral-200 p-6 rounded-lg">
-                            <h3 className="text-2xl mb-6 font-semibold">
-                                About Me
-                            </h3>
+                    <div className="bg-neutral-900 text-neutral-200 p-6">
+                        <h3 className="text-2xl mb-6 font-semibold relative w-fit">
+                            Title:
+                            <EditBtn
+                                type="area"
+                                InitialValue={user.title}
+                                title="Your Title"
+                                feild="title"
+                                max={30}
+                            />
+                        </h3>
+                        I am {user.title && <p>{user.title}</p>}
+                    </div>
 
-                            <p>{user.about}</p>
-                        </div>
-                    )}
+                    <div className="bg-neutral-900 text-neutral-200 p-6 rounded-lg">
+                        <h3 className="text-2xl mb-6 font-semibold relative w-fit">
+                            About Me:
+                            <EditBtn
+                                type="area"
+                                InitialValue={user.about}
+                                title="About You"
+                                feild="about"
+                                max={500}
+                            />
+                        </h3>
+                        {user.about && <p>{user.about}</p>}
+                    </div>
 
                     <div className="p-5 min-h-[60vh]">
                         <h2 className="text-neutral-200 text-4xl font-bold">

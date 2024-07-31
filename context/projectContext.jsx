@@ -22,7 +22,7 @@ const ProjectContext = ({ children }) => {
     const [toSignup, setToSigUp] = useState(false);
     const [box, setBox] = useState(null);
     const [projects, setProjects] = useState([]);
-    const [profileImage, setProfileImage]=useState(null);
+    const [profileImage, setProfileImage] = useState(null);
 
     const router = useRouter();
 
@@ -61,7 +61,7 @@ const ProjectContext = ({ children }) => {
         if (category === "all") {
             data = await getAllPosts();
         } else {
-            data = await getAllPostsByCategory(category)
+            data = await getAllPostsByCategory(category);
         }
         setFeed(data);
     };
@@ -120,6 +120,12 @@ const ProjectContext = ({ children }) => {
         router.push("/feed");
     };
 
+    const updateUserFeild = (feild, value) => {
+        setUser((p) => {
+            return { ...p, [feild]: value };
+        });
+    };
+
     const val = {
         user,
         toSignup,
@@ -132,6 +138,7 @@ const ProjectContext = ({ children }) => {
         login,
         signUp,
         fetchFeed,
+        updateUserFeild,
     };
 
     return (

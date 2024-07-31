@@ -23,4 +23,20 @@ const uploadImages = async (images, username, projectName) => {
     return url;
 };
 
-export { uploadImages };
+const uploadProfileImage = async (image, username) => {
+    if (!image) return;
+    
+
+    const fileExtension = image.file.name.split(".").at(-1);
+    const path = `media/${username}/profile.${fileExtension}`;
+
+    // console.log(path);
+    const imageRef = ref(storage, path);
+    await uploadBytes(imageRef, image.file);
+
+    const url = await getDownloadURL(imageRef);
+    console.log("Image uploaded");
+    return url
+}
+
+export { uploadImages, uploadProfileImage };
