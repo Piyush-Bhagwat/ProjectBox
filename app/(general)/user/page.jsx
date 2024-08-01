@@ -43,13 +43,12 @@ const ProfilePage = () => {
     return (
         <>
             {user ? (
-                <div className="bg-neutral-900 text-neutral-200 p-8 lg:p-16 space-y-8">
-                    <div className="flex flex-row items-center space-x-4 justify-between">
+                <div className="bg-neutral-900 overflow-x-hidden w-[100%] text-neutral-200 p-8 lg:p-16 ">
+                    <div className="flex flex-col md:flex-row items-center space-x-4 justify-between">
                         <div className="w-1/3 bg-neutral-900 text-neutral-200 p-6 rounded-lg ">
-                            <h4 className="text-xl mb-2">
-                                Total Projects Uploaded
+                            <h4 className="md:text-xl mb-2">
+                            {box?.length} Projects Uploaded
                             </h4>
-                            <div className="text-lg">{box?.length}</div>
                         </div>
                         <div className="flex flex-col items-center">
                             <div className="relative w-64 h-64 rounded-full flex items-center justify-center">
@@ -88,7 +87,7 @@ const ProfilePage = () => {
                         </div>
                         <div className="w-1/3 flex flex-col items-end space-y-4">
                             <button
-                                className="px-3 py-0.5 border-white rounded-md border-2 text-neutral-200 border-dashed hover:bg-neutral-100 hover:text-black transition-all"
+                                className="px-3 py-0.5 hidden md:inline border-white rounded-md border-2 text-neutral-200 border-dashed hover:bg-neutral-100 hover:text-black transition-all"
                                 onClick={handleShareProfile}
                             >
                                 Share Profile
