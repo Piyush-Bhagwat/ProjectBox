@@ -26,14 +26,13 @@ const MemberInput = ({ index, onChange }) => {
                     onChange(e);
 
                     setValue(e.target.value);
-                    const suggest = await searchUserNames(e.target.value);
+                    const suggest = await searchUserNames(e.target.value.toLowerCase());
                     setUsernameSuggest(suggest);
                 }}
                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                 onFocus={() => setShowSuggestions(true)}
                 onBlur={async () => {
-                    setTimeout(()=>setShowSuggestions(false), 100)
-                    ;
+                    setTimeout(() => setShowSuggestions(false), 100);
                 }}
             />
             {value && showSugegstions && usernameSuggest?.length != 0 && (
