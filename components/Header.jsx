@@ -3,12 +3,13 @@ import { IMAGES } from "@/assets/assets";
 import { projectContext } from "@/context/projectContext";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Button from "./ui/Button";
 import { FaPlus } from "react-icons/fa6";
 
 const Header = () => {
     const { user } = useContext(projectContext);
+    const [openNav, setOpenNav] = useState(false);
 
     return (
         <header className="text-gray-50 body-font border-b border-neutral-700 shadow-xl">
@@ -34,19 +35,19 @@ const Header = () => {
                     </Link>
                 )}
 
-                <nav className=" hidden md:flex text-sm flex-wrap items-center gap-3 justify-center">
-                    <a className=" cursor-pointer hover:text-gray-300">
+                <nav className="hidden md:flex text-sm flex-wrap items-center gap-3 justify-center">
+                    <a className="cursor-pointer hover:text-gray-300">
                         Randomize
                     </a>
                     {user && (
                         <>
-                            <a className=" cursor-pointer hover:text-gray-300">
+                            <a className="cursor-pointer hover:text-gray-300">
                                 Favorites
                             </a>
 
                             <Link
                                 href={`/box/${user?.username}`}
-                                className=" cursor-pointer hover:text-gray-300"
+                                className="cursor-pointer hover:text-gray-300"
                             >
                                 Your Box
                             </Link>
@@ -64,13 +65,50 @@ const Header = () => {
                             </Link>
                         </>
                     )}
-
-                    {!user && (
-                        <Link href="/login">
-                            <Button lable="Login" />
-                        </Link>
-                    )}
                 </nav>
+
+                {user && (
+                    <div className="md:hidden">
+                        <button onClick={() => setOpenNav((p) => !p)}>
+                            <Image
+                                className="object-cover w-6 h-6 rounded-full ring ring-gray-300 dark:ring-gray-600"
+                                src={user?.photoURL}
+                                alt="userPic"
+                                width={20}
+                                height={20}
+                            />
+                        </button>
+
+                        <nav
+                            className={`absolute bg-neutral-700 flex flex-col gap-4 z-50 p-4 rounded-s-lg transition-all duration-200 ease-out ${
+                                openNav ? "right-0" : "-right-32"
+                            }`}
+                        >
+                            <a className="cursor-pointer hover:text-gray-300">
+                                Favorites
+                            </a>
+
+                            <Link
+                                href={`/box/${user?.username}`}
+                                className="cursor-pointer hover:text-gray-300"
+                            >
+                                Your Box
+                            </Link>
+                            <Link
+                                href={`/user`}
+                                className="cursor-pointer hover:text-gray-300"
+                            >
+                                Profile
+                            </Link>
+                        </nav>
+                    </div>
+                )}
+
+                {!user && (
+                    <Link href="/login">
+                        <Button lable="Login" />
+                    </Link>
+                )}
             </div>
         </header>
     );

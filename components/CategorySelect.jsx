@@ -2,7 +2,7 @@ import React from "react";
 
 const CategorySelect = ({catergory, setCategory}) => {
     return (
-        <div className="mt-3 md:mt-5 text-neutral-200 text-xs md:text-sm flex justify-center gap-2 flex-wrap md:gap-4">
+        <div className="mt-3 mx-3 md:mt-5 text-neutral-200 text-xs md:text-sm flex justify-center gap-1 flex-wrap md:gap-4">
             <button
                 className={`px-3 py-0.5 rounded-full border border-neutral-600 hover:bg-neutral-700   ${
                     catergory == "all" &&
