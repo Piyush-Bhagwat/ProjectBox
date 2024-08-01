@@ -3,7 +3,7 @@
     "short_name": "ProjectBox",
     "theme_color": "#404040",
     "background_color": "#171717",
-    "start_url": "/",
+    "start_url": "/feed",
     "display": "standalone",
     "orientation": "portrait",
     "icons": [
