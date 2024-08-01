@@ -47,7 +47,7 @@ const MemberInput = ({ index, onChange }) => {
                             className="ml-4 flex items-center gap-2 hover:bg-neutral-600 px-3 py-2 rounded-md"
                         >
                             <Image
-                                className="rounded-full"
+                                className="w-[36px] object-cover aspect-square rounded-full"
                                 src={data.url}
                                 width={35}
                                 height={35}

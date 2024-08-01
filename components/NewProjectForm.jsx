@@ -163,7 +163,7 @@ const NewProjectForm = () => {
                                         htmlFor="projectname"
                                         className="text-neutral-100"
                                     >
-                                        Project Name:
+                                        Project Name*:
                                     </label>
                                     <input
                                         type="text"
@@ -216,7 +216,7 @@ const NewProjectForm = () => {
                                     htmlFor="date"
                                     class="block text-sm text-neutral-200 dark:text-gray-300"
                                 >
-                                    date
+                                    date*
                                 </label>
 
                                 <input
@@ -235,7 +235,7 @@ const NewProjectForm = () => {
                                     htmlFor="about"
                                     className="block text-sm font-medium leading-6 text-neutral-200"
                                 >
-                                    About
+                                    About*:
                                 </label>
                                 <div className="mt-2">
                                     <textarea
@@ -379,7 +379,7 @@ const NewProjectForm = () => {
                                     htmlFor="status"
                                     className="block text-sm font-medium leading-6 text-neutral-200"
                                 >
-                                    Status
+                                    Status*:
                                 </label>
                                 <fieldset className="flex flex-wrap gap-3">
                                     <legend className="sr-only">Status</legend>
@@ -434,7 +434,7 @@ const NewProjectForm = () => {
                                 htmlFor="category"
                                 className="block text-sm font-medium leading-6 text-neutral-200"
                             >
-                                Category
+                                Category*:
                             </label>
                             <div className="mt-2">
                                 <select
@@ -457,7 +457,7 @@ const NewProjectForm = () => {
                         <div className="col-span-full mb-3">
                             <TextInput
                                 id="tech"
-                                lable="Technologies Used: (comma seperated)"
+                                lable="Technologies Used(comma seperated) *"
                                 type="text"
                                 onChange={handleFormChange}
                                 required
@@ -580,7 +580,7 @@ const NewProjectForm = () => {
                                     htmlFor="visiblity"
                                     className="block text-sm font-medium leading-6 text-neutral-200"
                                 >
-                                    Visiblity:
+                                    Visiblity*:
                                 </label>
                                 <fieldset className="flex flex-wrap gap-3">
                                     <legend className="sr-only">Status</legend>
