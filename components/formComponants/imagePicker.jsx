@@ -3,7 +3,7 @@ import React from "react";
 
 const ImagePicker = ({ handleSelect, image, idx }) => {
     return (
-        <div className="mt-2 w-[27%] aspect-square bg-neutral-800 items-center flex justify-center rounded-lg border-2 border-dashed border-neutral-600 p-3 ">
+        <div className="mt-2 w-[46%] md:w-[27%] aspect-square bg-neutral-800 items-center flex justify-center rounded-lg border-2 border-dashed border-neutral-600 p-3 ">
             <div className="text-center ">
                 {image ? (
                     <>

@@ -342,7 +342,7 @@ const NewProjectForm = () => {
                                 <label className="block text-sm font-medium leading-6 text-neutral-200">
                                     Photos
                                 </label>
-                                <div className="flex gap-2">
+                                <div className="flex gap-2 flex-wrap md:flex-row">
                                     <ImagePicker
                                         handleSelect={handlePhotosSelect}
                                         image={images[0]}
