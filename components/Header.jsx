@@ -3,13 +3,25 @@ import { IMAGES } from "@/assets/assets";
 import { projectContext } from "@/context/projectContext";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "./ui/Button";
 import { FaPlus } from "react-icons/fa6";
 
 const Header = () => {
     const { user } = useContext(projectContext);
     const [openNav, setOpenNav] = useState(false);
+    const [hideNav, setHideNav] = useState(true);
+
+    useEffect(() => {
+        async function closeNav() {
+            if (!openNav) {
+                setTimeout(() => setHideNav(true), 300);
+            } else {
+                setHideNav(false)
+            }
+        }
+        closeNav();
+    }, [openNav]);
 
     return (
         <header className="text-gray-50 body-font border-b border-neutral-700 shadow-xl">
@@ -79,28 +91,30 @@ const Header = () => {
                             />
                         </button>
 
-                        <nav
-                            className={`absolute bg-neutral-700 flex flex-col gap-4 z-50 p-4 rounded-s-lg transition-all duration-200 ease-out ${
-                                openNav ? "right-0" : "-right-32"
-                            }`}
-                        >
-                            <a className="cursor-pointer hover:text-gray-300">
-                                Favorites
-                            </a>
+                        {!hideNav && (
+                            <nav
+                                className={`absolute bg-neutral-700 flex flex-col gap-4 z-50 p-4 rounded-s-lg transition-all duration-200 delay-75 ease-out ${
+                                    openNav ? "right-0" : "-right-32"
+                                }`}
+                            >
+                                <a className="cursor-pointer hover:text-gray-300">
+                                    Favorites
+                                </a>
 
-                            <Link
-                                href={`/box/${user?.username}`}
-                                className="cursor-pointer hover:text-gray-300"
-                            >
-                                Your Box
-                            </Link>
-                            <Link
-                                href={`/user`}
-                                className="cursor-pointer hover:text-gray-300"
-                            >
-                                Profile
-                            </Link>
-                        </nav>
+                                <Link
+                                    href={`/box/${user?.username}`}
+                                    className="cursor-pointer hover:text-gray-300"
+                                >
+                                    Your Box
+                                </Link>
+                                <Link
+                                    href={`/user`}
+                                    className="cursor-pointer hover:text-gray-300"
+                                >
+                                    Profile
+                                </Link>
+                            </nav>
+                        )}
                     </div>
                 )}
 

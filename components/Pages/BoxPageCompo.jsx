@@ -24,8 +24,8 @@ const BoxPageCompo = ({ user, pageUser, box }) => {
     return (
         <div className="p-5 min-h-[60vh] w-full flex flex-col items-center">
             <div className="mt-3 flex flex-col items-center w-full">
-                <div className="flex items-center relative">
-                    <p className="text-neutral-200 absolute -left-1/3 -translate-x-full">
+                <div className="flex flex-col md:flex-row items-center relative">
+                    <p className="text-neutral-200 hidden md:block md:absolute md:-left-1/3 -translate-x-full">
                         {box.length} projects made
                     </p>
                     <Image
@@ -34,7 +34,7 @@ const BoxPageCompo = ({ user, pageUser, box }) => {
                         height={264}
                         className="rounded-full w-[264px] aspect-square object-cover border-[12px] border-dashed border-neutral-800"
                     />
-                    <p className="text-neutral-200 absolute -right-1/3 translate-x-full">
+                    <p className="text-neutral-200 mt-3 md:mt-0 md:absolute md:-right-1/3 md:translate-x-full">
                         {pageUser.title && `I am a ${pageUser.title}`}
                     </p>
                 </div>
@@ -84,7 +84,7 @@ const BoxPageCompo = ({ user, pageUser, box }) => {
                 )}
             </div>
 
-            <div className="mt-5 w-3/4">
+            <div className="mt-5 w-full md:w-3/4">
                 <p className="text-neutral-200">{pageUser.about}</p>
             </div>
 
