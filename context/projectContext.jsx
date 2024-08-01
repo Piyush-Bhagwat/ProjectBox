@@ -30,8 +30,9 @@ const ProjectContext = ({ children }) => {
         async function fetchUser() {
             console.log("getting login info...");
             let res = JSON.parse(localStorage.getItem("user"));
+            if (!res) return
 
-            res = await getUser(res.email);
+            res = await getUser(res?.email);
             if (res) {
                 setUser(res);
                 console.log("found user");
@@ -45,8 +46,9 @@ const ProjectContext = ({ children }) => {
         async function fetchUser() {
             console.log("getting login info...");
             let res = JSON.parse(localStorage.getItem("user"));
+            if (!res) return
 
-            res = await getUser(res.email);
+            res = await getUser(res?.email);
             if (res) {
                 setUser(res);
                 console.log("found user");
@@ -120,6 +122,12 @@ const ProjectContext = ({ children }) => {
         router.push("/feed");
     };
 
+    const logout = () => {
+        router.push("/feed");
+        localStorage.removeItem("user");
+        setUser(null);
+    };
+
     const updateUserFeild = (feild, value) => {
         setUser((p) => {
             return { ...p, [feild]: value };
@@ -139,6 +147,7 @@ const ProjectContext = ({ children }) => {
         signUp,
         fetchFeed,
         updateUserFeild,
+        logout,
     };
 
     return (

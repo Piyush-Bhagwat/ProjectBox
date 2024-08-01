@@ -11,7 +11,7 @@ import Button from "@/components/ui/Button";
 import EditBtn from "@/components/ui/EditBtn";
 
 const ProfilePage = () => {
-    const { user, box } = useProjects();
+    const { user, box, logout } = useProjects();
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -47,7 +47,7 @@ const ProfilePage = () => {
                     <div className="flex flex-col md:flex-row items-center space-x-4 justify-between">
                         <div className="w-1/3 bg-neutral-900 text-neutral-200 p-6 rounded-lg ">
                             <h4 className="md:text-xl mb-2">
-                            {box?.length} Projects Uploaded
+                                {box?.length} Projects Uploaded
                             </h4>
                         </div>
                         <div className="flex flex-col items-center">
@@ -94,7 +94,7 @@ const ProfilePage = () => {
                             </button>
                             <button
                                 className="px-3 py-0.5 border-white rounded-md border-2 text-neutral-200 border-dashed hover:bg-neutral-100 hover:text-black transition-all"
-                                onClick={handleLogout}
+                                onClick={logout}
                             >
                                 Log Out
                             </button>

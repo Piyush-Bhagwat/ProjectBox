@@ -605,7 +605,7 @@ const NewProjectForm = () => {
                                             </p>
                                         </label>
                                     </div>
-
+                                    
                                     <div>
                                         <label
                                             htmlFor="private"
