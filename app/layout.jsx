@@ -1,8 +1,8 @@
-import { Inter, Work_Sans } from "next/font/google";
+import { Inter, Work_Sans, Space_Mono } from "next/font/google";
 import "./globals.css";
 import ProjectContext from "@/context/projectContext";
 
-const inter = Work_Sans({ subsets: ["latin"] });
+const inter = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], });
 
 export const metadata = {
     title: "ProjectBox | Home",
