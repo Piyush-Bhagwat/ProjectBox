@@ -36,7 +36,7 @@ const ProjectCard = ({ project }) => {
 
                 likes?.map((like) => {
                     console.log("likes", likes);
-                    if (like === user.username) {
+                    if (like === user?.username) {
                         setIsLiked(true);
                     }
                 });
@@ -87,11 +87,20 @@ const ProjectCard = ({ project }) => {
     };
 
     const handleFav = () => {
+        if (!user) {
+            alert("Login First!");
+            return;
+        }
         if (isFav) setIsFav(false);
         else setIsFav(true);
     };
 
     const handleLike = async () => {
+        if (!user) {
+            alert("Login First!");
+            return;
+        }
+
         if (isLiked) {
             await unLikeProject(project.id, user.username, project.category);
             setLikeCount((p) => p - 1);
@@ -104,6 +113,10 @@ const ProjectCard = ({ project }) => {
     };
 
     const handleSendComment = async () => {
+        if (!user) {
+            alert("Login First!");
+            return;
+        }
         if (comment) {
             await addComment(
                 project.id,
