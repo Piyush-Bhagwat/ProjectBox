@@ -1,5 +1,6 @@
 import {
     addDoc,
+    arrayRemove,
     arrayUnion,
     collection,
     doc,
@@ -120,7 +121,7 @@ const getUserPhoto = async (username) => {
 
     const snap = await getDoc(ref);
 
-    if (sanp) {
+    if (snap) {
         return snap.data().photoURL;
     }
     return null;
@@ -242,6 +243,27 @@ const getUserProjects = async (email) => {
     }
 };
 
+const likeProject = async (projectID, username, category) => {
+    const projRef = doc(db, "posts", "india", category, projectID);
+    await updateDoc(projRef, {
+        likes: arrayUnion(username),
+    });
+};
+
+const unLikeProject = async (projectID, username, category) => {
+    const projRef = doc(db, "posts", "india", category, projectID);
+    await updateDoc(projRef, {
+        likes: arrayRemove(username),
+    });
+};
+
+const addComment = async (projectID, username, comment, category) => {
+    const projRef = doc(db, "posts", "india", category, projectID);
+    await updateDoc(projRef, {
+        comments: arrayUnion({ comment, username }),
+    });
+};
+
 export {
     userExistEmail,
     createUser,
@@ -260,4 +282,7 @@ export {
     getUserProjects,
     searchUserNames,
     getUserPhoto,
+    likeProject,
+    unLikeProject,
+    addComment,
 };
