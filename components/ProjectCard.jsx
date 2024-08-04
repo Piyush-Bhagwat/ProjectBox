@@ -144,8 +144,8 @@ const ProjectCard = ({ project }) => {
     const renderComments = () => {
         return (
             <>
-                {comments?.map((com) => {
-                    return <Comment com={com} />;
+                {comments?.map((com, idx) => {
+                    return <Comment com={com} key={idx} />;
                 })}
             </>
         );
