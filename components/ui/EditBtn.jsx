@@ -44,7 +44,7 @@ const EditBtn = ({ title, type = "text", max, feild, InitialValue }) => {
     return (
         <>
             <button
-                className={`absolute top-0 left-[110%] w-9 aspect-square flex items-center justify-center rounded-full hover:bg-neutral-800`}
+                className={`absolute top-0 left-[110%] w-9 aspect-square flex items-center justify-center rounded-full active:bg-neutral-800 hover:md:bg-neutral-800`}
                 onClick={() => setIsEditing((p) => !p)}
             >
                 <SlPencil className="text-base" />

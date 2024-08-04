@@ -195,14 +195,14 @@ const ProjectCard = ({ project }) => {
                         <div className="flex gap-2">
                             <button
                                 onClick={handleLike}
-                                className="flex gap-2 bg-neutral-700 px-2 py-1 rounded-full items-center  hover:scale-110 transition-all duration-150"
+                                className="flex gap-2 bg-neutral-700 px-2 py-1 rounded-full items-center active:scale-110 hover:md:scale-110 transition-all duration-150"
                             >
                                 {isLiked ? <BiSolidLike /> : <BiLike />}{" "}
                                 <p className="text-base">{likeCount}</p>
                             </button>
                             <button
                                 onClick={() => setCommentSec((p) => !p)}
-                                className="flex gap-2 bg-neutral-700 px-2 py-1 rounded-full items-center hover:scale-110 transition-all duration-150"
+                                className="flex gap-2 bg-neutral-700 px-2 py-1 rounded-full items-center active:scale-110 hover:md:scale-110 transition-all duration-150"
                             >
                                 {commentSec ? (
                                     <BiSolidComment />
@@ -216,7 +216,7 @@ const ProjectCard = ({ project }) => {
                         </div>
                         <button
                             onClick={handleFav}
-                            className="hover:scale-110 transition-all duration-150"
+                            className="active:scale-110 hover:md:scale-110 transition-all duration-150"
                         >
                             {isFav ? <BiSolidHeart /> : <BiHeart />}
                         </button>
