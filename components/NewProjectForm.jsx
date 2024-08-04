@@ -128,7 +128,7 @@ const NewProjectForm = () => {
 
             auther: user.username,
             createdAt: Date.now(),
-            likes: 0,
+            likes: [],
         };
         //step4: upload!!
         console.log("uploads start");
