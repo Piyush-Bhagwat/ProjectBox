@@ -25,6 +25,7 @@ const ProjectCard = ({ project }) => {
     const [commentSec, setCommentSec] = useState(false);
     const [comments, setComments] = useState([]);
     const [likeCount, setLikeCount] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     const [comment, setComment] = useState("");
     const textareaRef = useRef(null);
@@ -35,7 +36,6 @@ const ProjectCard = ({ project }) => {
                 const likes = project.likes;
 
                 likes?.map((like) => {
-                    console.log("likes", likes);
                     if (like === user?.username) {
                         setIsLiked(true);
                     }
@@ -47,10 +47,6 @@ const ProjectCard = ({ project }) => {
         }
         fetchData();
     }, []);
-
-    useEffect(() => {
-        console.log("comments", comments);
-    }, [comments]);
 
     useEffect(() => {
         if (textareaRef.current) {
@@ -100,15 +96,20 @@ const ProjectCard = ({ project }) => {
             alert("Login First!");
             return;
         }
+        if (loading) return;
 
         if (isLiked) {
+            setLoading(true);
             await unLikeProject(project.id, user.username, project.category);
             setLikeCount((p) => p - 1);
             setIsLiked(false);
+            setLoading(false);
         } else {
+            setLoading(true);
             await likeProject(project.id, user.username, project.category);
             setLikeCount((p) => p + 1);
             setIsLiked(true);
+            setLoading(false);
         }
     };
 
@@ -117,7 +118,10 @@ const ProjectCard = ({ project }) => {
             alert("Login First!");
             return;
         }
+        if (loading) return;
         if (comment) {
+            setLoading(true);
+
             await addComment(
                 project.id,
                 user.username,
@@ -132,6 +136,7 @@ const ProjectCard = ({ project }) => {
             } else {
                 setComments((p) => [{ username: user.username, comment }]);
             }
+            setLoading(false);
         }
         setComment("");
     };
@@ -148,8 +153,8 @@ const ProjectCard = ({ project }) => {
 
     return (
         <article
-            className={`overflow-hidden transition-all duration-200 gap-8 flex 
-            ${commentSec ? "col-span-2" : "col-span-1"}
+            className={`overflow-hidden transition-all duration-200 gap-8 flex flex-col md:flex-row 
+            ${commentSec ? "md:col-span-2" : "col-span-1"}
             ${
                 project?.auther === user?.username
                     ? "border-white"
@@ -227,7 +232,7 @@ const ProjectCard = ({ project }) => {
             </div>
 
             {commentSec && (
-                <div className="bg-neutral-800 p-2 rounded-lg w-full gap-2 flex flex-col justify-between h-full">
+                <div className="bg-neutral-800 p-2 rounded-lg w-full gap-2 flex flex-col justify-between h-60 md:h-full">
                     <h1 className="text-neutral-200 text-2xl font-bold tracking-wide">
                         Comments
                     </h1>
