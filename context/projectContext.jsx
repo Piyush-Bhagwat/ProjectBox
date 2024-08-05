@@ -50,7 +50,7 @@ const ProjectContext = ({ children }) => {
             data = await getAllPostsByCategoryIDB(category);
         }
 
-        if (!data){
+        if (data.length == 0) {
             if (category === "all") {
                 data = await getAllPosts();
             } else {
@@ -61,22 +61,25 @@ const ProjectContext = ({ children }) => {
         setFeed(data);
     };
 
-    useEffect(() => {
-        async function fetchUser() {
-            console.log("getting login info...");
-            let res = JSON.parse(localStorage.getItem("user"));
-            if (!res) return;
-            await fetchAllProjects();
+    async function fetchUser() {
+        console.log("getting login info...");
+        let res = JSON.parse(localStorage.getItem("user"));
+        if (!res) return;
 
-            res = await getUser(res?.email);
-            if (res) {
-                setUser(res);
-                console.log("found user");
-            }
-            // await fetchFeed();
+        res = await getUser(res?.email);
+        if (res) {
+            setUser(res);
+            console.log("found user");
         }
+        // await fetchFeed();
+    }
 
-        fetchUser();
+    useEffect(() => {
+        async function fetchData() {
+            await fetchUser();
+            await fetchAllProjects();
+        }
+        fetchData();
     }, []);
 
     useEffect(() => {
