@@ -30,6 +30,12 @@ const ProjectContext = ({ children }) => {
     const [projects, setProjects] = useState([]);
     const [profileImage, setProfileImage] = useState(null);
     const router = useRouter();
+    const [isOnline, setIsOnline] = useState(true);
+
+    const updateOnlineStatus = async () => {
+        const status = await checkOnlineStatus();
+        setIsOnline(status);
+    };
 
     const fetchAllProjects = async () => {
         const isOnline = await checkOnlineStatus();
@@ -41,7 +47,21 @@ const ProjectContext = ({ children }) => {
         }
     };
 
+    useEffect(() => {
+        const interval = setInterval(
+            async () => await updateOnlineStatus(),
+            5000
+        );
+
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        if (!isOnline) alert("offline you!");
+    }, [isOnline]);
+
     const fetchFeed = async (category) => {
+        const isOnline = await checkOnlineStatus();
         let data = [];
 
         if (category === "all") {
@@ -50,7 +70,7 @@ const ProjectContext = ({ children }) => {
             data = await getAllPostsByCategoryIDB(category);
         }
 
-        if (data.length == 0) {
+        if (data.length == 0 && isOnline) {
             if (category === "all") {
                 data = await getAllPosts();
             } else {
@@ -62,16 +82,19 @@ const ProjectContext = ({ children }) => {
     };
 
     async function fetchUser() {
+        const isOnline = await checkOnlineStatus();
         console.log("getting login info...");
         let res = JSON.parse(localStorage.getItem("user"));
         if (!res) return;
 
-        res = await getUser(res?.email);
+        if (isOnline) {
+            res = await getUser(res?.email);
+        }
+
         if (res) {
             setUser(res);
             console.log("found user");
         }
-        // await fetchFeed();
     }
 
     useEffect(() => {
