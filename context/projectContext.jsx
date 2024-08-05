@@ -7,6 +7,7 @@ import {
     getUser,
     userExistEmail,
     getUserProjects,
+    getAllPostsByCategory,
 } from "@/firebase/firebase.db";
 import {
     getAllPostsByCategoryIDB,
@@ -47,6 +48,14 @@ const ProjectContext = ({ children }) => {
             data = await getAllProjectIDB();
         } else {
             data = await getAllPostsByCategoryIDB(category);
+        }
+
+        if (!data){
+            if (category === "all") {
+                data = await getAllPosts();
+            } else {
+                data = await getAllPostsByCategory(category);
+            }
         }
 
         setFeed(data);
