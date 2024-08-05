@@ -29,9 +29,9 @@ const ProjectContext = ({ children }) => {
     const [box, setBox] = useState(null);
     const [projects, setProjects] = useState([]);
     const [profileImage, setProfileImage] = useState(null);
-    const isOnline = useOnline();
-
     const router = useRouter();
+    
+    const isOnline = useOnline();
 
     const fetchAllProjects = async () => {
         console.log("online?", isOnline);
