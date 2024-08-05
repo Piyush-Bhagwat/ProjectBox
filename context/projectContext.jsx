@@ -1,5 +1,4 @@
 "use client";
-import useOnline from "@/components/hooks/useOnline";
 import { loginWithGoogle } from "@/firebase/firbase.auth";
 import {
     createUser,
@@ -8,13 +7,13 @@ import {
     getUser,
     userExistEmail,
     getUserProjects,
-    getAllPostsByCategory,
 } from "@/firebase/firebase.db";
 import {
     getAllPostsByCategoryIDB,
     getAllProjectIDB,
     saveProjectsToIDB,
 } from "@/indexedDB/indexed.db";
+import { checkOnlineStatus } from "@/utils/utilFuncitons";
 import { useRouter } from "next/navigation";
 import React, { createContext, useEffect, useState, useContext } from "react";
 
@@ -30,10 +29,9 @@ const ProjectContext = ({ children }) => {
     const [projects, setProjects] = useState([]);
     const [profileImage, setProfileImage] = useState(null);
     const router = useRouter();
-    
-    const isOnline = useOnline();
 
     const fetchAllProjects = async () => {
+        const isOnline = await checkOnlineStatus();
         console.log("online?", isOnline);
         if (isOnline) {
             const data = await getAllPosts();
