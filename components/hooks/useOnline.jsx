@@ -17,6 +17,7 @@ const useOnline = () => {
     };
 
     useEffect(() => {
+        if (typeof window === 'undefined') return;
         const updateOnlineStatus = () => {
             setIsOnline(navigator.onLine);
             if (navigator.onLine) {
