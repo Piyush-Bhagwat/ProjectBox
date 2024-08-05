@@ -9,6 +9,11 @@ import {
     getUserProjects,
     getAllPostsByCategory,
 } from "@/firebase/firebase.db";
+import {
+    getAllPostsByCategoryIDB,
+    getAllProjectIDB,
+    saveProjectsToIDB,
+} from "@/indexedDB/indexed.db";
 import { useRouter } from "next/navigation";
 import React, { createContext, useEffect, useState, useContext } from "react";
 
@@ -26,37 +31,10 @@ const ProjectContext = ({ children }) => {
 
     const router = useRouter();
 
-    useEffect(() => {
-        async function fetchUser() {
-            console.log("getting login info...");
-            let res = JSON.parse(localStorage.getItem("user"));
-            if (!res) return
-
-            res = await getUser(res?.email);
-            if (res) {
-                setUser(res);
-                console.log("found user");
-            }
-        }
-
-        fetchUser();
-    }, []);
-
-    useEffect(() => {
-        async function fetchUser() {
-            console.log("getting login info...");
-            let res = JSON.parse(localStorage.getItem("user"));
-            if (!res) return
-
-            res = await getUser(res?.email);
-            if (res) {
-                setUser(res);
-                console.log("found user");
-            }
-        }
-
-        fetchUser();
-    }, []);
+    const fetchAllProjects = async () => {
+        const data = await getAllPosts();
+        await saveProjectsToIDB(data);
+    };
 
     const fetchFeed = async (category) => {
         let data = [];
@@ -65,8 +43,33 @@ const ProjectContext = ({ children }) => {
         } else {
             data = await getAllPostsByCategory(category);
         }
+
+        // if (category === "all") {
+        //     data = await getAllProjectIDB();
+        // } else {
+        //     data = await getAllPostsByCategoryIDB(category);
+        // }
+
         setFeed(data);
     };
+
+    useEffect(() => {
+        async function fetchUser() {
+            console.log("getting login info...");
+            let res = JSON.parse(localStorage.getItem("user"));
+            if (!res) return;
+
+            res = await getUser(res?.email);
+            if (res) {
+                setUser(res);
+                console.log("found user");
+            }
+            // await fetchAllProjects();
+            // await fetchFeed();
+        }
+
+        fetchUser();
+    }, []);
 
     useEffect(() => {
         async function fetchData() {

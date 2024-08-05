@@ -18,7 +18,7 @@ const saveProjectsToIDB = async (projects) => {
     }
 };
 
-const getProjectsFromIDB = async () => {
+const getAllProjectIDB = async () => {
     try {
         const projects = await idb.projects.toArray();
         console.log("Projects fetched from IndexedDB:", projects);
@@ -29,4 +29,23 @@ const getProjectsFromIDB = async () => {
     }
 };
 
-export { saveProjectsToIDB, getProjectsFromIDB };
+const getAllPostsByCategoryIDB = async (category) => {
+    console.log("dunning catergory...");
+    
+    try {
+        const projects = await db.projects
+            .where("category")
+            .equals(category)
+            .toArray();
+        console.log(
+            `Projects fetched from IndexedDB for category ${category}:`,
+            projects
+        );
+        return projects;
+    } catch (error) {
+        console.error("Failed to fetch projects from IndexedDB:", error);
+        return [];
+    }
+};
+
+export { saveProjectsToIDB, getAllProjectIDB, getAllPostsByCategoryIDB };
