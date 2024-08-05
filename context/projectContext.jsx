@@ -1,4 +1,5 @@
 "use client";
+import useOnline from "@/components/hooks/useOnline";
 import { loginWithGoogle } from "@/firebase/firbase.auth";
 import {
     createUser,
@@ -28,27 +29,27 @@ const ProjectContext = ({ children }) => {
     const [box, setBox] = useState(null);
     const [projects, setProjects] = useState([]);
     const [profileImage, setProfileImage] = useState(null);
+    const isOnline = useOnline();
 
     const router = useRouter();
 
     const fetchAllProjects = async () => {
-        const data = await getAllPosts();
-        await saveProjectsToIDB(data);
+        console.log("online?", isOnline);
+        if (isOnline) {
+            const data = await getAllPosts();
+            console.log("Savig to IDB");
+            await saveProjectsToIDB(data);
+        }
     };
 
     const fetchFeed = async (category) => {
         let data = [];
-        if (category === "all") {
-            data = await getAllPosts();
-        } else {
-            data = await getAllPostsByCategory(category);
-        }
 
-        // if (category === "all") {
-        //     data = await getAllProjectIDB();
-        // } else {
-        //     data = await getAllPostsByCategoryIDB(category);
-        // }
+        if (category === "all") {
+            data = await getAllProjectIDB();
+        } else {
+            data = await getAllPostsByCategoryIDB(category);
+        }
 
         setFeed(data);
     };
@@ -58,13 +59,13 @@ const ProjectContext = ({ children }) => {
             console.log("getting login info...");
             let res = JSON.parse(localStorage.getItem("user"));
             if (!res) return;
+            await fetchAllProjects();
 
             res = await getUser(res?.email);
             if (res) {
                 setUser(res);
                 console.log("found user");
             }
-            // await fetchAllProjects();
             // await fetchFeed();
         }
 
