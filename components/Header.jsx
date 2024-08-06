@@ -8,7 +8,7 @@ import Button from "./ui/Button";
 import { FaPlus } from "react-icons/fa6";
 
 const Header = () => {
-    const { user } = useContext(projectContext);
+    const { user, isOnline } = useContext(projectContext);
     const [openNav, setOpenNav] = useState(false);
     const [hideNav, setHideNav] = useState(true);
 
@@ -17,7 +17,7 @@ const Header = () => {
             if (!openNav) {
                 setTimeout(() => setHideNav(true), 300);
             } else {
-                setHideNav(false)
+                setHideNav(false);
             }
         }
         closeNav();
@@ -25,6 +25,15 @@ const Header = () => {
 
     return (
         <header className="text-gray-50 body-font border-b border-neutral-700 shadow-xl">
+            <div
+                className={`bg-red-400 text-black fixed z-50 px-3 
+                    ${
+                        isOnline ? "-top-16 md:-top-7" : "top-0"
+                    } transition-all duration-150 ease-in-out
+                    rounded-br-lg`}
+            >
+                You are offline, some features maybe unavailable
+            </div>
             <div className="container mx-auto flex flex-wrap px-5 py-2 flex-row items-center justify-between w-full relative">
                 <Link
                     href="/feed"

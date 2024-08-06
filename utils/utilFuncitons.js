@@ -15,4 +15,21 @@ function debounce(func, wait) {
     };
 }
 
-export { getPostID, debounce };
+const checkOnlineStatus = async () => {
+    try {
+        // Use a request that will fail when offline
+        const response = await fetch(
+            "https://jsonplaceholder.typicode.com/posts/1",
+            {
+                method: "HEAD",
+                cache: "no-cache",
+            }
+        );
+        return response.ok;
+    } catch (error) {
+        console.log("you are not conencted.");
+        return false;
+    }
+};
+
+export { getPostID, debounce, checkOnlineStatus };
