@@ -10,9 +10,12 @@ import {
     getAllPostsByCategory,
 } from "@/firebase/firebase.db";
 import {
+    clearUser,
     getAllPostsByCategoryIDB,
     getAllProjectIDB,
+    getUserIDB,
     saveProjectsToIDB,
+    saveUserIDB,
 } from "@/indexedDB/indexed.db";
 import { checkOnlineStatus } from "@/utils/utilFuncitons";
 import { useRouter } from "next/navigation";
@@ -39,10 +42,10 @@ const ProjectContext = ({ children }) => {
 
     const fetchAllProjects = async () => {
         const isOnline = await checkOnlineStatus();
-        console.log("online?", isOnline);
+
         if (isOnline) {
             const data = await getAllPosts();
-            console.log("Savig to IDB");
+            console.log("Savig Projects to IDB");
             await saveProjectsToIDB(data);
         }
     };
@@ -55,10 +58,6 @@ const ProjectContext = ({ children }) => {
 
         return () => clearInterval(interval);
     }, []);
-
-    useEffect(() => {
-        if (!isOnline) alert("offline you!");
-    }, [isOnline]);
 
     const fetchFeed = async (category) => {
         const isOnline = await checkOnlineStatus();
@@ -84,11 +83,13 @@ const ProjectContext = ({ children }) => {
     async function fetchUser() {
         const isOnline = await checkOnlineStatus();
         console.log("getting login info...");
-        let res = JSON.parse(localStorage.getItem("user"));
+        let res = await getUserIDB();
+
         if (!res) return;
 
         if (isOnline) {
             res = await getUser(res?.email);
+            await saveUserIDB(res);
         }
 
         if (res) {
@@ -99,8 +100,8 @@ const ProjectContext = ({ children }) => {
 
     useEffect(() => {
         async function fetchData() {
-            await fetchUser();
             await fetchAllProjects();
+            await fetchUser();
         }
         fetchData();
     }, []);
@@ -122,7 +123,7 @@ const ProjectContext = ({ children }) => {
 
     const login = async () => {
         const res = await loginWithGoogle();
-        console.log(res);
+        console.log("user Looged In with google", res);
         const data = {
             email: res.email,
             photoURL: res.photoURL,
@@ -141,7 +142,7 @@ const ProjectContext = ({ children }) => {
 
         const dbUser = await getUser(data.email);
         setUser(dbUser);
-        localStorage.setItem("user", JSON.stringify(res));
+        await saveUserIDB(dbUser);
     };
 
     const signUp = async (usr, pass) => {
@@ -151,7 +152,7 @@ const ProjectContext = ({ children }) => {
             lowerUsername: usr.toLowerCase(),
             ...user,
         };
-        console.log("data", data);
+        console.log("Sighup Data", data);
         await createUser(data);
         const dbUser = await getUser(data.email);
         setUser(dbUser);
@@ -159,9 +160,9 @@ const ProjectContext = ({ children }) => {
         router.push("/feed");
     };
 
-    const logout = () => {
+    const logout = async () => {
+        await clearUser();
         router.push("/feed");
-        localStorage.removeItem("user");
         setUser(null);
     };
 
@@ -177,6 +178,7 @@ const ProjectContext = ({ children }) => {
         box,
         feed,
         projects,
+        isOnline,
         profileImage,
         setProfileImage,
         setUser,

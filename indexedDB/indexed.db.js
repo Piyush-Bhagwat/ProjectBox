@@ -4,6 +4,7 @@ const idb = new Dexie("projectsBoxDB");
 idb.version(1).stores({
     projects:
         "++id, auther, projectName, formalName, date, category, about, status, tech, problems, solution, notes, members, githubLink, linkedinLink,hostedLink, photos, tags, likes, comments, visibility, createdAt",
+    user: "++id, about, email, github, linkedIn, lowerUsername, name, password, photoURL, title, uid, username",
 });
 
 const saveProjectsToIDB = async (projects) => {
@@ -42,4 +43,38 @@ const getAllPostsByCategoryIDB = async (category) => {
     }
 };
 
-export { saveProjectsToIDB, getAllProjectIDB, getAllPostsByCategoryIDB };
+const saveUserIDB = async (usr) => {
+    try {
+        await idb.user.clear();
+        console.log("user idb", usr);
+
+        await idb.user.add(usr);
+    } catch (er) {
+        console.log(er, "coulnt add user to idb");
+    }
+};
+
+const getUserIDB = async () => {
+    try {
+        const users = await idb.user.toArray();
+        if (users) {
+            return users[0];
+        }
+        return [];
+    } catch (er) {
+        return [];
+    }
+};
+
+const clearUser = async () => {
+    await idb.user.clear();
+};
+
+export {
+    saveProjectsToIDB,
+    getAllProjectIDB,
+    getAllPostsByCategoryIDB,
+    getUserIDB,
+    saveUserIDB,
+    clearUser
+};
