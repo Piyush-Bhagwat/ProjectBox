@@ -1,5 +1,6 @@
 import { getUserPhoto } from "@/firebase/firebase.db";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const Comment = ({ com }) => {
@@ -22,7 +23,7 @@ const Comment = ({ com }) => {
                     height={40}
                     className="object-cover w-7 aspect-square rounded-full"
                 />
-                {com.username}
+                <Link href={`/box/${com.username}`}>{com.username}</Link>
             </p>
             <p className="mt-3">{com.comment}</p>
         </div>
