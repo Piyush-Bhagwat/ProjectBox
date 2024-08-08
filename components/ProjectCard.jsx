@@ -37,6 +37,8 @@ const ProjectCard = ({ project }) => {
 
                 likes?.map((like) => {
                     if (like === user?.username) {
+                        console.log("likesss", like, user?.username);
+
                         setIsLiked(true);
                     }
                 });
@@ -46,7 +48,7 @@ const ProjectCard = ({ project }) => {
             setComments(project.comments);
         }
         fetchData();
-    }, []);
+    }, [user]);
 
     useEffect(() => {
         if (textareaRef.current) {
