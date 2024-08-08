@@ -160,14 +160,13 @@ const ProjectDisplay = ({ project }) => {
                             <ul className="mt-2 w-full flex justify-center gap-3 list-none">
                                 {project.githubLink && (
                                     <li>
-                                        <a
+                                        <Link
                                             href={project.githubLink}
                                             target="_blank"
-                                            rel="noopener noreferrer"
                                             className="flex items-center space-x-2 text-3xl"
                                         >
                                             <FaGithub />
-                                        </a>
+                                        </Link>
                                     </li>
                                 )}
                                 {project.twitterLink && (

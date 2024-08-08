@@ -60,20 +60,19 @@ const ProjectContext = ({ children }) => {
     }, []);
 
     const fetchFeed = async (category) => {
-        const isOnline = await checkOnlineStatus();
         let data = [];
 
-        if (category === "all") {
-            data = await getAllProjectIDB();
-        } else {
-            data = await getAllPostsByCategoryIDB(category);
-        }
-
-        if (data.length == 0 && isOnline) {
+        if (isOnline) {
             if (category === "all") {
                 data = await getAllPosts();
             } else {
                 data = await getAllPostsByCategory(category);
+            }
+        } else {
+            if (category === "all") {
+                data = await getAllProjectIDB();
+            } else {
+                data = await getAllPostsByCategoryIDB(category);
             }
         }
 
