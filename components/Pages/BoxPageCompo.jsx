@@ -104,7 +104,10 @@ const BoxPageCompo = ({ user, pageUser, box }) => {
                         const text = s.trim();
 
                         return (
-                            <div className="text-sm outline outline-2 shadow-md outline-neutral-300 px-2 py-1 rounded-full">
+                            <div
+                                key={text}
+                                className="text-sm outline outline-2 shadow-md outline-neutral-300 px-2 py-1 rounded-full"
+                            >
                                 {text}
                             </div>
                         );
