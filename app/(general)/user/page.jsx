@@ -34,7 +34,7 @@ const ProfilePage = () => {
         return (
             <>
                 {box?.map((item) => (
-                    <div>
+                    <div key={item.id}>
                         <ProjectCard
                             project={item}
                             id={item.id}
