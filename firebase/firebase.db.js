@@ -264,6 +264,10 @@ const addComment = async (projectID, username, comment, category) => {
     });
 };
 
+const deleteProject = async () => {
+    
+}
+
 export {
     userExistEmail,
     createUser,

@@ -18,7 +18,7 @@ const BoxPage = ({ params }) => {
         const boxData = await getbox(params.username);
         const userData = await getUserByUsername(params.username);
 
-        setBox(boxData.slice(0, 4));
+        setBox(boxData);
         setPageUser(userData);
         setLoading(false);
     };

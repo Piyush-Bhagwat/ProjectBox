@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { SlPencil } from "react-icons/sl";
+import { SlPencil, SlTrash } from "react-icons/sl";
 import { useProjects } from "@/context/projectContext";
 import ProjectCard from "@/components/ProjectCard";
 import Skeleton from "@/components/ui/skeleton";
@@ -34,9 +34,34 @@ const ProfilePage = () => {
         return (
             <>
                 {box?.map((item) => (
-                    <ProjectCard project={item} id={item.id} key={item.id} />
+                    <div>
+                        <ProjectCard
+                            project={item}
+                            id={item.id}
+                            key={item.id}
+                        />
+                        <button className="p-2 bg-neutral-600">
+                            <SlTrash />
+                        </button>
+                    </div>
                 ))}
             </>
+        );
+    };
+
+    const renderSkills = () => {
+        return (
+            <div className="flex gap-2 max-w-lg flex-wrap">
+                {user?.skills.split(",").map((t) => {
+                    const text = t.trim();
+
+                    return (
+                        <div className="text-sm outline outline-2 shadow-md outline-neutral-300 px-2 py-1 rounded-full">
+                            {text}
+                        </div>
+                    );
+                })}
+            </div>
         );
     };
 
@@ -115,6 +140,20 @@ const ProfilePage = () => {
                         I am {user.title && <p>{user.title}</p>}
                     </div>
 
+                    <div className="bg-neutral-900 text-neutral-200 p-6">
+                        <h3 className="text-2xl mb-6 font-semibold relative w-fit">
+                            Skills:
+                            <EditBtn
+                                type="text"
+                                InitialValue={user.skills}
+                                title="Your Skills. (comma seperate)"
+                                feild="skills"
+                                max={120}
+                            />
+                        </h3>
+                        {user.skills && renderSkills()}
+                    </div>
+
                     <div className="bg-neutral-900 text-neutral-200 p-6 rounded-lg">
                         <h3 className="text-2xl mb-6 font-semibold relative w-fit">
                             About Me:
@@ -126,7 +165,9 @@ const ProfilePage = () => {
                                 max={500}
                             />
                         </h3>
-                        {user.about && <p>{user.about}</p>}
+                        {user.about && (
+                            <p className="whitespace-pre-line">{user.about}</p>
+                        )}
                     </div>
 
                     <div className="p-5 min-h-[60vh]">
