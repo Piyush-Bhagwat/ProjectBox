@@ -31,10 +31,6 @@ const ProjectCard = ({ project }) => {
     const [comment, setComment] = useState("");
     const textareaRef = useRef(null);
 
-    if (!project || !project?.auther) {
-        return null; // or a loader, or fallback UI
-    }
-
     useEffect(() => {
         async function fetchData() {
             if (project.likes) {
