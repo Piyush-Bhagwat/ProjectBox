@@ -24,7 +24,7 @@ const Header = () => {
     }, [openNav]);
 
     return (
-        <header className="text-gray-50 body-font border-b border-neutral-700 shadow-xl">
+        <header className="text-gray-50 body-font border-b border-neutral-700 shadow-xl w-full">
             <div
                 className={`bg-red-400 text-black fixed z-50 px-3 
                     ${
@@ -34,7 +34,7 @@ const Header = () => {
             >
                 You are offline, some features maybe unavailable
             </div>
-            <div className="container mx-auto flex flex-wrap px-5 py-2 flex-row items-center justify-between w-full relative">
+            <div className="flex flex-wrap px-5 py-2 flex-row items-center justify-between w-full relative">
                 <Link
                     href="/feed"
                     className="flex cursor-pointer title-font font-medium items-center text-gray-50 "
