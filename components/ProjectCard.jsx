@@ -20,11 +20,6 @@ import Comment from "./ui/comment";
 import Skeleton from "./ui/skeleton";
 
 const ProjectCard = ({ project }) => {
-    if (!project) return;
-    if (!project?.auther) return 
-
-    // console.log("ProjectCard Rendered", project.id);    
-
     const { user } = useContext(projectContext);
     const [isLiked, setIsLiked] = useState(false);
     const [isFav, setIsFav] = useState(false);
@@ -35,6 +30,10 @@ const ProjectCard = ({ project }) => {
 
     const [comment, setComment] = useState("");
     const textareaRef = useRef(null);
+
+    if (!project || !project?.auther) {
+        return null; // or a loader, or fallback UI
+    }
 
     useEffect(() => {
         async function fetchData() {
