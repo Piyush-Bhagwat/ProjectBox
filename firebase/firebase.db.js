@@ -3,6 +3,7 @@ import {
     arrayRemove,
     arrayUnion,
     collection,
+    deleteDoc,
     doc,
     getDoc,
     getDocs,
@@ -14,8 +15,9 @@ import {
     where,
 } from "firebase/firestore";
 import { db, userCollection } from "./firebase.config";
-import { getPostID } from "@/utils/utilFuncitons";
-import { uploadProfileImage } from "./direbase.storage";
+import { getPathFromFirebaseStorageUrl, getPostID } from "@/utils/utilFuncitons";
+import { deleteImage, uploadProfileImage } from "./direbase.storage";
+import { deleteObject } from "firebase/storage";
 
 const userExistEmail = async (email) => {
     const q = query(userCollection, where("email", "==", email));
@@ -60,12 +62,13 @@ const getbox = async (username) => {
         const snapshot = await getDocs(boxRef);
 
         const postIDs = snapshot.docs?.map((data) => {
-            return data.data();
+            return { ...data.data(), entryID: data.id };
+
         });
 
         for (const id of postIDs) {
             const post = await getPostData(id.path);
-            boxData.push(post);
+            boxData.push({...post, entryID: id.entryID});
         }
 
         return boxData;
@@ -264,9 +267,24 @@ const addComment = async (projectID, username, comment, category) => {
     });
 };
 
-const deleteProject = async () => {
-    
-}
+const deleteProject = async (projectID, category, entryID) => {
+    console.log("id to del:", projectID, category);
+
+    const project = (await getDoc(doc(db, "posts", "india", category, projectID))).data();
+
+    for (const p of project?.photos) {
+        const link = getPathFromFirebaseStorageUrl(p)
+        console.log("link ", link);
+
+        await deleteImage(link)
+    }
+
+    console.log("deleting project: ", projectID, "EntryID: ", entryID);
+
+    await deleteDoc(doc(db, "posts", "india", category, projectID));
+    await deleteDoc(doc(db, "users", project.auther, "box", entryID));
+    console.log("project deleted");
+};
 
 export {
     userExistEmail,
@@ -276,6 +294,7 @@ export {
     getUserByUsername,
     updateFeild,
     updateProfilePhoto,
+    deleteProject,
     uploadPost,
     getAllPosts,
     getAllPostsByCategory,

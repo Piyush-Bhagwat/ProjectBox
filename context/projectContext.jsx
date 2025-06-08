@@ -28,6 +28,7 @@ export const useProjects = () => useContext(projectContext);
 const ProjectContext = ({ children }) => {
     const [user, setUser] = useState(null);
     const [feed, setFeed] = useState(null);
+    const [refresh, setRefresh] = useState(5);
     const [toSignup, setToSigUp] = useState(false);
     const [box, setBox] = useState(null);
     const [projects, setProjects] = useState([]);
@@ -103,13 +104,15 @@ const ProjectContext = ({ children }) => {
             await fetchUser();
         }
         fetchData();
-    }, []);
+    }, [refresh]);
 
     useEffect(() => {
         async function fetchData() {
             if (!user) return;
             const boxData = await getbox(user.username);
             if (boxData) {
+                console.log("Box Data Found", boxData);
+
                 setBox(boxData);
             }
 
@@ -118,7 +121,11 @@ const ProjectContext = ({ children }) => {
         }
 
         fetchData();
-    }, [user]);
+    }, [user, refresh]);
+
+    function refreshData() {
+        setRefresh((prev) => prev + 1);
+    }
 
     const login = async () => {
         const res = await loginWithGoogle();
@@ -185,6 +192,7 @@ const ProjectContext = ({ children }) => {
         signUp,
         fetchFeed,
         updateUserFeild,
+        refreshData,
         logout,
     };
 

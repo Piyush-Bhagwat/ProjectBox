@@ -26,7 +26,7 @@ const NewProjectForm = () => {
     const [nameAvaliable, setNameAvaliable] = useState(false);
     const [formData, setFormData] = useState({ category: "web" });
     const [images, setImages] = useState([null, null, null, null]);
-    const { user } = useContext(projectContext);
+    const { user, refreshData } = useContext(projectContext);
 
     // Handle adding a new input field
     const addField = () => {
@@ -61,7 +61,7 @@ const NewProjectForm = () => {
 
     const handleFormChange = (e) => {
         const newData = { ...formData, [e.target.name]: e.target.value };
-        console.log(newData);
+        // console.log(newData);
         setFormData(newData);
     };
 
@@ -137,10 +137,11 @@ const NewProjectForm = () => {
         alert("upload successful please refresh");
 
         setUploading(false);
+        refreshData();
         router.push(`/display/${getPostID(user.username, projectName)}`);
     };
 
-    const sendInviations = async () => {};
+    const sendInviations = async () => { };
 
     return (
         <div>
@@ -181,11 +182,10 @@ const NewProjectForm = () => {
                                 </div>
                                 {projectName && (
                                     <p
-                                        className={`${
-                                            nameAvaliable
+                                        className={`${nameAvaliable
                                                 ? "text-green-300"
                                                 : "text-red-400"
-                                        } ml-3 text-sm`}
+                                            } ml-3 text-sm`}
                                     >
                                         <span className="text-blue-300">
                                             {getPostID(
@@ -605,7 +605,7 @@ const NewProjectForm = () => {
                                             </p>
                                         </label>
                                     </div>
-                                    
+
                                     <div>
                                         <label
                                             htmlFor="private"

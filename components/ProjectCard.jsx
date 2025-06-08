@@ -17,8 +17,14 @@ import Button from "./ui/Button";
 import TextInput from "./formComponants/textInput";
 import { addComment, likeProject, unLikeProject } from "@/firebase/firebase.db";
 import Comment from "./ui/comment";
+import Skeleton from "./ui/skeleton";
 
 const ProjectCard = ({ project }) => {
+    if (!project) return;
+    if (!project?.auther) return 
+
+    // console.log("ProjectCard Rendered", project.id);    
+
     const { user } = useContext(projectContext);
     const [isLiked, setIsLiked] = useState(false);
     const [isFav, setIsFav] = useState(false);
@@ -157,20 +163,21 @@ const ProjectCard = ({ project }) => {
         <article
             className={`overflow-hidden transition-all duration-200 gap-8 flex flex-col md:flex-row 
             ${commentSec ? "md:col-span-2" : "col-span-1"}
-            ${
-                project?.auther === user?.username
+            ${project?.auther === user?.username
                     ? "border-white"
                     : "border-neutral-600"
-            }  p-2  border-2 border-dashed rounded-lg  shadow-sm `}
+                }  p-2  border-2 border-dashed rounded-lg  shadow-sm `}
         >
             <div className="flex flex-col justify-between w-full">
-                <Image
-                    alt={project.projectName}
-                    width={480}
-                    height={480}
-                    src={project.photos[0]}
-                    className="h-56 w-full object-cover rounded-lg"
-                />
+                {project?.photos?.length != 0 ? (
+                    <Image
+                        alt={project?.projectName}
+                        width={480}
+                        height={480}
+                        src={project?.photos[0]}
+                        className="h-56 w-full object-cover rounded-lg"
+                    />) : <p className="text-neutral-400 w-full h-48 text-center">
+                    No Image Available  </p>}
 
                 <div className="p-2">
                     <Link href={`/display/${project.id}`}>

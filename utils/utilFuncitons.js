@@ -32,4 +32,38 @@ const checkOnlineStatus = async () => {
     }
 };
 
-export { getPostID, debounce, checkOnlineStatus };
+// Function to extract and decode the path from a Firebase Storage public URL
+const getPathFromFirebaseStorageUrl = (url) => {
+    // Find the index of '/o/' which marks the start of the object path
+    const pathStartIndex = url.indexOf("/o/");
+    if (pathStartIndex === -1) {
+        console.error("Invalid Firebase Storage URL");
+        return null;
+    }
+
+    // Get the substring starting from '/o/'
+    const pathSubstring = url.substring(pathStartIndex + 3); // +3 to skip '/o/'
+
+    // Find the index of the '?' which marks the end of the object path before query parameters
+    const queryParamIndex = pathSubstring.indexOf("?");
+    const encodedPath =
+        queryParamIndex === -1
+            ? pathSubstring // No query parameters, the whole substring is the path
+            : pathSubstring.substring(0, queryParamIndex); // Path is before the query parameters
+
+    // Decode the path
+    try {
+        // The path might contain slashes that were encoded as %2F, we need to decode them
+        return decodeURIComponent(encodedPath.replace(/%2F/g, "/"));
+    } catch (error) {
+        console.error("Error decoding path:", error);
+        return null;
+    }
+};
+
+export {
+    getPostID,
+    debounce,
+    checkOnlineStatus,
+    getPathFromFirebaseStorageUrl,
+};

@@ -9,7 +9,7 @@ const BoxPageCompo = ({ user, pageUser, box }) => {
     const renderCards = () => {
         return (
             <>
-                {box?.slice(0, 4).map((item) => {
+                {box?.slice(0, 3).map((item) => {
                     return (
                         <ProjectCard
                             key={item.id}
@@ -124,7 +124,7 @@ const BoxPageCompo = ({ user, pageUser, box }) => {
 
                         <Button rounded lable="View All =>" />
                     </div>
-                    <div className="mt-6 grid grid-col-1 md:grid-cols-4 gap-3 md:gap-5 ">
+                    <div className="mt-6 grid grid-col-1 md:grid-cols-3 gap-3 md:gap-5 ">
                         {renderCards()}
                     </div>
                 </div>

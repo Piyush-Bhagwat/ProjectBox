@@ -9,15 +9,33 @@ import Image from "next/image";
 import { FaCheck } from "react-icons/fa6";
 import Button from "@/components/ui/Button";
 import EditBtn from "@/components/ui/EditBtn";
+import { deleteProject } from "@/firebase/firebase.db";
+import { ThreeCircles } from "react-loader-spinner";
 
 const ProfilePage = () => {
-    const { user, box, logout } = useProjects();
+    const { user, box, logout, refreshData } = useProjects();
 
     const [isEditing, setIsEditing] = useState(false);
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         document.title = `${user?.username} | Home`;
     }, [user]);
+
+    async function handleDeleteProject(item) {
+
+        if (!confirm("Are you sure you want to delete this project?")) return;
+
+        if (deleting) return;
+        if (item.auther !== user.username) {
+            alert("You can only delete your own projects.");
+            return;
+        }
+        setDeleting(true);
+        await deleteProject(item.id, item.category, item.entryID);
+        await refreshData();
+        setDeleting(false);
+    }
 
     const handleShareProfile = () => {
         const profileLink = `${window.location.origin}/box/${user.username}`;
@@ -26,24 +44,30 @@ const ProfilePage = () => {
         });
     };
 
-    const handleLogout = () => {
-        null;
-    };
-
     const renderCards = () => {
         return (
             <>
                 {box?.map((item) => (
-                    <div key={item.id}>
+                    <div key={item.id} className="relative">
                         <ProjectCard
                             project={item}
                             id={item.id}
                             key={item.id}
                         />
-                        <button className="p-2 bg-neutral-600">
-                            <SlTrash />
+                        <button
+                            className="p-2 bg-neutral-600 absolute bottom-2 right-2 rounded-full hover:bg-neutral-500 transition-all active:scale-95"
+                            onClick={() => handleDeleteProject(item)
+                            }
+                        >
+                            {deleting ? <ThreeCircles
+                                visible={true}
+                                height="15"
+                                width="15"
+                                color="#fff"
+                                ariaLabel="three-circles-loading"
+                            /> : <SlTrash className="text-neutral-200" />}
                         </button>
-                    </div>
+                    </div >
                 ))}
             </>
         );

@@ -1,5 +1,10 @@
 // const {} = require("firebase/storage");
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+    getDownloadURL,
+    ref,
+    uploadBytes,
+    deleteObject,
+} from "firebase/storage";
 import { storage } from "./firebase.config";
 
 const uploadImages = async (images, username, projectName) => {
@@ -25,7 +30,6 @@ const uploadImages = async (images, username, projectName) => {
 
 const uploadProfileImage = async (image, username) => {
     if (!image) return;
-    
 
     const fileExtension = image.file.name.split(".").at(-1);
     const path = `media/${username}/profile.${fileExtension}`;
@@ -36,7 +40,15 @@ const uploadProfileImage = async (image, username) => {
 
     const url = await getDownloadURL(imageRef);
     console.log("Image uploaded");
-    return url
+    return url;
+};
+
+async function deleteImage(path) {
+    try {
+        await deleteObject(ref(storage, path));
+    } catch (e) {
+        console.log(e);
+    }
 }
 
-export { uploadImages, uploadProfileImage };
+export { uploadImages, uploadProfileImage, deleteImage };

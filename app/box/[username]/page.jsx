@@ -35,7 +35,7 @@ const BoxPage = ({ params }) => {
             ) : (
                 <>
                     {pageUser ? (
-                        <BoxPageCompo box={box} pageUser={pageUser} user={user}/>
+                        <BoxPageCompo box={box} pageUser={pageUser} user={user} />
                     ) : (
                         <h1>No User Found 💀</h1>
                     )}
