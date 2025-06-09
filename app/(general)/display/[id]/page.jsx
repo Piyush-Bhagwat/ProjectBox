@@ -7,11 +7,11 @@ const ProjectPage = ({ params }) => {
     const [project, setProject] = useState(null);
     const projectID = params.id;
 
-    useEffect(()=>{
-        async function fetch(){
+    useEffect(() => {
+        async function fetch() {
             const data = await getPostFromProjectID(projectID)
             console.log("ProjectID", projectID);
-            setProject(data)
+            setProject(data);
         }
         fetch()
     }, [])
@@ -20,7 +20,7 @@ const ProjectPage = ({ params }) => {
 
     return (
         <div>
-            <ProjectDisplay project={project}/>
+            <ProjectDisplay project={project} />
         </div>
     );
 };

@@ -9,14 +9,24 @@ const BoxPageCompo = ({ user, pageUser, box }) => {
     const renderCards = () => {
         return (
             <>
-                {box?.slice(0, 3).map((item) => {
-                    return (
-                        <ProjectCard
-                            key={item.id}
-                            project={item}
-                            id={item.id}
-                        />
-                    );
+                {
+                    !pageUser?.topProjects && (
+                        <p className="text-neutral-200 text-center">
+                            No top projects found for this user.
+                        </p>
+                    )
+
+                }
+                {box?.map((item) => {
+                    if (pageUser?.topProjects && pageUser?.topProjects.includes(item.id)) {
+                        return (
+                            <ProjectCard
+                                key={item.id}
+                                project={item}
+                                id={item.id}
+                            />
+                        );
+                    }
                 })}
             </>
         );

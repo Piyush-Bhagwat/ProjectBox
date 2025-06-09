@@ -1,20 +1,31 @@
 "use client";
 import Image from "next/image";
 import PageSkeleton from "./ui/PageSkeleton";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     FaCrown,
     FaGithub,
     FaLinkedin,
     FaXTwitter,
     FaYoutube,
+    FaArrowUpRightFromSquare,
+    FaArrowLeft,
+    FaArrowRight,
 } from "react-icons/fa6";
 import Link from "next/link";
-import { getUserPhoto } from "@/firebase/firebase.db";
+import Comment from "./ui/comment";
+import { addComment } from "@/firebase/firebase.db";
+import { useProjects } from "@/context/projectContext";
+import Button from "./ui/Button";
 
 const ProjectDisplay = ({ project }) => {
     const [photoIDX, setPhotoIDX] = useState(0);
     const [photoURL, setPhotoURL] = useState("");
+    const [comment, setComment] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [comments, setComments] = useState(project?.comments || []);
+    const textareaRef = useRef(null);
+    const { user } = useProjects();
 
     useEffect(() => {
         if (!project) return;
@@ -23,6 +34,8 @@ const ProjectDisplay = ({ project }) => {
         } else {
             setPhotoURL("https://via.placeholder.com/480");
         }
+
+        setComments(project?.comments || []);
     }, [photoIDX, project]);
 
     if (!project) {
@@ -49,14 +62,49 @@ const ProjectDisplay = ({ project }) => {
             <>
                 {tags?.map((tag) => {
                     return (
-                            
-                            <div key={tag} className="md:px-2 cursor-default md:py-0.5 px-1 text-white border text-sm border-white rounded-full">
+
+                        <div key={tag} className="md:px-2 cursor-default md:py-0.5 px-1 text-white border text-sm border-white rounded-full">
                             {tag}
                         </div>
                     );
                 })}
             </>
         );
+    };
+
+    const handleSendComment = async () => {
+        if (!user) {
+            alert("Login First!");
+            return;
+        }
+        if (loading) return;
+        if (comment) {
+            setLoading(true);
+            console.log("Sending comment", {
+                projectID: project.id,
+                username: user.username,
+                comment,
+                category: project.category,
+            });
+
+
+            await addComment(
+                project.id,
+                user.username,
+                comment,
+                project.category
+            );
+            if (comments) {
+                setComments((p) => [
+                    ...p,
+                    { username: user.username, comment },
+                ]);
+            } else {
+                setComments((p) => [{ username: user.username, comment }]);
+            }
+            setLoading(false);
+        }
+        setComment("");
     };
 
     const haveAnyLinks =
@@ -74,12 +122,12 @@ const ProjectDisplay = ({ project }) => {
             <div className="flex flex-col md:flex-row w-full gap-10">
                 <div className="w-full md:w-1/2">
                     <div className="relative mt-3 md:mt-6 flex md:gap-3 items-center justify-center ">
-                        <button
-                            className="absolute left-2 bg-black/60 md:bg-none text-2xl md:static block h-8  md:h-12 aspect-square md:border-2 rounded-full border-dashed border-neutral-600 hover:bg-neutral-600 md:transition-all"
+                        {project?.photos.length > 1 && <button
+                            className=" flex items-center justify-center absolute left-2 bg-black/60 md:bg-none text-2xl md:static h-8  md:h-12 aspect-square md:border-2 rounded-full border-dashed border-neutral-600 hover:bg-neutral-600 md:transition-all active:scale-95"
                             onClick={() => changeIDX(-1)}
                         >
-                            {"<-"}
-                        </button>
+                            <FaArrowLeft />
+                        </button>}
                         <div className=" w-full md:w-[90%] aspect-video bg-neutral-800 rounded-lg">
                             <Image
                                 src={photoURL}
@@ -89,12 +137,12 @@ const ProjectDisplay = ({ project }) => {
                                 className="w-full aspect-video object-cover hover:object-contain rounded-lg"
                             />
                         </div>
-                        <button
-                            className="absolute right-2 bg-black/60 md:bg-none text-2xl md:static block h-8  md:h-12 aspect-square md:border-2 rounded-full border-dashed border-neutral-600 hover:bg-neutral-600 md:transition-all"
+                        {project?.photos.length > 1 && <button
+                            className="absolute right-2 bg-black/60 md:bg-none text-2xl md:static h-8  md:h-12 aspect-square md:border-2 rounded-full border-dashed border-neutral-600 hover:bg-neutral-600 md:transition-all flex items-center justify-center active:scale-95"
                             onClick={() => changeIDX(1)}
                         >
-                            {"->"}
-                        </button>
+                            <FaArrowRight />
+                        </button>}
                     </div>
 
                     <div className="flex mt-6 w-full gap-2 justify-evenly">
@@ -108,11 +156,10 @@ const ProjectDisplay = ({ project }) => {
                                 <p className="text-sm flex gap-1 items-center">
                                     {" "}
                                     <span
-                                        className={`p-1.5 rounded-full animate-pulse ${
-                                            project.status == "ongoing"
-                                                ? "bg-blue-300"
-                                                : "bg-green-300"
-                                        } inline-block`}
+                                        className={`p-1.5 rounded-full animate-pulse ${project.status == "ongoing"
+                                            ? "bg-blue-300"
+                                            : "bg-green-300"
+                                            } inline-block`}
                                     ></span>
                                     {project.status}
                                 </p>
@@ -158,6 +205,16 @@ const ProjectDisplay = ({ project }) => {
                                 Social Links
                             </p>
                             <ul className="mt-2 w-full flex justify-center gap-3 list-none">
+                                {project.hostedLink && (
+                                    <li>
+                                        <Link
+                                            href={project.hostedLink}
+                                            target="_blank"
+                                            className="flex items-center space-x-2 text-3xl"
+                                        >
+                                            <FaArrowUpRightFromSquare />
+                                        </Link>
+                                    </li>)}
                                 {project.githubLink && (
                                     <li>
                                         <Link
@@ -231,9 +288,29 @@ const ProjectDisplay = ({ project }) => {
                             <p className="mb-2">
                                 <strong>Solution:</strong> {project.solution}
                             </p>
-                            <p className="mb-2">
-                                <strong>Personal Notes:</strong> {project.notes}
-                            </p>
+                        </div>
+                    </div>
+
+                    <div className="bg-neutral-800 p-2 rounded-md">
+                        <h2 className="font-semibold mb-3 text-3xl leading-7 text-neutral-200">Comments</h2>
+                        <div className="flex flex-col gap-3 p-2 md:p-3">
+                            <div className="flex items-center w-full gap-2">
+                                <textarea
+                                    ref={textareaRef}
+                                    rows={3}
+                                    value={comment}
+                                    onChange={(event) => setComment(event.target.value)}
+                                    placeholder="Add a comment..."
+                                    type="text"
+                                    className="w-full block rounded-md bg-neutral-900 text-neutral-200 px-2"
+                                />
+                                <Button onClick={handleSendComment} rounded>
+                                    Send
+                                </Button>
+                            </div>
+                            {comments.map((com, index) => (
+                                <Comment key={index} com={com} />
+                            ))}
                         </div>
                     </div>
                 </div>

@@ -68,7 +68,7 @@ const getbox = async (username) => {
 
         for (const id of postIDs) {
             const post = await getPostData(id.path);
-            boxData.push({...post, entryID: id.entryID});
+            boxData.push({ ...post, entryID: id.entryID });
         }
 
         return boxData;
@@ -203,7 +203,6 @@ const getPostData = async (id) => {
 
 const getPostFromProjectID = async (projectID = "") => {
     const categories = ["web", "app", "ai", "ds", "vr", "other"];
-    const posts = [];
     projectID = decodeURIComponent(projectID);
 
     for (const cat of categories) {
@@ -213,11 +212,11 @@ const getPostFromProjectID = async (projectID = "") => {
 
         if (snap.data()) {
             console.log("project found:", snap.data());
-            return snap.data();
+            return { ...snap.data(), id: snap.id };
         }
     }
 
-    return posts;
+    return {};
 };
 
 const getUserProjects = async (email) => {

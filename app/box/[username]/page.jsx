@@ -31,7 +31,7 @@ const BoxPage = ({ params }) => {
     return (
         <>
             {loading ? (
-                <Skeleton />
+                <Skeleton /> 
             ) : (
                 <>
                     {pageUser ? (

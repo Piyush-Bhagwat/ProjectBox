@@ -16,12 +16,12 @@ const Comment = ({ com }) => {
 
     return (
         <div className="bg-neutral-900 rounded-md text-neutral-200 px-2 py-1">
-            <p className="text-sm flex items-center gap-2">
+            <p className="text-xs flex items-center gap-2">
                 <Image
                     src={photoURL}
-                    width={40}
-                    height={40}
-                    className="object-cover w-7 aspect-square rounded-full"
+                    width={30}
+                    height={30}
+                    className="object-cover w-6 aspect-square rounded-full"
                 />
                 <Link href={`/box/${com.username}`}>{com.username}</Link>
             </p>

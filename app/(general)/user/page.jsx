@@ -6,21 +6,47 @@ import { useProjects } from "@/context/projectContext";
 import ProjectCard from "@/components/ProjectCard";
 import Skeleton from "@/components/ui/skeleton";
 import Image from "next/image";
-import { FaCheck } from "react-icons/fa6";
+import { FaCheck, FaCircleCheck, FaRegCircle } from "react-icons/fa6";
 import Button from "@/components/ui/Button";
 import EditBtn from "@/components/ui/EditBtn";
-import { deleteProject } from "@/firebase/firebase.db";
+import { deleteProject, updateFeild } from "@/firebase/firebase.db";
 import { ThreeCircles } from "react-loader-spinner";
 
 const ProfilePage = () => {
     const { user, box, logout, refreshData } = useProjects();
 
-    const [isEditing, setIsEditing] = useState(false);
+    const [topProjects, setTopProjects] = useState([]);
     const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         document.title = `${user?.username} | Home`;
+        if (user) {
+            // Fetch top projects from user data
+            const top = user.topProjects || [];
+            setTopProjects(top);
+        }
     }, [user]);
+
+    const handleTopProject = async (item) => {
+        if (topProjects.includes(item.id)) {
+            // If already selected, remove it
+            setTopProjects(topProjects.filter((id) => id !== item.id));
+            await updateFeild(user.username, "topProjects", topProjects.filter((id) => id !== item.id));
+        } else {
+            if (topProjects.length >= 3) {
+                if (!confirm(`You can only have 3 top projects. first one will be replaced. ${item.id}`)) return;
+                setTopProjects([...topProjects.slice(1), item.id]);
+                await updateFeild(user.username, "topProjects", [...topProjects.slice(1), item.id]);
+            } else {
+                // Add normally
+                setTopProjects([...topProjects, item.id]);
+                await updateFeild(user.username, "topProjects", [...topProjects, item.id]);
+            }
+        }
+
+        refreshData();
+        console.log("Top projects updated:", topProjects);
+    };
 
     async function handleDeleteProject(item) {
 
@@ -48,26 +74,34 @@ const ProfilePage = () => {
         return (
             <>
                 {box?.map((item) => (
-                    <div key={item.id} className="relative">
+                    <button key={item.id} className="relative" onClick={() => { console.log("Project clicked") }}>
                         <ProjectCard
                             project={item}
                             id={item.id}
                             key={item.id}
                         />
-                        <button
-                            className="p-2 bg-neutral-600 absolute bottom-2 right-2 rounded-full hover:bg-neutral-500 transition-all active:scale-95"
-                            onClick={() => handleDeleteProject(item)
-                            }
-                        >
-                            {deleting ? <ThreeCircles
-                                visible={true}
-                                height="15"
-                                width="15"
-                                color="#fff"
-                                ariaLabel="three-circles-loading"
-                            /> : <SlTrash className="text-neutral-200" />}
-                        </button>
-                    </div >
+                        <div className="absolute bottom-2 right-2">
+                            <button
+                                title="Delete Project"
+                                className="p-2 bg-neutral-600 rounded-full hover:bg-neutral-500 transition-all active:scale-95"
+                                onClick={() => handleDeleteProject(item)
+                                }
+                            >
+                                {deleting ? <ThreeCircles
+                                    visible={true}
+                                    height="15"
+                                    width="15"
+                                    color="#fff"
+                                    ariaLabel="three-circles-loading"
+                                /> : <SlTrash className="text-neutral-200" />}
+                            </button>
+
+                            <button onClick={() => handleTopProject(item)} title="Add to Top Projects" className={`p-2 ${topProjects.includes(item.id) ? "bg-blue-700" : "bg-neutral-600"} rounded-full hover:bg-neutral-500 transition-all active:scale-95 ml-2`}>
+                                {topProjects.includes(item.id) ? <FaCheck /> : <FaRegCircle />}
+                            </button>
+
+                        </div>
+                    </button >
                 ))}
             </>
         );
