@@ -17,7 +17,6 @@ import {
 import { db, userCollection } from "./firebase.config";
 import { getPathFromFirebaseStorageUrl, getPostID } from "@/utils/utilFuncitons";
 import { deleteImage, uploadProfileImage } from "./direbase.storage";
-import { deleteObject } from "firebase/storage";
 
 const userExistEmail = async (email) => {
     const q = query(userCollection, where("email", "==", email));
@@ -31,9 +30,8 @@ const createUser = async (data) => {
     console.log("error.................", data);
 };
 
-const storeToBox = async (username, path, name) => {
+const storeToBox = async (username, name) => {
     await addDoc(collection(db, "users", username, "box"), {
-        path,
         name,
         time: Date.now(),
     });
@@ -67,7 +65,7 @@ const getbox = async (username) => {
         });
 
         for (const id of postIDs) {
-            const post = await getPostData(id.path);
+            const post = await getPostData(id.name);
             boxData.push({ ...post, entryID: id.entryID });
         }
 
@@ -149,12 +147,12 @@ const updateProfilePhoto = async (username, image) => {
 const uploadPost = async (data) => {
     try {
         const postID = getPostID(data.auther, data.projectName);
-        const pathToPost = `posts/india/${data.category}/${postID}`;
+        const pathToPost = `posts/${postID}`;
         const postRef = doc(db, pathToPost);
         console.log("upload form", data);
         await setDoc(postRef, data);
         console.log("upload finished");
-        await storeToBox(data.auther, pathToPost, postID);
+        await storeToBox(data.auther, postID);
         return pathToPost;
     } catch (er) {
         console.warn("error uploading post");
@@ -162,37 +160,29 @@ const uploadPost = async (data) => {
 };
 
 const getAllPosts = async () => {
-    const categories = ["web", "app", "ai", "ds", "vr", "other"];
     const posts = [];
-
-    for (const cat of categories) {
-        const path = `posts/india/${cat}`;
-        const ref = collection(db, path);
-        const q = query(ref, orderBy("createdAt"));
-        const snap = await getDocs(q);
-
-        snap.docs.forEach((doc) => posts.push({ ...doc.data(), id: doc.id }));
-    }
-
+    const ref = collection(db, "posts");
+    const q = query(ref, orderBy("createdAt"));
+    const snap = await getDocs(q);
+    snap.docs.forEach((doc) => posts.push({ ...doc.data(), id: doc.id }));
     return posts.reverse();
 };
 
 const getAllPostsByCategory = async (category) => {
-    const cat = category;
-    const posts = [];
-
-    const path = `posts/india/${cat}`;
-    const ref = collection(db, path);
-    const snap = await getDocs(ref);
-
-    snap.docs.forEach((doc) => posts.push({ ...doc.data(), id: doc.id }));
+    const postsRef = collection(db, "posts");
+    const q = query(postsRef, where("category", "==", category), orderBy("createdAt"), limit(100));
+    const querySnapshot = await getDocs(q);
+    const posts = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    }));
 
     return posts;
 };
 
 const getPostData = async (id) => {
     try {
-        const postRef = doc(db, id);
+        const postRef = doc(db, "posts", id);
         const snap = await getDoc(postRef);
 
         return { ...snap.data(), id: snap.id };
@@ -202,26 +192,23 @@ const getPostData = async (id) => {
 };
 
 const getPostFromProjectID = async (projectID = "") => {
-    const categories = ["web", "app", "ai", "ds", "vr", "other"];
     projectID = decodeURIComponent(projectID);
 
-    for (const cat of categories) {
-        const path = `posts/india/${cat}/${projectID}`;
-        const ref = doc(db, path);
-        const snap = await getDoc(ref);
+    const path = `posts/${projectID}`;
+    const ref = doc(db, path);
+    const snap = await getDoc(ref);
 
-        if (snap.data()) {
-            console.log("project found:", snap.data());
-            return { ...snap.data(), id: snap.id };
-        }
+    if (snap.data()) {
+        console.info("project found:", snap.data());
+        return { ...snap.data(), id: snap.id };
     }
 
-    return {};
+    console.warn("Project not found with ID:", projectID);
 };
 
 const getUserProjects = async (email) => {
     try {
-        const userSnapshot = await getDocs(
+        const userSnapshot = await getDoc(
             query(userCollection, where("email", "==", email))
         );
 
@@ -229,7 +216,7 @@ const getUserProjects = async (email) => {
             throw new Error("User not found");
         }
 
-        const username = userSnapshot.docs[0].data().username;
+        const username = userSnapshot.data().username;
         const boxRef = collection(db, "users", username, "box");
         const snapshot = await getDocs(boxRef);
 
@@ -245,22 +232,22 @@ const getUserProjects = async (email) => {
     }
 };
 
-const likeProject = async (projectID, username, category) => {
-    const projRef = doc(db, "posts", "india", category, projectID);
+const likeProject = async (projectID, username) => {
+    const projRef = doc(db, "posts", projectID);
     await updateDoc(projRef, {
         likes: arrayUnion(username),
     });
 };
 
-const unLikeProject = async (projectID, username, category) => {
-    const projRef = doc(db, "posts", "india", category, projectID);
+const unLikeProject = async (projectID, username) => {
+    const projRef = doc(db, "posts", projectID);
     await updateDoc(projRef, {
         likes: arrayRemove(username),
     });
 };
 
-const addComment = async (projectID, username, comment, category) => {
-    const projRef = doc(db, "posts", "india", category, projectID);
+const addComment = async (projectID, username, comment) => {
+    const projRef = doc(db, "posts", projectID);
     await updateDoc(projRef, {
         comments: arrayUnion({ comment, username }),
     });
@@ -269,7 +256,7 @@ const addComment = async (projectID, username, comment, category) => {
 const deleteProject = async (projectID, category, entryID) => {
     console.log("id to del:", projectID, category);
 
-    const project = (await getDoc(doc(db, "posts", "india", category, projectID))).data();
+    const project = (await getDoc(doc(db, "posts", projectID))).data();
 
     for (const p of project?.photos) {
         const link = getPathFromFirebaseStorageUrl(p)
@@ -278,15 +265,37 @@ const deleteProject = async (projectID, category, entryID) => {
         await deleteImage(link)
     }
 
-    console.log("deleting project: ", projectID, "EntryID: ", entryID);
+    console.warn("deleting project: ", projectID, "EntryID: ", entryID);
 
-    await deleteDoc(doc(db, "posts", "india", category, projectID));
+    await deleteDoc(doc(db, "posts", projectID));
     await deleteDoc(doc(db, "users", project.auther, "box", entryID));
-    console.log("project deleted");
+    console.info("project deleted");
 };
+
+async function migratePosts() {
+  const oldPostsRef = collection(db, "posts", "india", "web");
+  const querySnapshot = await getDocs(oldPostsRef);
+
+  for (const docSnap of querySnapshot.docs) {
+    const postData = docSnap.data();
+    const postId = docSnap.id;
+
+    // Create new doc directly under 'posts'
+    const newPostRef = doc(db, "posts", postId);
+    await setDoc(newPostRef, postData);
+
+    // Optional: delete old nested doc
+    // await deleteDoc(doc(db, "posts", "India", "web", postId));
+
+    console.log(`Migrated post: ${postId}`);
+  }
+
+  console.log("✅ Migration complete!");
+}
 
 export {
     userExistEmail,
+    migratePosts,
     createUser,
     getbox,
     getUser,

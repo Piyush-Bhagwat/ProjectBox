@@ -6,6 +6,7 @@ import { FaLinkedin } from "react-icons/fa";
 import Button from "../ui/Button";
 
 const BoxPageCompo = ({ user, pageUser, box }) => {
+    
     const renderCards = () => {
         return (
             <>

@@ -4,6 +4,7 @@ import CategorySelect from "@/components/CategorySelect";
 import ProjectCard from "@/components/ProjectCard";
 import Skeleton from "@/components/ui/skeleton";
 import { projectContext } from "@/context/projectContext";
+import { migratePosts } from "@/firebase/firebase.db";
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import { Rings, RotatingSquare } from "react-loader-spinner";
@@ -35,6 +36,8 @@ const FeedPage = () => {
 
     return (
         <div>
+            {/* <button onClick={migratePosts}>MIGRATE!!!!!</button> */}
+
             <CategorySelect catergory={catergory} setCategory={setCategory} />
 
             {!loading ? (

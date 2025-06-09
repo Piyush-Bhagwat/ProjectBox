@@ -3,7 +3,7 @@ import BoxPageCompo from "@/components/Pages/BoxPageCompo";
 import ProjectCard from "@/components/ProjectCard";
 import Skeleton from "@/components/ui/skeleton";
 import { projectContext, useProjects } from "@/context/projectContext";
-import { getbox, getUserByUsername } from "@/firebase/firebase.db";
+import { getbox, getUserByUsername, migratePosts } from "@/firebase/firebase.db";
 import React, { useContext, useEffect, useState } from "react";
 
 const BoxPage = ({ params }) => {
