@@ -272,7 +272,7 @@ const ProjectDisplay = ({ project }) => {
                         <h2 className="font-semibold mb-3 text-3xl leading-7 text-neutral-200">
                             Description
                         </h2>
-                        <p className="mt-1 leading-6 text-gray-300">
+                        <p className="mt-1 leading-6 text-gray-300 whitespace-pre-line">
                             {project.about}
                         </p>
                     </div>
@@ -281,12 +281,12 @@ const ProjectDisplay = ({ project }) => {
                             Journey
                         </p>
                         <div className="mt-1 ml-6 leading-6 text-gray-300">
-                            <p className="mb-2">
-                                <strong>Problems Faced:</strong>{" "}
+                            <p className="mb-2 whitespace-pre-line">
+                                <strong className="text-xl">Problems Faced:</strong>{" "}
                                 {project.problems}
                             </p>
-                            <p className="mb-2">
-                                <strong>Solution:</strong> {project.solution}
+                            <p className="mb-2 whitespace-pre-line">
+                                <strong className="text-xl">Solution:</strong> {project.solution}
                             </p>
                         </div>
                     </div>
